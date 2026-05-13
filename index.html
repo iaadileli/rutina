@@ -171,6 +171,9 @@
     background: var(--bg);
   }
   .serie-row input:focus { outline: none; border-color: var(--primary); background: white; }
+  .serie-row input.locked, .serie-row input[readonly] {
+    background: var(--primary-soft); color: var(--text); cursor: not-allowed; opacity: 0.85;
+  }
   .serie-row .check, .serie-row .apply-all {
     width: 36px; height: 36px;
     border: 1px solid var(--border); border-radius: 8px;
@@ -807,6 +810,11 @@ function toggleReps(btn) {
 }
 
 function guardarSerie(btn) {
+  // Si ya está marcada, desmarcar (toggle)
+  if (btn.classList.contains("done")) {
+    return desmarcarSerie(btn);
+  }
+
   const key = btn.dataset.key;
   const ejIdx = parseInt(btn.dataset.ej);
   const serie = parseInt(btn.dataset.serie);
@@ -836,10 +844,13 @@ function guardarSerie(btn) {
   saveState();
   btn.classList.add("done");
 
+  // Bloquear todos los inputs de la fila mientras esté marcada
+  inputs.forEach(inp => { inp.readOnly = true; inp.classList.add("locked"); });
+
   // Si no metió peso, mostrar "Peso corporal" en lugar del input vacío
   if (peso === null) {
     const pesoInput = inputs[0];
-    if (pesoInput && !pesoInput.classList.contains("bw-tag")) {
+    if (pesoInput && pesoInput.parentNode) {
       const tag = document.createElement("div");
       tag.className = "bw-tag";
       tag.textContent = "Peso corporal";
@@ -852,6 +863,47 @@ function guardarSerie(btn) {
   } else {
     toast(`Serie ${serie} · peso corporal`);
   }
+}
+
+function desmarcarSerie(btn) {
+  const row = btn.parentElement;
+  const ejIdx = parseInt(btn.dataset.ej);
+  const serie = parseInt(btn.dataset.serie);
+  const dia = state.currentDay;
+  const ej = RUTINA[dia].ejercicios[ejIdx];
+  const hoy = new Date().toISOString().slice(0,10);
+
+  // Borrar la sesión más reciente que coincida (de hoy, mismo día/ejercicio/serie)
+  for (let i = state.sessions.length - 1; i >= 0; i--) {
+    const s = state.sessions[i];
+    if (s.date === hoy && s.dia === dia && s.ejercicio === ej.nombre && s.serie === serie) {
+      state.sessions.splice(i, 1);
+      break;
+    }
+  }
+
+  // Quitar el "done"
+  btn.classList.remove("done");
+
+  // Desbloquear inputs
+  row.querySelectorAll("input").forEach(inp => { inp.readOnly = false; inp.classList.remove("locked"); });
+
+  // Si hay tag "Peso corporal" en lugar del input de peso, restaurar el input
+  const bwTag = row.querySelector(".bw-tag");
+  if (bwTag) {
+    const lastWeight = state.lastWeights[ej.nombre];
+    const newInput = document.createElement("input");
+    newInput.type = "number";
+    newInput.inputMode = "decimal";
+    newInput.step = "0.5";
+    newInput.placeholder = lastWeight || "-";
+    newInput.dataset.field = "peso";
+    newInput.dataset.key = `${dia}-${ejIdx}-${serie}`;
+    bwTag.replaceWith(newInput);
+  }
+
+  saveState();
+  toast(`Serie ${serie} desmarcada`);
 }
 
 function renderHistory() {
