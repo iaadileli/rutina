@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1F4E78">
+<title>Mi rutina</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --primary: #1F4E78;
+    --primary-soft: #d9e6f2;
+    --accent: #FCE4D6;     /* compuesto 5x5 */
+    --reminder: #FFF2CC;   /* recordatorio cruzado */
+    --core: #E2EFDA;       /* core */
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e4e7eb;
+    --danger: #c0392b;
+    --ok: #2e7d32;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+  body { padding-bottom: 80px; }
+
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--primary); color: white;
+    padding: 14px 16px 8px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  header h1 { font-size: 18px; margin: 0 0 10px 0; font-weight: 600; letter-spacing: 0.2px; }
+
+  .tabs { display: flex; gap: 6px; overflow-x: auto; }
+  .tab {
+    flex: 1; min-width: 70px; padding: 8px 10px;
+    background: rgba(255,255,255,0.12); color: white;
+    border: none; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .tab.active { background: white; color: var(--primary); }
+
+  main { padding: 16px; max-width: 720px; margin: 0 auto; }
+
+  /* Selector de día */
+  .day-picker { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+  .day-btn {
+    flex: 1; min-width: 56px; padding: 10px 6px;
+    background: var(--card); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+  }
+  .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+  .day-btn small { display: block; font-size: 10px; font-weight: 400; opacity: 0.7; margin-top: 2px; }
+
+  /* Cards de ejercicios */
+  .exercise {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+  .exercise.compuesto { border-left: 4px solid #f17a3d; }
+  .exercise.recordatorio { border-left: 4px solid #d4ac0d; }
+  .exercise.core { border-left: 4px solid #5b8a3a; }
+  .exercise.cardio { border-left: 4px solid #3498db; }
+
+  /* Card de cardio: botón grande */
+  .cardio-action { margin-top: 12px; }
+  .cardio-btn {
+    width: 100%; padding: 18px; border-radius: 12px;
+    border: 2px solid var(--primary); background: white; color: var(--primary);
+    font-size: 18px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .cardio-btn.done { background: var(--ok); color: white; border-color: var(--ok); }
+  .cardio-btn .icon { font-size: 24px; }
+
+  .ex-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 10px;
+    margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .ex-tag.compuesto { background: var(--accent); color: #8a4612; }
+  .ex-tag.recordatorio { background: var(--reminder); color: #7d6608; }
+  .ex-tag.core { background: var(--core); color: #2e5d1f; }
+  .ex-tag.normal { background: var(--primary-soft); color: var(--primary); }
+
+  .ex-name { font-weight: 600; font-size: 16px; margin: 0 0 4px 0; }
+  .ex-target { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+  .ex-target b { color: var(--text); }
+  .ex-note { font-size: 12px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* Serie inputs */
+  .series-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .series-toolbar { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 4px; }
+  .toggle-reps {
+    background: transparent; border: 1px dashed var(--border); color: var(--muted);
+    padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer;
+  }
+  .toggle-reps.active { background: var(--primary-soft); color: var(--primary); border-style: solid; border-color: var(--primary-soft); }
+
+  /* Layout dinámico: sin reps por defecto */
+  .serie-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 1fr auto auto;
+    gap: 6px; align-items: center;
+  }
+  .serie-row.with-reps { grid-template-columns: 28px 1fr 1fr 1fr auto auto; }
+  .serie-row.head { font-size: 11px; color: var(--muted); text-transform: uppercase; padding: 0 4px; }
+  .reps-col { display: none; }
+  .serie-row.with-reps .reps-col { display: block; }
+  .serie-num { font-weight: 600; color: var(--muted); text-align: center; }
+  .serie-row input {
+    width: 100%; padding: 10px 8px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 15px; text-align: center;
+    background: var(--bg);
+  }
+  .serie-row input:focus { outline: none; border-color: var(--primary); background: white; }
+  .serie-row .check, .serie-row .apply-all {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--bg); cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .serie-row .check.done { background: var(--ok); color: white; border-color: var(--ok); }
+  .serie-row .apply-all { color: var(--primary); font-size: 18px; font-weight: 700; }
+  .serie-row .apply-all:active { background: var(--primary-soft); }
+
+  /* Histórico */
+  .history-day {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 14px; margin-bottom: 10px;
+    box-shadow: var(--shadow);
+  }
+  .history-day h3 { margin: 0 0 8px 0; font-size: 14px; color: var(--primary); }
+  .history-row {
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 6px 0; border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .history-row:first-of-type { border-top: none; }
+  .history-row .ej-name { font-weight: 500; }
+  .history-row .ej-data { color: var(--muted); }
+
+  /* Botones grandes */
+  .btn {
+    width: 100%; padding: 14px; border-radius: 10px;
+    border: none; background: var(--primary); color: white;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .btn.secondary { background: var(--card); color: var(--primary); border: 1px solid var(--border); }
+  .btn.danger { background: var(--danger); }
+
+  .empty {
+    text-align: center; color: var(--muted);
+    padding: 40px 20px; font-size: 14px;
+  }
+
+  /* Settings */
+  .setting-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+  .setting-card h3 { margin: 0 0 6px 0; font-size: 15px; }
+  .setting-card p { color: var(--muted); font-size: 13px; margin: 0 0 10px 0; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: white;
+    padding: 10px 20px; border-radius: 24px;
+    font-size: 14px; opacity: 0; transition: opacity 0.3s;
+    pointer-events: none; z-index: 100;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Última carga */
+  .last-load {
+    display: inline-block; padding: 2px 8px;
+    background: var(--primary-soft); color: var(--primary);
+    border-radius: 8px; font-size: 11px; font-weight: 600;
+    margin-left: 6px;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Form de medidas */
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .form-grid label, label.full-width {
+    display: flex; flex-direction: column;
+    font-size: 12px; color: var(--muted); gap: 4px;
+    margin-bottom: 8px;
+  }
+  label.full-width { display: block; margin-bottom: 12px; }
+  .form-grid input, label.full-width input, .select {
+    padding: 10px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 15px; background: var(--bg); color: var(--text);
+    width: 100%;
+  }
+  .form-grid input:focus, label.full-width input:focus, .select:focus {
+    outline: none; border-color: var(--primary); background: white;
+  }
+
+  /* Gráficas SVG */
+  .chart-container {
+    margin: 12px 0;
+    background: white; border-radius: 8px; padding: 8px;
+    border: 1px solid var(--border);
+  }
+  .chart-title {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    margin-bottom: 6px; padding: 0 4px;
+  }
+  .chart-title .delta {
+    font-weight: 500; font-size: 12px; margin-left: 8px;
+  }
+  .delta.up { color: var(--ok); }
+  .delta.down { color: var(--danger); }
+  svg.chart { width: 100%; height: 180px; display: block; }
+  svg.chart .axis { stroke: var(--border); stroke-width: 1; }
+  svg.chart .grid { stroke: var(--border); stroke-width: 0.5; stroke-dasharray: 2 2; }
+  svg.chart .line { fill: none; stroke: var(--primary); stroke-width: 2; }
+  svg.chart .area { fill: var(--primary-soft); opacity: 0.5; }
+  svg.chart .point { fill: var(--primary); }
+  svg.chart .label { font-size: 10px; fill: var(--muted); font-family: -apple-system, sans-serif; }
+  svg.chart .value-label { font-size: 10px; fill: var(--text); font-weight: 600; font-family: -apple-system, sans-serif; }
+
+  /* Medidas lista */
+  .medida-row {
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 10px 0; border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .medida-row:first-of-type { border-top: none; }
+  .medida-data { font-size: 13px; }
+  .medida-data .fecha { font-weight: 600; color: var(--primary); display: block; margin-bottom: 2px; }
+  .medida-data .vals { color: var(--muted); }
+  .medida-row .delete-btn {
+    background: transparent; border: none; color: var(--danger);
+    font-size: 18px; cursor: pointer; padding: 4px 8px;
+  }
+
+  @media (min-width: 600px) {
+    .serie-row { grid-template-columns: 40px 1fr 1fr 1fr auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mi rutina · <span id="weekday-label" style="font-weight: 400; opacity: 0.8;"></span></h1>
+  <div class="tabs">
+    <button class="tab active" data-view="hoy">Hoy</button>
+    <button class="tab" data-view="historico">Histórico</button>
+    <button class="tab" data-view="medidas">Medidas</button>
+    <button class="tab" data-view="exportar">Exportar</button>
+    <button class="tab" data-view="ajustes">Ajustes</button>
+  </div>
+</header>
+
+<main>
+  <!-- VISTA HOY -->
+  <section id="view-hoy">
+    <div class="day-picker" id="day-picker"></div>
+    <div id="exercise-list"></div>
+  </section>
+
+  <!-- VISTA HISTORICO -->
+  <section id="view-historico" class="hidden">
+    <div class="setting-card">
+      <h3>Evolución por ejercicio</h3>
+      <p>Selecciona un ejercicio para ver cómo ha evolucionado el peso máximo en cada sesión.</p>
+      <select id="exercise-selector" class="select"></select>
+      <div id="progression-chart"></div>
+    </div>
+    <div id="history-content"></div>
+  </section>
+
+  <!-- VISTA MEDIDAS -->
+  <section id="view-medidas" class="hidden">
+    <div class="setting-card">
+      <h3>Añadir medidas</h3>
+      <p>Apúntalas el mismo día del mes (por ejemplo, día 1) en ayunas. La cintura es la métrica que mejor sigue tu progreso.</p>
+      <form id="medida-form">
+        <div class="form-grid">
+          <label>Fecha <input type="date" id="m-fecha" required></label>
+          <label>Peso (kg) <input type="number" inputmode="decimal" step="0.1" id="m-peso" required placeholder="120"></label>
+          <label>Altura (cm) <input type="number" inputmode="decimal" step="0.5" id="m-altura" placeholder="185"></label>
+          <label>Cintura (cm) <input type="number" inputmode="decimal" step="0.5" id="m-cintura" placeholder="ombligo"></label>
+          <label>Pecho (cm) <input type="number" inputmode="decimal" step="0.5" id="m-pecho" placeholder="línea pezones"></label>
+          <label>Brazo (cm) <input type="number" inputmode="decimal" step="0.5" id="m-brazo" placeholder="contraído"></label>
+          <label>Cadera (cm) <input type="number" inputmode="decimal" step="0.5" id="m-cadera" placeholder="parte más ancha"></label>
+        </div>
+        <label class="full-width">Notas <input type="text" id="m-notas" placeholder="energía, sueño, etc."></label>
+        <button type="submit" class="btn">Guardar medida</button>
+      </form>
+    </div>
+
+    <div class="setting-card" id="medidas-graficas-card">
+      <h3>Evolución</h3>
+      <div id="medidas-graficas"></div>
+    </div>
+
+    <div class="setting-card">
+      <h3>Histórico de medidas</h3>
+      <div id="medidas-lista"></div>
+    </div>
+  </section>
+
+  <!-- VISTA EXPORTAR -->
+  <section id="view-exportar" class="hidden">
+    <div class="setting-card">
+      <h3>Exportar todo el histórico</h3>
+      <p>Descarga un fichero CSV con todas las series registradas. Lo puedes abrir en Excel, Numbers o Google Sheets.</p>
+      <button class="btn" onclick="exportCSV()">Descargar CSV</button>
+    </div>
+    <div class="setting-card">
+      <h3>Copia de seguridad (JSON)</h3>
+      <p>Guarda todos los datos en un fichero por si quieres tenerlo a buen recaudo o moverlo a otro móvil.</p>
+      <button class="btn secondary" onclick="exportJSON()">Descargar JSON</button>
+      <label class="btn secondary" style="display:block; text-align:center;">
+        Importar JSON
+        <input type="file" accept=".json" onchange="importJSON(event)" style="display:none">
+      </label>
+    </div>
+  </section>
+
+  <!-- VISTA AJUSTES -->
+  <section id="view-ajustes" class="hidden">
+    <div class="setting-card">
+      <h3>Última carga por ejercicio</h3>
+      <p>La app recuerda el último peso que has metido en cada ejercicio para sugerírtelo la próxima vez.</p>
+      <div id="last-loads"></div>
+    </div>
+    <div class="setting-card">
+      <h3>Datos</h3>
+      <p>Borra todo el histórico de sesiones. Esta acción no se puede deshacer.</p>
+      <button class="btn danger" onclick="resetData()">Borrar todos los datos</button>
+    </div>
+    <div class="setting-card">
+      <h3>Sobre la rutina</h3>
+      <p>Plan v2 con compuestos 5x5 y recordatorios cruzados. 4 días pesas + cardio miércoles. Adaptada a condromalacia rotuliana derecha.</p>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* ================== DATOS DE LA RUTINA ================== */
+const RUTINA = {
+  "Día 1": {
+    label: "Pecho + Tríceps",
+    ejercicios: [
+      { tipo: "compuesto", nombre: "Press banca plano (barra)", series: 5, reps: "5", rpe: "7-8", descanso: "3 min", nota: "Compuesto 5x5. +2,5 kg cuando completes con RPE ≤7." },
+      { tipo: "normal", nombre: "Press inclinado (mancuernas)", series: 4, reps: "6-10", rpe: "7-8", descanso: "2 min", nota: "Énfasis clavicular. Doble progresión." },
+      { tipo: "normal", nombre: "Aperturas pec-deck o cable", series: 3, reps: "10-15", rpe: "8", descanso: "75-90 s", nota: "Tensión continua, sin balanceo." },
+      { tipo: "normal", nombre: "Fondos asistidos o press cerrado", series: 3, reps: "8-10", rpe: "7-8", descanso: "90-120 s", nota: "Codos pegados al cuerpo." },
+      { tipo: "normal", nombre: "Tríceps polea con cuerda", series: 3, reps: "10-15", rpe: "8-9", descanso: "60-75 s", nota: "Última serie cerca del fallo." },
+      { tipo: "recordatorio", nombre: "Face pull con cuerda (recordatorio espalda)", series: 3, reps: "12-15", rpe: "8", descanso: "60 s", nota: "Salud de hombro. NO machacar." },
+      { tipo: "core", nombre: "Plancha frontal", series: 2, reps: "30-45 s", rpe: "7-8", descanso: "45-60 s", nota: "Anti-extensión. Glúteo activo." }
+    ]
+  },
+  "Día 2": {
+    label: "Espalda + Bíceps",
+    ejercicios: [
+      { tipo: "compuesto", nombre: "Peso muerto rumano (mancuerna)", series: 5, reps: "5", rpe: "7-8", descanso: "3 min", nota: "Compuesto 5x5. Bisagra de cadera, espalda neutra. +2,5 kg por mancuerna cuando RPE ≤7." },
+      { tipo: "normal", nombre: "Jalón al pecho o dominada asistida", series: 4, reps: "6-10", rpe: "7-8", descanso: "2 min", nota: "Tirón vertical." },
+      { tipo: "normal", nombre: "Remo pecho apoyado", series: 4, reps: "6-10", rpe: "7-8", descanso: "2 min", nota: "Codos atrás, escápulas estables." },
+      { tipo: "normal", nombre: "Remo sentado en cable (agarre neutro)", series: 3, reps: "8-12", rpe: "7-8", descanso: "90-120 s", nota: "Recorrido completo. No tirar con lumbar." },
+      { tipo: "normal", nombre: "Curl mancuerna inclinado", series: 3, reps: "8-12", rpe: "8", descanso: "75-90 s", nota: "Estiramiento largo del bíceps." },
+      { tipo: "recordatorio", nombre: "Pájaros / deltoide posterior (recordatorio hombro)", series: 3, reps: "12-20", rpe: "8", descanso: "60 s", nota: "Sinergia con la espalda. Carga baja." },
+      { tipo: "core", nombre: "Crunch en máquina", series: 2, reps: "12-15", rpe: "8", descanso: "60 s", nota: "Flexión controlada. No tires del cuello." }
+    ]
+  },
+  "Día 3": {
+    label: "Cardio",
+    ejercicios: [
+      { tipo: "cardio", nombre: "Cinta inclinada al 15%", series: 1, reps: "35-45 min", rpe: "5-6", descanso: "Continuo", nota: "Ritmo de conversación. No HIIT." }
+    ]
+  },
+  "Día 4": {
+    label: "Hombro",
+    ejercicios: [
+      { tipo: "compuesto", nombre: "Press militar (barra) o sentado con respaldo", series: 5, reps: "5", rpe: "7-8", descanso: "3 min", nota: "Compuesto 5x5. Si lumbar protesta de pie, hazlo sentado." },
+      { tipo: "normal", nombre: "Press Arnold o press inclinado mancuernas", series: 3, reps: "8-12", rpe: "7-8", descanso: "90-120 s", nota: "Variación angular del press." },
+      { tipo: "normal", nombre: "Elevaciones laterales (mancuernas)", series: 4, reps: "12-20", rpe: "8-9", descanso: "60-75 s", nota: "Estricto, sin trampear." },
+      { tipo: "normal", nombre: "Elevaciones laterales polea (un brazo)", series: 3, reps: "12-15", rpe: "8-9", descanso: "60 s", nota: "Tensión continua." },
+      { tipo: "normal", nombre: "Face pull con cuerda", series: 3, reps: "12-15", rpe: "8", descanso: "60 s", nota: "Deltoide posterior + manguito." },
+      { tipo: "recordatorio", nombre: "Aperturas en pec-deck (recordatorio pecho)", series: 3, reps: "10-15", rpe: "8", descanso: "60-75 s", nota: "Mantiene frecuencia pecho 2x/sem." },
+      { tipo: "core", nombre: "Pallof press en polea", series: 2, reps: "12 por lado", rpe: "7-8", descanso: "45-60 s", nota: "Anti-rotación. No dejes que el tronco gire." }
+    ]
+  },
+  "Día 5": {
+    label: "Pierna",
+    ejercicios: [
+      { tipo: "compuesto", nombre: "Peso muerto convencional (barra)", series: 5, reps: "5", rpe: "7-8", descanso: "3 min", nota: "Compuesto 5x5. Si rodilla protesta, prueba sumo o trap-bar." },
+      { tipo: "normal", nombre: "Hip thrust", series: 4, reps: "6-10", rpe: "7-8", descanso: "2 min", nota: "Glúteo dominante, amable con la rodilla." },
+      { tipo: "normal", nombre: "Prensa horizontal (rango limitado ~90°)", series: 3, reps: "10-12", rpe: "7-8", descanso: "2 min", nota: "NO bajes hasta el pecho. Pies a anchura media o algo altos." },
+      { tipo: "normal", nombre: "Curl femoral tumbado", series: 4, reps: "10-15", rpe: "8-9", descanso: "75-90 s", nota: "Isquios fuertes estabilizan la rótula. 1 s de pausa." },
+      { tipo: "normal", nombre: "Abductor en máquina sentado", series: 3, reps: "12-15", rpe: "8", descanso: "60 s", nota: "Glúteo medio: clave para el tracking rotuliano." },
+      { tipo: "normal", nombre: "Gemelo en prensa o de pie", series: 4, reps: "12-20", rpe: "8-9", descanso: "60-75 s", nota: "Pausa al estiramiento y arriba." },
+      { tipo: "recordatorio", nombre: "Remo con mancuerna unilateral (recordatorio espalda)", series: 3, reps: "8-12", rpe: "8", descanso: "75 s", nota: "Grosor de espalda con poco volumen lumbar." }
+    ]
+  }
+};
+
+const DIA_KEYS = ["Día 1","Día 2","Día 3","Día 4","Día 5"];
+
+/* ================== ESTADO ================== */
+let state = {
+  currentDay: "Día 1",
+  sessions: [],     // [{date, dia, ejercicio, serie, peso, reps, rpe, notas}]
+  medidas: [],      // [{date, peso, altura, cintura, pecho, brazo, cadera, notas}]
+  lastWeights: {},  // {ejercicio: peso}
+  repsVisible: {},  // {"dia-ejIdx": true} → mostrar columna reps en ese ejercicio
+  selectedExercise: null, // ejercicio seleccionado en el histórico para la gráfica
+  todayInputs: {}   // estado temporal de la sesión en curso (no persistido entre días)
+};
+
+function loadState() {
+  const saved = localStorage.getItem("rutina_app");
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state.sessions = parsed.sessions || [];
+      state.lastWeights = parsed.lastWeights || {};
+      state.medidas = parsed.medidas || [];
+    } catch(e) { console.error(e); }
+  }
+  // Día inicial sugerido según día de semana real (Lun→Día 1, Mar→Día 2, Mié→Día 3, Jue→Día 4, Vie→Día 5)
+  const hoy = new Date().getDay(); // 0=Dom, 1=Lun...
+  const map = {1:"Día 1", 2:"Día 2", 3:"Día 3", 4:"Día 4", 5:"Día 5"};
+  if (map[hoy]) state.currentDay = map[hoy];
+}
+
+function saveState() {
+  localStorage.setItem("rutina_app", JSON.stringify({
+    sessions: state.sessions,
+    lastWeights: state.lastWeights,
+    medidas: state.medidas
+  }));
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+/* ================== RENDER ================== */
+function renderTabs() {
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const view = btn.dataset.view;
+      ["hoy","historico","medidas","exportar","ajustes"].forEach(v => {
+        document.getElementById("view-" + v).classList.toggle("hidden", v !== view);
+      });
+      if (view === "historico") renderHistory();
+      if (view === "ajustes") renderSettings();
+      if (view === "medidas") renderMedidas();
+    });
+  });
+}
+
+function renderDayPicker() {
+  const dp = document.getElementById("day-picker");
+  dp.innerHTML = "";
+  DIA_KEYS.forEach(d => {
+    const btn = document.createElement("button");
+    btn.className = "day-btn" + (d === state.currentDay ? " active" : "");
+    btn.innerHTML = `${d}<small>${RUTINA[d].label}</small>`;
+    btn.addEventListener("click", () => {
+      state.currentDay = d;
+      renderDayPicker();
+      renderExercises();
+      updateWeekdayLabel();
+    });
+    dp.appendChild(btn);
+  });
+}
+
+function updateWeekdayLabel() {
+  document.getElementById("weekday-label").textContent = RUTINA[state.currentDay].label;
+}
+
+function renderExercises() {
+  const container = document.getElementById("exercise-list");
+  container.innerHTML = "";
+  const dia = state.currentDay;
+  const ejercicios = RUTINA[dia].ejercicios;
+
+  ejercicios.forEach((ej, idx) => {
+    const card = document.createElement("div");
+    card.className = "exercise " + ej.tipo;
+
+    const tagLabel = {
+      compuesto: "Compuesto 5x5",
+      recordatorio: "Recordatorio",
+      core: "Core",
+      cardio: "Cardio",
+      normal: ""
+    }[ej.tipo];
+
+    const lastWeight = state.lastWeights[ej.nombre];
+    const lastBadge = (lastWeight && ej.tipo !== "cardio") ? `<span class="last-load">última: ${lastWeight} kg</span>` : "";
+
+    let html = "";
+    if (tagLabel) html += `<span class="ex-tag ${ej.tipo}">${tagLabel}</span>`;
+    html += `<h3 class="ex-name">${ej.nombre}${lastBadge}</h3>`;
+
+    // CARDIO: solo botón de check, sin inputs
+    if (ej.tipo === "cardio") {
+      html += `<div class="ex-target"><b>${ej.reps}</b> · RPE <b>${ej.rpe}</b></div>`;
+      const yaHecho = state.sessions.some(s =>
+        s.date === new Date().toISOString().slice(0,10) &&
+        s.ejercicio === ej.nombre
+      );
+      html += `
+        <div class="cardio-action">
+          <button class="cardio-btn ${yaHecho ? 'done' : ''}" data-ej="${idx}">
+            <span class="icon">${yaHecho ? '✓' : '○'}</span>
+            <span>${yaHecho ? 'Cardio realizado hoy' : 'Marcar cardio como hecho'}</span>
+          </button>
+        </div>
+        <div class="ex-note">${ej.nota}</div>
+      `;
+      card.innerHTML = html;
+      container.appendChild(card);
+      return; // saltamos el resto (series, etc.)
+    }
+
+    html += `<div class="ex-target"><b>${ej.series}</b> series × <b>${ej.reps}</b> · RPE <b>${ej.rpe}</b> · descanso ${ej.descanso}</div>`;
+
+    // Series
+    const showReps = state.repsVisible[`${dia}-${idx}`] === true;
+    const withRepsClass = showReps ? " with-reps" : "";
+    html += `<div class="series-list">`;
+    html += `
+      <div class="series-toolbar">
+        <button class="toggle-reps${showReps ? ' active' : ''}" data-ej="${idx}">
+          ${showReps ? '− reps' : '+ reps'}
+        </button>
+      </div>`;
+    html += `
+      <div class="serie-row head${withRepsClass}">
+        <span></span><span>Peso (kg)</span>
+        <span class="reps-col">Reps</span>
+        <span>RPE</span><span></span><span></span>
+      </div>`;
+    for (let s = 1; s <= ej.series; s++) {
+      const key = `${dia}-${idx}-${s}`;
+      html += `
+        <div class="serie-row${withRepsClass}" data-key="${key}">
+          <span class="serie-num">${s}</span>
+          <input type="number" inputmode="decimal" step="0.5" placeholder="${lastWeight || '-'}" data-field="peso" data-key="${key}">
+          <input type="number" inputmode="numeric" placeholder="${ej.reps}" data-field="reps" data-key="${key}" class="reps-col">
+          <input type="number" inputmode="decimal" step="0.5" placeholder="${ej.rpe}" data-field="rpe" data-key="${key}">
+          <button class="apply-all" data-ej="${idx}" data-serie="${s}" title="Copiar a las siguientes series">⤓</button>
+          <button class="check" data-key="${key}" data-ej="${idx}" data-serie="${s}">✓</button>
+        </div>
+      `;
+    }
+    html += `</div>`;
+    html += `<div class="ex-note">${ej.nota}</div>`;
+
+    card.innerHTML = html;
+    container.appendChild(card);
+  });
+
+  // Listeners
+  container.querySelectorAll(".check").forEach(btn => {
+    btn.addEventListener("click", () => guardarSerie(btn));
+  });
+  container.querySelectorAll(".apply-all").forEach(btn => {
+    btn.addEventListener("click", () => aplicarATodas(btn));
+  });
+  container.querySelectorAll(".toggle-reps").forEach(btn => {
+    btn.addEventListener("click", () => toggleReps(btn));
+  });
+  container.querySelectorAll(".cardio-btn").forEach(btn => {
+    btn.addEventListener("click", () => guardarCardio(btn));
+  });
+}
+
+function guardarCardio(btn) {
+  const ejIdx = parseInt(btn.dataset.ej);
+  const dia = state.currentDay;
+  const ej = RUTINA[dia].ejercicios[ejIdx];
+  const hoy = new Date().toISOString().slice(0,10);
+
+  // ¿ya hecho hoy? → toggle (lo borramos)
+  const yaIdx = state.sessions.findIndex(s => s.date === hoy && s.ejercicio === ej.nombre);
+  if (yaIdx >= 0) {
+    state.sessions.splice(yaIdx, 1);
+    saveState();
+    renderExercises();
+    toast("Cardio desmarcado");
+    return;
+  }
+
+  state.sessions.push({
+    date: hoy,
+    timestamp: Date.now(),
+    dia: dia,
+    ejercicio: ej.nombre,
+    tipo: ej.tipo,
+    serie: 1,
+    peso: null,
+    reps: null,
+    rpe: null
+  });
+  saveState();
+  renderExercises();
+  toast("Cardio marcado como hecho");
+}
+
+function aplicarATodas(btn) {
+  const ejIdx = parseInt(btn.dataset.ej);
+  const serieOrigen = parseInt(btn.dataset.serie);
+  const dia = state.currentDay;
+  const ej = RUTINA[dia].ejercicios[ejIdx];
+
+  // Coge los valores de la fila origen
+  const origenInputs = btn.parentElement.querySelectorAll("input");
+  const valPeso = origenInputs[0].value;
+  const valReps = origenInputs[1].value;
+  const valRpe  = origenInputs[2].value;
+
+  // Replicar a todas las series posteriores (que no estén ya marcadas como hechas)
+  let copiadas = 0;
+  for (let s = serieOrigen + 1; s <= ej.series; s++) {
+    const key = `${dia}-${ejIdx}-${s}`;
+    const row = document.querySelector(`.serie-row[data-key="${key}"]`);
+    if (!row) continue;
+    const check = row.querySelector(".check");
+    if (check && check.classList.contains("done")) continue; // no sobrescribir las ya guardadas
+    const inputs = row.querySelectorAll("input");
+    if (valPeso) inputs[0].value = valPeso;
+    if (valReps) inputs[1].value = valReps;
+    if (valRpe)  inputs[2].value = valRpe;
+    copiadas++;
+  }
+  toast(copiadas ? `Copiado a ${copiadas} serie${copiadas>1?'s':''}` : "No hay series posteriores libres");
+}
+
+function toggleReps(btn) {
+  const ejIdx = parseInt(btn.dataset.ej);
+  const dia = state.currentDay;
+  const key = `${dia}-${ejIdx}`;
+  state.repsVisible[key] = !state.repsVisible[key];
+  renderExercises();
+}
+
+function guardarSerie(btn) {
+  const key = btn.dataset.key;
+  const ejIdx = parseInt(btn.dataset.ej);
+  const serie = parseInt(btn.dataset.serie);
+  const dia = state.currentDay;
+  const ej = RUTINA[dia].ejercicios[ejIdx];
+
+  const inputs = btn.parentElement.querySelectorAll("input");
+  const peso = parseFloat(inputs[0].value) || null;
+  const reps = parseFloat(inputs[1].value) || null;
+  const rpe = parseFloat(inputs[2].value) || null;
+
+  if (peso === null && reps === null) {
+    toast("Rellena peso o reps antes");
+    return;
+  }
+
+  state.sessions.push({
+    date: new Date().toISOString().slice(0,10),
+    timestamp: Date.now(),
+    dia: dia,
+    ejercicio: ej.nombre,
+    tipo: ej.tipo,
+    serie: serie,
+    peso: peso,
+    reps: reps,
+    rpe: rpe
+  });
+
+  // Actualiza última carga
+  if (peso !== null) state.lastWeights[ej.nombre] = peso;
+
+  saveState();
+  btn.classList.add("done");
+  toast(`Serie ${serie} guardada · ${peso || "-"} kg × ${reps || "-"}`);
+}
+
+function renderHistory() {
+  renderExerciseSelector();
+  renderProgressionChart();
+
+  const container = document.getElementById("history-content");
+  if (state.sessions.length === 0) {
+    container.innerHTML = `<div class="empty">No tienes sesiones guardadas todavía.<br>Empieza a registrar series en la pestaña "Hoy".</div>`;
+    return;
+  }
+
+  // Agrupar por fecha + día
+  const groups = {};
+  state.sessions.forEach(s => {
+    const k = `${s.date}|${s.dia}`;
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(s);
+  });
+
+  // Ordenar por fecha descendente
+  const keys = Object.keys(groups).sort().reverse();
+
+  container.innerHTML = "";
+  keys.forEach(k => {
+    const [date, dia] = k.split("|");
+    const sessions = groups[k];
+    const div = document.createElement("div");
+    div.className = "history-day";
+
+    // Agrupar por ejercicio dentro del día
+    const porEj = {};
+    sessions.forEach(s => {
+      if (!porEj[s.ejercicio]) porEj[s.ejercicio] = [];
+      porEj[s.ejercicio].push(s);
+    });
+
+    const fechaBonita = new Date(date).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+    let html = `<h3>${fechaBonita} · ${dia} — ${RUTINA[dia]?.label || ""}</h3>`;
+    Object.keys(porEj).forEach(ej => {
+      const series = porEj[ej];
+      // Buscar las reps objetivo del ejercicio para mostrarlas cuando reps está vacío
+      let repsObjetivo = "";
+      for (const d of Object.values(RUTINA)) {
+        const found = d.ejercicios.find(e => e.nombre === ej);
+        if (found) { repsObjetivo = found.reps; break; }
+      }
+      const resumen = series.map(s => {
+        const reps = s.reps != null ? s.reps : `(${repsObjetivo})`;
+        return `${s.peso || "-"}×${reps}${s.rpe ? "@"+s.rpe : ""}`;
+      }).join(", ");
+      html += `<div class="history-row"><span class="ej-name">${ej}</span><span class="ej-data">${resumen}</span></div>`;
+    });
+    div.innerHTML = html;
+    container.appendChild(div);
+  });
+}
+
+function renderSettings() {
+  const container = document.getElementById("last-loads");
+  const entries = Object.entries(state.lastWeights);
+  if (entries.length === 0) {
+    container.innerHTML = `<p style="color:var(--muted);font-size:13px;">Aún no hay cargas registradas.</p>`;
+    return;
+  }
+  let html = `<div style="font-size:13px;">`;
+  entries.sort().forEach(([ej, peso]) => {
+    html += `<div style="padding:6px 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;"><span>${ej}</span><b>${peso} kg</b></div>`;
+  });
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+/* ================== GRÁFICAS (SVG) ================== */
+function chartSVG(points, opts) {
+  // points = [{x: dateString, y: number}], opts = {label, unit, color}
+  opts = opts || {};
+  const W = 600, H = 180;
+  const pad = { top: 16, right: 24, bottom: 28, left: 36 };
+  const innerW = W - pad.left - pad.right;
+  const innerH = H - pad.top - pad.bottom;
+
+  if (points.length === 0) {
+    return `<div class="empty" style="padding:24px;">Aún no hay datos para esta gráfica.</div>`;
+  }
+
+  // Eje Y: min y max con margen
+  const ys = points.map(p => p.y);
+  let yMin = Math.min(...ys);
+  let yMax = Math.max(...ys);
+  if (yMin === yMax) { yMin = yMin - 1; yMax = yMax + 1; }
+  const yRange = yMax - yMin;
+  yMin = yMin - yRange * 0.1;
+  yMax = yMax + yRange * 0.1;
+
+  // Eje X: dates ordenadas
+  const xs = points.map(p => new Date(p.x).getTime());
+  const xMin = Math.min(...xs);
+  const xMax = Math.max(...xs);
+  const xRange = xMax - xMin || 1;
+
+  const px = i => pad.left + ((xs[i] - xMin) / xRange) * innerW;
+  const py = v => pad.top + (1 - (v - yMin) / (yMax - yMin)) * innerH;
+
+  // Path
+  let path = "";
+  let area = "";
+  points.forEach((p, i) => {
+    const cmd = i === 0 ? "M" : "L";
+    path += `${cmd}${px(i)},${py(p.y)} `;
+  });
+  // Area cerrada
+  if (points.length > 1) {
+    area = `M${px(0)},${py(yMin)} `;
+    points.forEach((p, i) => { area += `L${px(i)},${py(p.y)} `; });
+    area += `L${px(points.length-1)},${py(yMin)} Z`;
+  }
+
+  // Ticks Y (3 valores)
+  const yTicks = [yMin + (yMax-yMin)*0, yMin + (yMax-yMin)*0.5, yMax];
+  let gridLines = "";
+  let yLabels = "";
+  yTicks.forEach(v => {
+    const yy = py(v);
+    gridLines += `<line class="grid" x1="${pad.left}" y1="${yy}" x2="${W-pad.right}" y2="${yy}"/>`;
+    yLabels += `<text class="label" x="${pad.left-6}" y="${yy+4}" text-anchor="end">${v.toFixed(1)}</text>`;
+  });
+
+  // Ticks X (primero, medio, último)
+  const xTickIdxs = points.length <= 4
+    ? points.map((_,i) => i)
+    : [0, Math.floor(points.length/2), points.length-1];
+  let xLabels = "";
+  xTickIdxs.forEach(i => {
+    const d = new Date(points[i].x);
+    const txt = `${d.getDate()}/${d.getMonth()+1}`;
+    xLabels += `<text class="label" x="${px(i)}" y="${H-8}" text-anchor="middle">${txt}</text>`;
+  });
+
+  // Puntos con valor
+  let circles = "";
+  points.forEach((p, i) => {
+    circles += `<circle class="point" cx="${px(i)}" cy="${py(p.y)}" r="3"/>`;
+    // Etiqueta de valor encima si hay pocos puntos
+    if (points.length <= 8) {
+      circles += `<text class="value-label" x="${px(i)}" y="${py(p.y)-8}" text-anchor="middle">${p.y}</text>`;
+    }
+  });
+
+  // Delta total
+  const delta = points[points.length-1].y - points[0].y;
+  const deltaClass = delta > 0 ? "up" : (delta < 0 ? "down" : "");
+  const deltaSign = delta > 0 ? "+" : "";
+  const deltaTxt = points.length >= 2 ? `<span class="delta ${deltaClass}">${deltaSign}${delta.toFixed(1)} ${opts.unit||""}</span>` : "";
+
+  const title = opts.label ? `<div class="chart-title">${opts.label}${deltaTxt}</div>` : "";
+
+  return `
+    <div class="chart-container">
+      ${title}
+      <svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+        ${gridLines}
+        <path class="area" d="${area}"/>
+        <path class="line" d="${path}"/>
+        ${circles}
+        ${yLabels}
+        ${xLabels}
+      </svg>
+    </div>
+  `;
+}
+
+/* ================== HISTÓRICO: SELECTOR + GRÁFICA PROGRESIÓN ================== */
+function renderExerciseSelector() {
+  const select = document.getElementById("exercise-selector");
+  // Ejercicios con datos numéricos (excluye cardio, core)
+  const ejerciciosConDatos = [...new Set(
+    state.sessions
+      .filter(s => s.peso != null && s.tipo !== "cardio")
+      .map(s => s.ejercicio)
+  )].sort();
+
+  if (ejerciciosConDatos.length === 0) {
+    select.innerHTML = `<option>Aún no hay datos con peso registrado</option>`;
+    select.disabled = true;
+    return;
+  }
+  select.disabled = false;
+
+  if (!state.selectedExercise || !ejerciciosConDatos.includes(state.selectedExercise)) {
+    state.selectedExercise = ejerciciosConDatos[0];
+  }
+
+  select.innerHTML = ejerciciosConDatos.map(ej =>
+    `<option ${ej === state.selectedExercise ? 'selected' : ''}>${ej}</option>`
+  ).join("");
+
+  select.onchange = e => {
+    state.selectedExercise = e.target.value;
+    renderProgressionChart();
+  };
+}
+
+function renderProgressionChart() {
+  const container = document.getElementById("progression-chart");
+  if (!state.selectedExercise) { container.innerHTML = ""; return; }
+
+  // Peso máximo de cada sesión (fecha) para ese ejercicio
+  const porFecha = {};
+  state.sessions
+    .filter(s => s.ejercicio === state.selectedExercise && s.peso != null)
+    .forEach(s => {
+      if (!porFecha[s.date] || s.peso > porFecha[s.date]) porFecha[s.date] = s.peso;
+    });
+
+  const points = Object.keys(porFecha).sort().map(date => ({
+    x: date, y: porFecha[date]
+  }));
+
+  container.innerHTML = chartSVG(points, {
+    label: `Peso máximo por sesión · ${state.selectedExercise}`,
+    unit: "kg"
+  });
+}
+
+/* ================== MEDIDAS ================== */
+function renderMedidas() {
+  // Set fecha por defecto
+  document.getElementById("m-fecha").value = new Date().toISOString().slice(0,10);
+
+  renderMedidasGraficas();
+  renderMedidasLista();
+}
+
+function addMedida(e) {
+  e.preventDefault();
+  const fecha = document.getElementById("m-fecha").value;
+  const peso = parseFloat(document.getElementById("m-peso").value);
+  if (!fecha || !peso) {
+    toast("Fecha y peso son obligatorios");
+    return;
+  }
+  const m = {
+    date: fecha,
+    peso: peso,
+    altura: parseFloat(document.getElementById("m-altura").value) || null,
+    cintura: parseFloat(document.getElementById("m-cintura").value) || null,
+    pecho:   parseFloat(document.getElementById("m-pecho").value)   || null,
+    brazo:   parseFloat(document.getElementById("m-brazo").value)   || null,
+    cadera:  parseFloat(document.getElementById("m-cadera").value)  || null,
+    notas:   document.getElementById("m-notas").value || ""
+  };
+  state.medidas.push(m);
+  saveState();
+  // Limpiar el form (menos altura, que suele ser constante)
+  ["m-peso","m-cintura","m-pecho","m-brazo","m-cadera","m-notas"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  renderMedidasGraficas();
+  renderMedidasLista();
+  toast("Medida guardada");
+}
+
+function deleteMedida(idx) {
+  if (!confirm("¿Borrar esta medida?")) return;
+  state.medidas.splice(idx, 1);
+  saveState();
+  renderMedidasGraficas();
+  renderMedidasLista();
+  toast("Medida borrada");
+}
+
+function renderMedidasGraficas() {
+  const container = document.getElementById("medidas-graficas");
+  if (state.medidas.length === 0) {
+    container.innerHTML = `<div class="empty">Añade tu primera medida para ver las gráficas.</div>`;
+    return;
+  }
+  // Ordenar por fecha
+  const ordenadas = [...state.medidas].sort((a,b) => a.date.localeCompare(b.date));
+  const charts = [];
+
+  // Peso (siempre)
+  const ptsPeso = ordenadas.filter(m => m.peso != null).map(m => ({x: m.date, y: m.peso}));
+  charts.push(chartSVG(ptsPeso, { label: "Peso (kg)", unit: "kg" }));
+
+  // Cintura
+  const ptsCint = ordenadas.filter(m => m.cintura != null).map(m => ({x: m.date, y: m.cintura}));
+  if (ptsCint.length > 0) charts.push(chartSVG(ptsCint, { label: "Cintura (cm)", unit: "cm" }));
+
+  // Pecho
+  const ptsPecho = ordenadas.filter(m => m.pecho != null).map(m => ({x: m.date, y: m.pecho}));
+  if (ptsPecho.length > 0) charts.push(chartSVG(ptsPecho, { label: "Pecho (cm)", unit: "cm" }));
+
+  // Brazo
+  const ptsBrazo = ordenadas.filter(m => m.brazo != null).map(m => ({x: m.date, y: m.brazo}));
+  if (ptsBrazo.length > 0) charts.push(chartSVG(ptsBrazo, { label: "Brazo (cm)", unit: "cm" }));
+
+  // Cadera
+  const ptsCad = ordenadas.filter(m => m.cadera != null).map(m => ({x: m.date, y: m.cadera}));
+  if (ptsCad.length > 0) charts.push(chartSVG(ptsCad, { label: "Cadera (cm)", unit: "cm" }));
+
+  // IMC (si hay altura)
+  const ultAltura = [...ordenadas].reverse().find(m => m.altura)?.altura;
+  if (ultAltura) {
+    const ptsImc = ordenadas.filter(m => m.peso != null).map(m => {
+      const altCm = m.altura || ultAltura;
+      const imc = m.peso / Math.pow(altCm/100, 2);
+      return { x: m.date, y: parseFloat(imc.toFixed(1)) };
+    });
+    charts.push(chartSVG(ptsImc, { label: "IMC", unit: "" }));
+  }
+
+  container.innerHTML = charts.join("");
+}
+
+function renderMedidasLista() {
+  const container = document.getElementById("medidas-lista");
+  if (state.medidas.length === 0) {
+    container.innerHTML = `<div class="empty">Sin medidas registradas.</div>`;
+    return;
+  }
+  const ordenadas = [...state.medidas]
+    .map((m, idx) => ({...m, _idx: idx}))
+    .sort((a,b) => b.date.localeCompare(a.date));
+
+  container.innerHTML = ordenadas.map(m => {
+    const fechaBonita = new Date(m.date).toLocaleDateString("es-ES", {
+      day: "numeric", month: "short", year: "numeric"
+    });
+    const parts = [];
+    if (m.peso)    parts.push(`peso ${m.peso} kg`);
+    if (m.cintura) parts.push(`cintura ${m.cintura} cm`);
+    if (m.pecho)   parts.push(`pecho ${m.pecho} cm`);
+    if (m.brazo)   parts.push(`brazo ${m.brazo} cm`);
+    if (m.cadera)  parts.push(`cadera ${m.cadera} cm`);
+    const notas = m.notas ? ` · <i>${m.notas}</i>` : "";
+    return `
+      <div class="medida-row">
+        <div class="medida-data">
+          <span class="fecha">${fechaBonita}</span>
+          <span class="vals">${parts.join(" · ")}${notas}</span>
+        </div>
+        <button class="delete-btn" onclick="deleteMedida(${m._idx})">✕</button>
+      </div>
+    `;
+  }).join("");
+}
+
+// Listener del formulario de medidas (registrarlo después de DOMContent listo)
+document.getElementById("medida-form").addEventListener("submit", addMedida);
+
+/* ================== EXPORTAR ================== */
+function exportCSV() {
+  if (state.sessions.length === 0 && state.medidas.length === 0) {
+    toast("No hay datos que exportar");
+    return;
+  }
+  // Bloque 1: entrenamientos
+  let csv = "# ENTRENAMIENTOS\n";
+  csv += "fecha,dia,ejercicio,tipo,serie,peso_kg,reps,rpe\n";
+  state.sessions.forEach(s => {
+    csv += [
+      s.date, s.dia, `"${s.ejercicio.replace(/"/g,'""')}"`, s.tipo,
+      s.serie, s.peso ?? "", s.reps ?? "", s.rpe ?? ""
+    ].join(",") + "\n";
+  });
+  // Bloque 2: medidas
+  csv += "\n# MEDIDAS\n";
+  csv += "fecha,peso_kg,altura_cm,cintura_cm,pecho_cm,brazo_cm,cadera_cm,notas\n";
+  state.medidas.forEach(m => {
+    csv += [
+      m.date, m.peso ?? "", m.altura ?? "", m.cintura ?? "",
+      m.pecho ?? "", m.brazo ?? "", m.cadera ?? "",
+      `"${(m.notas||"").replace(/"/g,'""')}"`
+    ].join(",") + "\n";
+  });
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `rutina_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("CSV descargado");
+}
+
+function exportJSON() {
+  const data = {
+    exported: new Date().toISOString(),
+    sessions: state.sessions,
+    lastWeights: state.lastWeights,
+    medidas: state.medidas
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `rutina_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("Backup JSON descargado");
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.sessions)) throw new Error("formato inválido");
+      if (!confirm(`Vas a importar ${data.sessions.length} series y ${(data.medidas||[]).length} medidas. Esto reemplazará todos los datos actuales. ¿Continuar?`)) return;
+      state.sessions = data.sessions;
+      state.lastWeights = data.lastWeights || {};
+      state.medidas = data.medidas || [];
+      saveState();
+      renderExercises();
+      toast("Datos importados");
+    } catch(err) {
+      alert("Error al importar: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetData() {
+  if (!confirm("¿Seguro que quieres borrar todo (entrenamientos Y medidas)? No se puede deshacer.")) return;
+  state.sessions = [];
+  state.lastWeights = {};
+  state.medidas = [];
+  saveState();
+  renderExercises();
+  renderSettings();
+  toast("Datos borrados");
+}
+
+/* ================== INIT ================== */
+loadState();
+renderTabs();
+renderDayPicker();
+updateWeekdayLabel();
+renderExercises();
+
+// Service worker básico para offline (solo si el navegador lo soporta y estamos en https/file)
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  navigator.serviceWorker.register("./sw.js").catch(()=>{});
+}
+</script>
+</body>
+</html>
