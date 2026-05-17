@@ -68,6 +68,19 @@
   .day-btn:hover { border-color: var(--text); }
   .day-btn.active { background: var(--text); color: white; border-color: var(--text); }
   .day-btn small { display: block; font-size: 10px; font-weight: 400; opacity: 0.7; margin-top: 3px; }
+  .day-btn.done-week { border-color: var(--border); }
+  .day-btn.done-today { border-color: #16a34a; }
+  .done-badge { font-size: 9px; display: block; margin-top: 2px; font-weight: 700; }
+  .day-btn.done-week .done-badge { color: var(--muted); }
+  .day-btn.done-today .done-badge { color: #16a34a; }
+  .week-lock-banner {
+    background: var(--primary-soft); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 16px;
+    font-size: 13px; color: var(--muted); text-align: center; line-height: 1.6;
+  }
+  .week-lock-banner strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 15px; }
+  .serie-row .check:disabled, .serie-row .apply-all:disabled { opacity: 0.35; cursor: not-allowed; }
+  .cardio-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
   /* Cards de ejercicios */
   .exercise {
@@ -529,6 +542,32 @@ function saveState() {
   }));
 }
 
+/* ================== BLOQUEO SEMANAL ================== */
+function getWeekStartStr(dateStr) {
+  const d = new Date(dateStr + "T12:00:00");
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return d.toISOString().slice(0, 10);
+}
+
+function getCurrentWeekStartStr() {
+  return getWeekStartStr(new Date().toISOString().slice(0, 10));
+}
+
+function getLastSessionDateForDay(dia) {
+  const weekStart = getCurrentWeekStartStr();
+  const relevant = state.sessions.filter(s => s.dia === dia && getWeekStartStr(s.date) === weekStart);
+  if (!relevant.length) return null;
+  return relevant.reduce((max, s) => s.date > max ? s.date : max, relevant[0].date);
+}
+
+function isDayLockedThisWeek(dia) {
+  const lastDate = getLastSessionDateForDay(dia);
+  if (!lastDate) return false;
+  return lastDate !== new Date().toISOString().slice(0, 10);
+}
+
 function toast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg;
@@ -556,10 +595,24 @@ function renderTabs() {
 function renderDayPicker() {
   const dp = document.getElementById("day-picker");
   dp.innerHTML = "";
+  const today = new Date().toISOString().slice(0, 10);
   DIA_KEYS.forEach(d => {
+    const lastDate = getLastSessionDateForDay(d);
+    const locked = lastDate && lastDate !== today;
+    const doneToday = lastDate === today;
+    let extraClass = "";
+    let badge = "";
+    if (locked) {
+      extraClass = " done-week";
+      const fecha = new Date(lastDate + "T12:00:00").toLocaleDateString("es-ES", { weekday: "short", day: "numeric" });
+      badge = `<span class="done-badge">✓ ${fecha}</span>`;
+    } else if (doneToday) {
+      extraClass = " done-today";
+      badge = `<span class="done-badge">✓ hoy</span>`;
+    }
     const btn = document.createElement("button");
-    btn.className = "day-btn" + (d === state.currentDay ? " active" : "");
-    btn.innerHTML = `${d}<small>${RUTINA[d].label}</small>`;
+    btn.className = `day-btn${d === state.currentDay ? " active" : ""}${extraClass}`;
+    btn.innerHTML = `${d}<small>${RUTINA[d].label}</small>${badge}`;
     btn.addEventListener("click", () => {
       state.currentDay = d;
       renderDayPicker();
@@ -579,6 +632,16 @@ function renderExercises() {
   container.innerHTML = "";
   const dia = state.currentDay;
   const ejercicios = RUTINA[dia].ejercicios;
+  const lockDate = isDayLockedThisWeek(dia) ? getLastSessionDateForDay(dia) : null;
+  const today = new Date().toISOString().slice(0, 10);
+
+  if (lockDate) {
+    const fechaBonita = new Date(lockDate + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
+    const banner = document.createElement("div");
+    banner.className = "week-lock-banner";
+    banner.innerHTML = `<strong>✓ Día completado</strong>Entrenaste el ${fechaBonita}.<br>Vuelve la próxima semana para registrar de nuevo.`;
+    container.appendChild(banner);
+  }
 
   ejercicios.forEach((ej, idx) => {
     const card = document.createElement("div");
@@ -602,15 +665,13 @@ function renderExercises() {
     // CARDIO: solo botón de check, sin inputs
     if (ej.tipo === "cardio") {
       html += `<div class="ex-target"><b>${ej.reps}</b> · RPE <b>${ej.rpe}</b></div>`;
-      const yaHecho = state.sessions.some(s =>
-        s.date === new Date().toISOString().slice(0,10) &&
-        s.ejercicio === ej.nombre
-      );
+      const cardioDate = lockDate || today;
+      const yaHecho = state.sessions.some(s => s.date === cardioDate && s.ejercicio === ej.nombre);
       html += `
         <div class="cardio-action">
-          <button class="cardio-btn ${yaHecho ? 'done' : ''}" data-ej="${idx}">
+          <button class="cardio-btn ${yaHecho ? 'done' : ''}" data-ej="${idx}"${lockDate ? ' disabled' : ''}>
             <span class="icon">${yaHecho ? '✓' : '○'}</span>
-            <span>${yaHecho ? 'Cardio realizado hoy' : 'Marcar cardio como hecho'}</span>
+            <span>${yaHecho ? 'Cardio realizado' : 'Marcar cardio como hecho'}</span>
           </button>
         </div>
         <div class="ex-note">${ej.nota}</div>
@@ -640,16 +701,41 @@ function renderExercises() {
       </div>`;
     for (let s = 1; s <= ej.series; s++) {
       const key = `${dia}-${idx}-${s}`;
-      html += `
-        <div class="serie-row${withRepsClass}" data-key="${key}">
-          <span class="serie-num">${s}</span>
-          <input type="number" inputmode="decimal" step="0.5" placeholder="${lastWeight || '-'}" data-field="peso" data-key="${key}">
-          <input type="number" inputmode="numeric" placeholder="${ej.reps}" data-field="reps" data-key="${key}" class="reps-col">
-          <input type="number" inputmode="decimal" step="0.5" placeholder="${ej.rpe}" data-field="rpe" data-key="${key}">
-          <button class="apply-all" data-ej="${idx}" data-serie="${s}" title="Copiar a las siguientes series">⤓</button>
-          <button class="check" data-key="${key}" data-ej="${idx}" data-serie="${s}">✓</button>
-        </div>
-      `;
+      if (lockDate) {
+        const savedSession = state.sessions.find(ss =>
+          ss.dia === dia && ss.date === lockDate && ss.ejercicio === ej.nombre && ss.serie === s
+        );
+        const isDone = savedSession != null;
+        const pesoVal = savedSession?.peso != null ? savedSession.peso : null;
+        const repsVal = savedSession?.reps != null ? savedSession.reps : "";
+        const rpeVal  = savedSession?.rpe  != null ? savedSession.rpe  : "";
+        const pesoCell = pesoVal !== null
+          ? `<input type="number" step="0.5" value="${pesoVal}" readonly>`
+          : isDone
+            ? `<div class="bw-tag">Peso corporal</div>`
+            : `<input type="number" step="0.5" placeholder="${lastWeight || '-'}" readonly>`;
+        html += `
+          <div class="serie-row${withRepsClass}" data-key="${key}">
+            <span class="serie-num">${s}</span>
+            ${pesoCell}
+            <input type="number" placeholder="${ej.reps}" value="${repsVal}" class="reps-col" readonly>
+            <input type="number" step="0.5" placeholder="${ej.rpe}" value="${rpeVal}" readonly>
+            <button class="apply-all" disabled>⤓</button>
+            <button class="check${isDone ? ' done' : ''}" disabled>✓</button>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="serie-row${withRepsClass}" data-key="${key}">
+            <span class="serie-num">${s}</span>
+            <input type="number" inputmode="decimal" step="0.5" placeholder="${lastWeight || '-'}" data-field="peso" data-key="${key}">
+            <input type="number" inputmode="numeric" placeholder="${ej.reps}" data-field="reps" data-key="${key}" class="reps-col">
+            <input type="number" inputmode="decimal" step="0.5" placeholder="${ej.rpe}" data-field="rpe" data-key="${key}">
+            <button class="apply-all" data-ej="${idx}" data-serie="${s}" title="Copiar a las siguientes series">⤓</button>
+            <button class="check" data-key="${key}" data-ej="${idx}" data-serie="${s}">✓</button>
+          </div>
+        `;
+      }
     }
     html += `</div>`;
     html += `<div class="ex-note">${ej.nota}</div>`;
@@ -696,6 +782,10 @@ function renderExercises() {
 }
 
 function guardarCardio(btn) {
+  if (isDayLockedThisWeek(state.currentDay)) {
+    toast("Este día ya fue entrenado esta semana");
+    return;
+  }
   const ejIdx = parseInt(btn.dataset.ej);
   const dia = state.currentDay;
   const ej = RUTINA[dia].ejercicios[ejIdx];
@@ -810,6 +900,10 @@ function toggleReps(btn) {
 }
 
 function guardarSerie(btn) {
+  if (isDayLockedThisWeek(state.currentDay)) {
+    toast("Este día ya fue entrenado esta semana");
+    return;
+  }
   // Si ya está marcada, desmarcar (toggle)
   if (btn.classList.contains("done")) {
     return desmarcarSerie(btn);
