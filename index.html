@@ -568,6 +568,12 @@ function isDayLockedThisWeek(dia) {
   return lastDate !== new Date().toISOString().slice(0, 10);
 }
 
+function getDayTrainedToday() {
+  const today = new Date().toISOString().slice(0, 10);
+  const session = state.sessions.find(s => s.date === today);
+  return session ? session.dia : null;
+}
+
 function toast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg;
@@ -634,12 +640,19 @@ function renderExercises() {
   const ejercicios = RUTINA[dia].ejercicios;
   const lockDate = isDayLockedThisWeek(dia) ? getLastSessionDateForDay(dia) : null;
   const today = new Date().toISOString().slice(0, 10);
+  const todayTrainedDay = getDayTrainedToday();
+  const lockedByOtherDay = !lockDate && todayTrainedDay && todayTrainedDay !== dia;
 
   if (lockDate) {
     const fechaBonita = new Date(lockDate + "T12:00:00").toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
     const banner = document.createElement("div");
     banner.className = "week-lock-banner";
     banner.innerHTML = `<strong>✓ Día completado</strong>Entrenaste el ${fechaBonita}.<br>Vuelve la próxima semana para registrar de nuevo.`;
+    container.appendChild(banner);
+  } else if (lockedByOtherDay) {
+    const banner = document.createElement("div");
+    banner.className = "week-lock-banner";
+    banner.innerHTML = `<strong>Hoy ya entrenaste ${todayTrainedDay}</strong>Solo puedes registrar un día por sesión.<br>Vuelve mañana para entrenar este día.`;
     container.appendChild(banner);
   }
 
@@ -786,6 +799,11 @@ function guardarCardio(btn) {
     toast("Este día ya fue entrenado esta semana");
     return;
   }
+  const hoyEntrenado = getDayTrainedToday();
+  if (hoyEntrenado && hoyEntrenado !== state.currentDay) {
+    toast(`Hoy ya entrenaste el ${hoyEntrenado}`);
+    return;
+  }
   const ejIdx = parseInt(btn.dataset.ej);
   const dia = state.currentDay;
   const ej = RUTINA[dia].ejercicios[ejIdx];
@@ -902,6 +920,11 @@ function toggleReps(btn) {
 function guardarSerie(btn) {
   if (isDayLockedThisWeek(state.currentDay)) {
     toast("Este día ya fue entrenado esta semana");
+    return;
+  }
+  const hoyEntrenado = getDayTrainedToday();
+  if (hoyEntrenado && hoyEntrenado !== state.currentDay) {
+    toast(`Hoy ya entrenaste el ${hoyEntrenado}`);
     return;
   }
   // Si ya está marcada, desmarcar (toggle)
