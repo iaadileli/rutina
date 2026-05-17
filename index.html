@@ -840,32 +840,41 @@ function aplicarATodas(btn) {
   const serieOrigen = parseInt(btn.dataset.serie);
   const dia = state.currentDay;
   const ej = RUTINA[dia].ejercicios[ejIdx];
-
-  // Coge los valores de la fila origen
-  const origenInputs = btn.parentElement.querySelectorAll("input");
-  const valPeso = origenInputs[0].value;
-  const valReps = origenInputs[1].value;
-  const valRpe  = origenInputs[2].value;
-
-  // Guardar también la propia serie origen (si no estaba ya marcada)
   const origenCheck = btn.parentElement.querySelector(".check");
-  if (origenCheck && !origenCheck.classList.contains("done")) {
+  const origenYaGuardada = origenCheck && origenCheck.classList.contains("done");
+
+  let valPeso = null, valReps = null, valRpe = null;
+
+  if (origenYaGuardada) {
+    // Si ya está marcada, leer desde sessions para evitar problemas con bw-tag o inputs readonly
+    const hoy = new Date().toISOString().slice(0, 10);
+    const saved = state.sessions.find(s =>
+      s.date === hoy && s.dia === dia && s.ejercicio === ej.nombre && s.serie === serieOrigen
+    );
+    if (saved) {
+      valPeso = saved.peso;
+      valReps = saved.reps;
+      valRpe  = saved.rpe;
+    }
+  } else {
+    const origenInputs = btn.parentElement.querySelectorAll("input");
+    valPeso = origenInputs[0].value !== "" ? origenInputs[0].value : null;
+    valReps = origenInputs[1].value !== "" ? origenInputs[1].value : null;
+    valRpe  = origenInputs[2].value !== "" ? origenInputs[2].value : null;
     guardarSerie(origenCheck);
   }
 
-  // Replicar a todas las series posteriores Y marcarlas como guardadas
   let copiadas = 0;
   for (let s = serieOrigen + 1; s <= ej.series; s++) {
     const key = `${dia}-${ejIdx}-${s}`;
     const row = document.querySelector(`.serie-row[data-key="${key}"]`);
     if (!row) continue;
     const check = row.querySelector(".check");
-    if (check && check.classList.contains("done")) continue; // no sobrescribir las ya guardadas
+    if (check && check.classList.contains("done")) continue;
     const inputs = row.querySelectorAll("input");
-    if (valPeso) inputs[0].value = valPeso;
-    if (valReps) inputs[1].value = valReps;
-    if (valRpe)  inputs[2].value = valRpe;
-    // Marcar como hecha (guarda + check verde)
+    if (valPeso !== null) inputs[0].value = valPeso;
+    if (valReps !== null) inputs[1].value = valReps;
+    if (valRpe  !== null) inputs[2].value = valRpe;
     if (check) guardarSerie(check);
     copiadas++;
   }
