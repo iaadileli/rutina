@@ -535,10 +535,8 @@ function loadState() {
       state.notes = (parsed.notesWeek === currentWeek) ? (parsed.notes || {}) : {};
     } catch(e) { console.error(e); }
   }
-  // Día inicial sugerido según día de semana real (Lun→Día 1, Mar→Día 2, Mié→Día 3, Jue→Día 4, Vie→Día 5)
-  const hoy = new Date().getDay(); // 0=Dom, 1=Lun...
-  const map = {1:"Día 1", 2:"Día 2", 3:"Día 3", 4:"Día 4", 5:"Día 5"};
-  if (map[hoy]) state.currentDay = map[hoy];
+  // Seleccionar el primer día de la secuencia que no se haya completado esta semana
+  state.currentDay = DIA_KEYS.find(d => getLastSessionDateForDay(d) === null) || "Día 1";
 }
 
 function saveState() {
