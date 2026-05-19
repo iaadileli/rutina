@@ -350,6 +350,7 @@
     <button class="tab active" data-view="hoy">Hoy</button>
     <button class="tab" data-view="historico">Histórico</button>
     <button class="tab" data-view="medidas">Medidas</button>
+    <button class="tab" data-view="calorias">Calorías</button>
     <button class="tab" data-view="exportar">Exportar</button>
     <button class="tab" data-view="ajustes">Ajustes</button>
   </div>
@@ -402,6 +403,11 @@
       <h3>Histórico de medidas</h3>
       <div id="medidas-lista"></div>
     </div>
+  </section>
+
+  <!-- VISTA CALORÍAS -->
+  <section id="view-calorias" class="hidden">
+    <div id="calorias-content"></div>
   </section>
 
   <!-- VISTA EXPORTAR -->
@@ -608,12 +614,13 @@ function renderTabs() {
       document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       const view = btn.dataset.view;
-      ["hoy","historico","medidas","exportar","ajustes"].forEach(v => {
+      ["hoy","historico","medidas","calorias","exportar","ajustes"].forEach(v => {
         document.getElementById("view-" + v).classList.toggle("hidden", v !== view);
       });
       if (view === "historico") renderHistory();
       if (view === "ajustes") renderSettings();
       if (view === "medidas") renderMedidas();
+      if (view === "calorias") renderCalorias();
     });
   });
 }
@@ -1403,6 +1410,132 @@ function renderMedidasLista() {
 
 // Listener del formulario de medidas (registrarlo después de DOMContent listo)
 document.getElementById("medida-form").addEventListener("submit", addMedida);
+
+/* ================== CALORÍAS ================== */
+function getBodyWeightForDate(date) {
+  const sorted = state.medidas
+    .filter(m => m.date <= date && m.peso != null)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  return sorted.length ? sorted[0].peso : null;
+}
+
+function getMETForRPE(rpe) {
+  if (!rpe || rpe <= 2) return 3;
+  if (rpe <= 4) return 3.5;
+  if (rpe <= 6) return 4.5;
+  if (rpe <= 8) return 5.5;
+  return 7;
+}
+
+function estimateSessionCalories(sessions, bodyWeight) {
+  let total = 0;
+  let hasCardio = false;
+  sessions.forEach(s => {
+    if (s.tipo === 'cardio') { hasCardio = true; return; }
+    // Tiempo estimado por serie (activo + descanso) en horas
+    const timeH = s.tipo === 'compuesto' ? 4/60 : s.tipo === 'core' ? 1.5/60 : 2.5/60;
+    total += getMETForRPE(s.rpe) * bodyWeight * timeH;
+  });
+  if (hasCardio) total += 8 * bodyWeight * (40/60); // cinta inclinada ~40 min
+  return Math.round(total);
+}
+
+function renderCalorias() {
+  const container = document.getElementById("calorias-content");
+  container.innerHTML = "";
+
+  const intro = document.createElement("div");
+  intro.className = "setting-card";
+  intro.innerHTML = `
+    <h3>Gasto estimado por sesión</h3>
+    <p>Calculado a partir de tu peso corporal (pestaña Medidas), el tipo de ejercicio y el RPE registrado. Margen de error ±15%.</p>
+  `;
+  container.appendChild(intro);
+
+  if (!state.medidas.some(m => m.peso != null)) {
+    const msg = document.createElement("div");
+    msg.className = "setting-card";
+    msg.innerHTML = `<p>Añade tu peso en la pestaña <b>Medidas</b> para ver el gasto calórico.</p>`;
+    container.appendChild(msg);
+    return;
+  }
+
+  if (state.sessions.length === 0) {
+    const msg = document.createElement("div");
+    msg.className = "empty";
+    msg.textContent = "No hay sesiones registradas todavía.";
+    container.appendChild(msg);
+    return;
+  }
+
+  // Agrupar sesiones por fecha + día
+  const groups = {};
+  state.sessions.forEach(s => {
+    const k = `${s.date}|${s.dia}`;
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(s);
+  });
+
+  const keys = Object.keys(groups).sort().reverse();
+  const sessionData = [];
+  const weeklyTotals = {};
+
+  keys.forEach(k => {
+    const [date, dia] = k.split("|");
+    const bodyWeight = getBodyWeightForDate(date);
+    if (!bodyWeight) return;
+    const sessions = groups[k];
+    const calories = estimateSessionCalories(sessions, bodyWeight);
+    const rpes = sessions.filter(s => s.rpe != null).map(s => s.rpe);
+    const avgRpe = rpes.length ? (rpes.reduce((a, b) => a + b, 0) / rpes.length) : null;
+    sessionData.push({ date, dia, sessions, bodyWeight, calories, avgRpe });
+    const wk = getWeekStartStr(date);
+    weeklyTotals[wk] = (weeklyTotals[wk] || 0) + calories;
+  });
+
+  if (sessionData.length === 0) {
+    const msg = document.createElement("div");
+    msg.className = "setting-card";
+    msg.innerHTML = `<p>Las sesiones anteriores a tu primera medida de peso no se pueden calcular. Añade una medida en la pestaña <b>Medidas</b>.</p>`;
+    container.appendChild(msg);
+    return;
+  }
+
+  // Resumen semanal
+  const weekKeys = Object.keys(weeklyTotals).sort().reverse();
+  if (weekKeys.length > 0) {
+    const weekCard = document.createElement("div");
+    weekCard.className = "setting-card";
+    let wHtml = `<h3>Resumen semanal</h3>`;
+    weekKeys.forEach(wk => {
+      const label = new Date(wk + "T12:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+      wHtml += `<div class="history-row"><span>Semana del ${label}</span><b>~${weeklyTotals[wk]} kcal</b></div>`;
+    });
+    weekCard.innerHTML = wHtml;
+    container.appendChild(weekCard);
+  }
+
+  // Tarjetas de sesión
+  sessionData.forEach(({ date, dia, sessions, bodyWeight, calories, avgRpe }) => {
+    const div = document.createElement("div");
+    div.className = "history-day";
+    const fechaBonita = new Date(date + "T12:00:00").toLocaleDateString("es-ES", { weekday: "short", day: "numeric", month: "short" });
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+        <div style="min-width:0;">
+          <div style="font-weight:700;font-size:14px;letter-spacing:-0.2px;">${fechaBonita} · ${dia}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">${RUTINA[dia]?.label || ""}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">${sessions.length} series · ${bodyWeight} kg · RPE ${avgRpe != null ? avgRpe.toFixed(1) : '-'}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:28px;font-weight:800;color:var(--accent-strong);line-height:1;">~${calories}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">kcal</div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
 
 /* ================== EXPORTAR ================== */
 function exportCSV() {
