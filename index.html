@@ -445,6 +445,15 @@
               </select>
             </label>
           </div>
+          <div style="margin-top:12px">
+            <div style="font-size:12px;color:var(--muted);margin-bottom:6px">¿Qué quieres conseguir?</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="ritmo-btns">
+              <button type="button" class="qty-btn" data-ritmo="0">Mantener peso</button>
+              <button type="button" class="qty-btn" data-ritmo="-300">Perder despacio<br><small style="font-weight:400;opacity:0.75">~300 g/semana</small></button>
+              <button type="button" class="qty-btn" data-ritmo="-500">Perder moderado<br><small style="font-weight:400;opacity:0.75">~500 g/semana</small></button>
+              <button type="button" class="qty-btn" data-ritmo="-750">Perder rápido<br><small style="font-weight:400;opacity:0.75">~750 g/semana</small></button>
+            </div>
+          </div>
         </div>
         <button type="submit" class="btn">Guardar medida</button>
       </form>
@@ -506,7 +515,7 @@
     <div class="setting-card">
       <h3>Sobre la rutina</h3>
       <p>Plan v2 con compuestos 5x5 y recordatorios cruzados. 4 días pesas + cardio miércoles. Adaptada a condromalacia rotuliana derecha.</p>
-      <p style="font-size:11px;color:var(--muted);margin:8px 0 0">versión 12</p>
+      <p style="font-size:11px;color:var(--muted);margin:8px 0 0">versión 13</p>
     </div>
   </section>
 </main>
@@ -633,7 +642,8 @@ let state = {
   caloriaObjetivo: 2000,
   sexo: 'h',
   edad: null,
-  nivelActividad: 1.55
+  nivelActividad: 1.55,
+  ritmo: -300
 };
 
 let calUi = {
@@ -671,6 +681,7 @@ function loadState() {
       state.sexo = parsed.sexo || 'h';
       state.edad = parsed.edad || null;
       state.nivelActividad = parsed.nivelActividad || 1.55;
+      state.ritmo = parsed.ritmo !== undefined ? parsed.ritmo : -300;
     } catch(e) { console.error(e); }
   }
   // Seleccionar el primer día de la secuencia que no se haya completado esta semana
@@ -689,7 +700,8 @@ function saveState() {
     caloriaObjetivo: state.caloriaObjetivo,
     sexo: state.sexo,
     edad: state.edad,
-    nivelActividad: state.nivelActividad
+    nivelActividad: state.nivelActividad,
+    ritmo: state.ritmo
   }));
 }
 
@@ -1277,20 +1289,17 @@ function renderObjetivoCard() {
   }
 
   const missing = !peso || !altura ? 'Introduce peso y altura arriba.' : !edad ? 'Introduce tu edad arriba.' : null;
+  const ritmoLabels = { 0: 'mantener peso', '-300': 'perder despacio', '-500': 'perder moderado', '-750': 'perder rápido' };
+  const ritmoLabel = ritmoLabels[String(state.ritmo ?? -300)] || 'déficit';
 
   card.innerHTML = `
     <h3>Calorías recomendadas</h3>
     <p style="font-size:13px;color:var(--muted);margin:0 0 12px">Mifflin-St Jeor · calculado con tus medidas y datos de arriba.</p>
     ${missing ? `<div style="font-size:13px;color:var(--muted);padding:6px 0 12px">${missing}</div>` : `
-    <div style="background:var(--primary-soft);border-radius:10px;padding:14px;margin-bottom:12px">
+    <div style="background:var(--primary-soft);border-radius:10px;padding:14px;margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span style="color:var(--muted)">Metabolismo basal (BMR)</span><b>${bmr} kcal</b></div>
       <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-top:1px solid var(--border)"><span style="color:var(--muted)">Mantenimiento (TDEE)</span><b>${tdee} kcal</b></div>
-      <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;border-top:1px solid var(--border)"><span style="color:var(--muted)">Déficit suave −300 kcal</span><b>${tdee - 300} kcal</b></div>
-      <div style="display:flex;justify-content:space-between;padding:6px 0 2px;font-size:13px;border-top:1px solid var(--border)"><span style="color:var(--muted)">Déficit moderado −500 kcal</span><b>${tdee - 500} kcal</b></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px">
-      <button class="btn" data-setobj="${tdee - 300}" style="font-size:13px;padding:10px">Usar ${tdee - 300} kcal<br><small style="font-weight:400;opacity:0.8">déficit suave</small></button>
-      <button class="btn secondary" data-setobj="${tdee - 500}" style="font-size:13px;padding:10px">Usar ${tdee - 500} kcal<br><small style="font-weight:400;opacity:0.8">déficit moderado</small></button>
+      <div style="display:flex;justify-content:space-between;padding:6px 0 2px;font-size:13px;border-top:1px solid var(--border);color:var(--accent-strong)"><span>Tu objetivo (${ritmoLabel})</span><b>${tdee + (state.ritmo || -300)} kcal</b></div>
     </div>`}
     <div style="padding-top:12px;border-top:1px solid var(--border)">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Objetivo actual: <b>${state.caloriaObjetivo} kcal</b> · o introduce uno manual:</div>
@@ -1302,12 +1311,6 @@ function renderObjetivoCard() {
     </div>
   `;
 
-  card.querySelectorAll("[data-setobj]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.caloriaObjetivo = parseInt(btn.dataset.setobj); saveState();
-      toast(`Objetivo: ${state.caloriaObjetivo} kcal`); renderObjetivoCard();
-    });
-  });
   card.querySelector("#objetivo-save-btn").addEventListener("click", () => {
     const v = parseInt(card.querySelector("#objetivo-kcal-input").value);
     if (v > 0) { state.caloriaObjetivo = v; saveState(); toast("Objetivo guardado"); renderObjetivoCard(); }
@@ -1503,6 +1506,9 @@ function renderMedidas() {
   document.getElementById("m-actividad").value = String(state.nivelActividad || 1.55);
   document.getElementById("sexo-h-btn").classList.toggle("active", state.sexo !== "m");
   document.getElementById("sexo-m-btn").classList.toggle("active", state.sexo === "m");
+  document.querySelectorAll("#ritmo-btns .qty-btn").forEach(b =>
+    b.classList.toggle("active", parseFloat(b.dataset.ritmo) === state.ritmo)
+  );
   renderMedidasGraficas();
   renderMedidasLista();
   renderObjetivoCard();
@@ -1527,6 +1533,16 @@ function addMedida(e) {
     notas:   document.getElementById("m-notas").value || ""
   };
   state.medidas.push(m);
+
+  // Recalcular objetivo calórico automáticamente
+  const altura2 = m.altura || [...state.medidas].reverse().find(x => x.altura)?.altura;
+  if (altura2 && state.edad) {
+    const bmr = Math.round(10 * peso + 6.25 * altura2 - 5 * state.edad + (state.sexo === 'h' ? 5 : -161));
+    const tdee = Math.round(bmr * (parseFloat(state.nivelActividad) || 1.55));
+    const nuevo = tdee + (state.ritmo || -300);
+    state.caloriaObjetivo = nuevo;
+  }
+
   saveState();
   // Limpiar el form (menos altura, que suele ser constante)
   ["m-peso","m-cintura","m-pecho","m-brazo","m-cadera","m-notas"].forEach(id => {
@@ -1534,7 +1550,8 @@ function addMedida(e) {
   });
   renderMedidasGraficas();
   renderMedidasLista();
-  toast("Medida guardada");
+  renderObjetivoCard();
+  toast(`Medida guardada · Objetivo: ${state.caloriaObjetivo} kcal`);
 }
 
 function deleteMedida(idx) {
@@ -1643,6 +1660,16 @@ document.getElementById("m-edad").addEventListener("change", e => {
 });
 document.getElementById("m-actividad").addEventListener("change", e => {
   state.nivelActividad = parseFloat(e.target.value); saveState(); renderObjetivoCard();
+});
+document.querySelectorAll("#ritmo-btns .qty-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.ritmo = parseFloat(btn.dataset.ritmo);
+    saveState();
+    document.querySelectorAll("#ritmo-btns .qty-btn").forEach(b =>
+      b.classList.toggle("active", b === btn)
+    );
+    renderObjetivoCard();
+  });
 });
 
 /* ================== CALORÍAS ================== */
