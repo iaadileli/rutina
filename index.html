@@ -630,7 +630,10 @@ let calUi = {
   addCustomMode: false,
   isListening: false,
   voiceMode: false,
-  voiceResults: []
+  voiceResults: [],
+  offResults: [],
+  offLoading: false,
+  offSearchedFor: ''
 };
 
 function loadState() {
@@ -1739,6 +1742,33 @@ function renderCalorias() {
   renderExerciseCalorias(container);
 }
 
+async function searchOpenFoodFacts(query) {
+  try {
+    const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(query)}&json=1&fields=product_name,nutriments,brands&page_size=8&lc=es&cc=es`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const seen = new Set();
+    return (data.products || [])
+      .filter(p => {
+        const kcal = p.nutriments && p.nutriments['energy-kcal_100g'];
+        const name = (p.product_name || '').trim();
+        if (!name || !kcal || seen.has(name.toLowerCase())) return false;
+        seen.add(name.toLowerCase());
+        return true;
+      })
+      .map(p => ({
+        id: 'off-' + Math.random().toString(36).slice(2),
+        nombre: p.product_name.trim() + (p.brands ? ` · ${p.brands.split(',')[0].trim()}` : ''),
+        kcal: Math.round(p.nutriments['energy-kcal_100g']),
+        cantidad: 100,
+        unidad: 'g'
+      }));
+  } catch(e) {
+    toast("Sin conexión a Open Food Facts");
+    return [];
+  }
+}
+
 function buildFoodSearchPanel(panel) {
   const recentFoods = getRecentFoods();
   const filteredFoods = searchFoods(calUi.searchQuery);
@@ -1761,13 +1791,25 @@ function buildFoodSearchPanel(panel) {
   }
   html += `<div id="food-list-container">`;
   if (filteredFoods.length === 0 && hasSearch) {
-    html += `<div style="padding:16px 0;text-align:center;color:var(--muted);font-size:13px">Sin resultados</div>`;
+    html += `<div style="padding:12px 0 4px;text-align:center;color:var(--muted);font-size:13px">Sin resultados locales</div>`;
   }
   filteredFoods.forEach(food => {
     html += `<div class="food-list-item" data-food-id="${food.id}"><div><div class="food-item-name">${escHtml(food.nombre)}</div><div class="food-item-kcal">${food.kcal} kcal · ${food.cantidad} ${food.unidad}</div></div><span style="color:var(--muted);font-size:20px">›</span></div>`;
   });
+
+  // Open Food Facts section
   if (hasSearch) {
-    html += `<div class="food-list-item" data-custom-new="1"><div><div class="food-item-name">+ Crear &ldquo;${escHtml(calUi.searchQuery.trim())}&rdquo;</div><div class="food-item-kcal">Añadir con calorías personalizadas</div></div><span style="color:var(--muted);font-size:20px">›</span></div>`;
+    if (calUi.offLoading) {
+      html += `<div style="text-align:center;color:var(--muted);font-size:13px;padding:12px 0">Buscando en Open Food Facts...</div>`;
+    } else if (calUi.offResults.length > 0) {
+      html += `<div class="recientes-label" style="margin-top:10px">Open Food Facts</div>`;
+      calUi.offResults.forEach(food => {
+        html += `<div class="food-list-item" data-food-id="${food.id}"><div><div class="food-item-name">${escHtml(food.nombre)}</div><div class="food-item-kcal">${food.kcal} kcal · 100 g</div></div><span style="color:var(--muted);font-size:20px">›</span></div>`;
+      });
+    } else if (calUi.offSearchedFor !== calUi.searchQuery) {
+      html += `<button id="off-search-btn" style="width:100%;margin-top:10px;padding:10px;border:1px dashed var(--border);border-radius:8px;background:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit">🌐 Buscar "${escHtml(calUi.searchQuery.trim())}" en Open Food Facts</button>`;
+    }
+    html += `<div class="food-list-item" data-custom-new="1" style="margin-top:6px"><div><div class="food-item-name">+ Crear &ldquo;${escHtml(calUi.searchQuery.trim())}&rdquo;</div><div class="food-item-kcal">Añadir con calorías personalizadas</div></div><span style="color:var(--muted);font-size:20px">›</span></div>`;
   }
   html += `</div>`;
   panel.innerHTML = html;
@@ -1777,13 +1819,30 @@ function buildFoodSearchPanel(panel) {
 
   panel.querySelector("#food-search-input").addEventListener("input", e => {
     calUi.searchQuery = e.target.value;
+    calUi.offResults = [];
+    calUi.offSearchedFor = '';
     renderCalorias();
     setTimeout(() => { const inp = document.getElementById("food-search-input"); if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); } }, 0);
   });
 
+  const offBtn = panel.querySelector("#off-search-btn");
+  if (offBtn) {
+    offBtn.addEventListener("click", async () => {
+      calUi.offLoading = true;
+      calUi.offSearchedFor = calUi.searchQuery;
+      renderCalorias();
+      calUi.offResults = await searchOpenFoodFacts(calUi.searchQuery);
+      calUi.offLoading = false;
+      renderCalorias();
+      setTimeout(() => { const inp = document.getElementById("food-search-input"); if (inp) inp.focus(); }, 0);
+    });
+  }
+
   panel.querySelectorAll(".food-list-item[data-food-id]").forEach(item => {
     item.addEventListener("click", () => {
-      const food = getAllFoods().find(f => f.id === item.dataset.foodId);
+      const localFood = getAllFoods().find(f => f.id === item.dataset.foodId);
+      const offFood = calUi.offResults.find(f => f.id === item.dataset.foodId);
+      const food = localFood || offFood;
       if (food) { calUi.selectedFood = food; calUi.selectedMultiplier = 1; calUi.customCantidad = null; renderCalorias(); }
     });
   });
