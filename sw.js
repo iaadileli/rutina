@@ -1,4 +1,4 @@
-const CACHE = "rutina-v14";
+const CACHE = "rutina-v15";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./logo.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {

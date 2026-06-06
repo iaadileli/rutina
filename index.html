@@ -515,7 +515,7 @@
     <div class="setting-card">
       <h3>Sobre la rutina</h3>
       <p>Plan v2 con compuestos 5x5 y recordatorios cruzados. 4 días pesas + cardio miércoles. Adaptada a condromalacia rotuliana derecha.</p>
-      <p style="font-size:11px;color:var(--muted);margin:8px 0 0">versión 14</p>
+      <p style="font-size:11px;color:var(--muted);margin:8px 0 0">versión 15</p>
     </div>
   </section>
 </main>
@@ -625,6 +625,78 @@ const ALIMENTOS_BASE = [
   { id: "tortilla_esp",    nombre: "Tortilla española (porción)",   kcal: 200, cantidad: 1,   unidad: "porción" },
   { id: "pizza_porcion",   nombre: "Porción de pizza",              kcal: 285, cantidad: 1,   unidad: "porción" },
   { id: "hamburguesa",     nombre: "Hamburguesa (restaurante)",     kcal: 500, cantidad: 1,   unidad: "ud" },
+  // Frutas frescas (BEDCA/USDA, por 100 g)
+  { id: "platano_g",       nombre: "Plátano",                       kcal: 89,  cantidad: 100, unidad: "g" },
+  { id: "chirimoya",       nombre: "Chirimoya",                     kcal: 73,  cantidad: 100, unidad: "g" },
+  { id: "papaya",          nombre: "Papaya",                        kcal: 43,  cantidad: 100, unidad: "g" },
+  { id: "mango",           nombre: "Mango",                         kcal: 60,  cantidad: 100, unidad: "g" },
+  { id: "pera",            nombre: "Pera",                          kcal: 57,  cantidad: 100, unidad: "g" },
+  { id: "melocoton",       nombre: "Melocotón / durazno",           kcal: 39,  cantidad: 100, unidad: "g" },
+  { id: "sandia",          nombre: "Sandía",                        kcal: 30,  cantidad: 100, unidad: "g" },
+  { id: "melon",           nombre: "Melón",                         kcal: 34,  cantidad: 100, unidad: "g" },
+  { id: "kiwi",            nombre: "Kiwi",                          kcal: 58,  cantidad: 100, unidad: "g" },
+  { id: "uvas",            nombre: "Uvas",                          kcal: 69,  cantidad: 100, unidad: "g" },
+  { id: "cereza",          nombre: "Cerezas",                       kcal: 63,  cantidad: 100, unidad: "g" },
+  { id: "pina",            nombre: "Piña",                          kcal: 50,  cantidad: 100, unidad: "g" },
+  { id: "granada",         nombre: "Granada",                       kcal: 68,  cantidad: 100, unidad: "g" },
+  { id: "arandanos",       nombre: "Arándanos",                     kcal: 57,  cantidad: 100, unidad: "g" },
+  { id: "frambuesas",      nombre: "Frambuesas",                    kcal: 52,  cantidad: 100, unidad: "g" },
+  { id: "mandarina",       nombre: "Mandarina / clementina",        kcal: 47,  cantidad: 100, unidad: "g" },
+  { id: "pomelo",          nombre: "Pomelo",                        kcal: 38,  cantidad: 100, unidad: "g" },
+  { id: "ciruela",         nombre: "Ciruela",                       kcal: 46,  cantidad: 100, unidad: "g" },
+  { id: "higo",            nombre: "Higos",                         kcal: 74,  cantidad: 100, unidad: "g" },
+  { id: "manzana_g",       nombre: "Manzana",                       kcal: 52,  cantidad: 100, unidad: "g" },
+  { id: "naranja_g",       nombre: "Naranja",                       kcal: 47,  cantidad: 100, unidad: "g" },
+  { id: "fresa_g",         nombre: "Fresas / fresones",             kcal: 32,  cantidad: 100, unidad: "g" },
+  { id: "limon",           nombre: "Limón",                         kcal: 29,  cantidad: 100, unidad: "g" },
+  // Verduras y hortalizas (BEDCA, por 100 g)
+  { id: "zanahoria",       nombre: "Zanahoria",                     kcal: 41,  cantidad: 100, unidad: "g" },
+  { id: "pepino",          nombre: "Pepino",                        kcal: 16,  cantidad: 100, unidad: "g" },
+  { id: "pimiento_rojo",   nombre: "Pimiento rojo",                 kcal: 31,  cantidad: 100, unidad: "g" },
+  { id: "pimiento_verde",  nombre: "Pimiento verde",                kcal: 20,  cantidad: 100, unidad: "g" },
+  { id: "calabacin",       nombre: "Calabacín",                     kcal: 17,  cantidad: 100, unidad: "g" },
+  { id: "berenjena",       nombre: "Berenjena",                     kcal: 25,  cantidad: 100, unidad: "g" },
+  { id: "cebolla",         nombre: "Cebolla",                       kcal: 40,  cantidad: 100, unidad: "g" },
+  { id: "champi",          nombre: "Champiñones",                   kcal: 22,  cantidad: 100, unidad: "g" },
+  { id: "lechuga",         nombre: "Lechuga / canónigos",           kcal: 15,  cantidad: 100, unidad: "g" },
+  { id: "judias_v",        nombre: "Judías verdes",                 kcal: 31,  cantidad: 100, unidad: "g" },
+  { id: "guisantes",       nombre: "Guisantes",                     kcal: 81,  cantidad: 100, unidad: "g" },
+  { id: "coliflor",        nombre: "Coliflor",                      kcal: 25,  cantidad: 100, unidad: "g" },
+  { id: "maiz",            nombre: "Maíz dulce",                    kcal: 86,  cantidad: 100, unidad: "g" },
+  { id: "boniato",         nombre: "Boniato / batata",              kcal: 86,  cantidad: 100, unidad: "g" },
+  { id: "apio",            nombre: "Apio",                          kcal: 16,  cantidad: 100, unidad: "g" },
+  { id: "puerro",          nombre: "Puerro",                        kcal: 31,  cantidad: 100, unidad: "g" },
+  { id: "tomate_g",        nombre: "Tomate",                        kcal: 18,  cantidad: 100, unidad: "g" },
+  { id: "remolacha",       nombre: "Remolacha",                     kcal: 43,  cantidad: 100, unidad: "g" },
+  // Pescados y mariscos (BEDCA, por 100 g)
+  { id: "merluza",         nombre: "Merluza",                       kcal: 82,  cantidad: 100, unidad: "g" },
+  { id: "atun_fresco",     nombre: "Atún fresco",                   kcal: 144, cantidad: 100, unidad: "g" },
+  { id: "dorada",          nombre: "Dorada",                        kcal: 96,  cantidad: 100, unidad: "g" },
+  { id: "lubina",          nombre: "Lubina",                        kcal: 82,  cantidad: 100, unidad: "g" },
+  { id: "bacalao",         nombre: "Bacalao fresco",                kcal: 82,  cantidad: 100, unidad: "g" },
+  { id: "sardina",         nombre: "Sardina",                       kcal: 185, cantidad: 100, unidad: "g" },
+  { id: "boqueron",        nombre: "Boquerón / anchoa",             kcal: 96,  cantidad: 100, unidad: "g" },
+  { id: "gambas",          nombre: "Gambas / langostinos",          kcal: 96,  cantidad: 100, unidad: "g" },
+  { id: "mejillones",      nombre: "Mejillones",                    kcal: 86,  cantidad: 100, unidad: "g" },
+  { id: "calamar",         nombre: "Calamar / sepia",               kcal: 92,  cantidad: 100, unidad: "g" },
+  { id: "pulpo",           nombre: "Pulpo",                         kcal: 57,  cantidad: 100, unidad: "g" },
+  { id: "rape",            nombre: "Rape",                          kcal: 73,  cantidad: 100, unidad: "g" },
+  // Carnes (BEDCA, por 100 g)
+  { id: "cerdo_lomo",      nombre: "Lomo de cerdo",                 kcal: 145, cantidad: 100, unidad: "g" },
+  { id: "pollo_muslo",     nombre: "Muslo de pollo",                kcal: 175, cantidad: 100, unidad: "g" },
+  { id: "cordero",         nombre: "Cordero",                       kcal: 178, cantidad: 100, unidad: "g" },
+  { id: "conejo",          nombre: "Conejo",                        kcal: 121, cantidad: 100, unidad: "g" },
+  { id: "chorizo",         nombre: "Chorizo",                       kcal: 430, cantidad: 100, unidad: "g" },
+  // Legumbres cocidas (BEDCA, por 100 g)
+  { id: "lentejas",        nombre: "Lentejas cocidas",              kcal: 116, cantidad: 100, unidad: "g" },
+  { id: "garbanzos",       nombre: "Garbanzos cocidos",             kcal: 164, cantidad: 100, unidad: "g" },
+  { id: "alubias",         nombre: "Alubias / judías cocidas",      kcal: 127, cantidad: 100, unidad: "g" },
+  { id: "edamame",         nombre: "Edamame",                       kcal: 121, cantidad: 100, unidad: "g" },
+  // Otros
+  { id: "quinoa",          nombre: "Quinoa cocida",                 kcal: 120, cantidad: 100, unidad: "g" },
+  { id: "hummus",          nombre: "Hummus",                        kcal: 177, cantidad: 100, unidad: "g" },
+  { id: "queso_manchego",  nombre: "Queso manchego",                kcal: 383, cantidad: 100, unidad: "g" },
+  { id: "chocolate_negro", nombre: "Chocolate negro 70%",           kcal: 598, cantidad: 100, unidad: "g" },
 ];
 
 /* ================== ESTADO ================== */
@@ -2145,22 +2217,57 @@ function stopVoiceInput() {
   const text = (calUi.liveTranscript + ' ' + calUi.interimText).trim();
   calUi.liveTranscript = '';
   calUi.interimText = '';
-  if (!text) { renderCalorias(); return; }
-  calUi.voiceResults = parseVoiceTranscript(text);
-  calUi.voiceMode = true;
+  if (!text) { calUi.panelOpen = false; renderCalorias(); return; }
+
+  const results = parseVoiceTranscript(text);
+  const matched = results.filter(r => r.matched);
+  const unmatched = results.filter(r => !r.matched);
+
+  if (matched.length === 0) {
+    // Nada reconocido — mostrar panel para que el usuario vea qué pasó
+    calUi.voiceResults = results;
+    calUi.voiceMode = true;
+    renderCalorias();
+    return;
+  }
+
+  // Auto-añadir todo sin confirmación
+  const total = matched.reduce((s, r) => s + r.totalKcal, 0);
+  matched.forEach(r => addFoodEntry(r.food, r.cantidad));
+  calUi.panelOpen = false;
+  calUi.voiceMode = false;
+  calUi.voiceResults = [];
   renderCalorias();
+  let msg = `+${total} kcal · ${matched.map(r => r.food.nombre).join(', ')}`;
+  if (unmatched.length > 0) msg += ` · No encontrado: ${unmatched.map(r => '"' + r.foodQuery + '"').join(', ')}`;
+  toast(msg);
 }
 
 function parseVoiceTranscript(text) {
   text = text.toLowerCase()
+    // errores frecuentes del reconocedor de voz en español
+    .replace(/\bdiagramo[s]?\b/g, 'gramos')
+    .replace(/\bdiagrama[s]?\b/g, 'gramos')
+    .replace(/\bgramo[s]?\b/g, 'gramos')
     .replace(/\bgranos?\b/g, 'gramos')
-    .replace(/\bgr\b/g, 'gramos')
+    .replace(/\bgrs?\b/g, 'gramos')
+    .replace(/\bkilogramo[s]?\b/g, 'kg')
     .replace(/\bkilos?\b/g, 'kg')
-    .replace(/\bun\b/g, '1').replace(/\buna\b/g, '1')
+    .replace(/\bmililitro[s]?\b/g, 'ml')
+    .replace(/\blitros?\b/g, '1000 ml')
+    // números en palabras
+    .replace(/\bun(o|a)?\b/g, '1')
     .replace(/\bdos\b/g, '2').replace(/\btres\b/g, '3')
     .replace(/\bcuatro\b/g, '4').replace(/\bcinco\b/g, '5')
     .replace(/\bseis\b/g, '6').replace(/\bsiete\b/g, '7')
-    .replace(/\bocho\b/g, '8').replace(/\bnueve\b/g, '9');
+    .replace(/\bocho\b/g, '8').replace(/\bnueve\b/g, '9')
+    .replace(/\bdiez\b/g, '10').replace(/\bonce\b/g, '11')
+    .replace(/\bdoce\b/g, '12').replace(/\bveinte\b/g, '20')
+    .replace(/\bcien\b/g, '100').replace(/\bdoscientos\b/g, '200')
+    .replace(/\btrescientos\b/g, '300').replace(/\bcuatrocientos\b/g, '400')
+    .replace(/\bquinientos\b/g, '500')
+    // "medio/media" → 0.5
+    .replace(/\bmedio[s]?\b/g, '0.5').replace(/\bmedia[s]?\b/g, '0.5');
 
   const segments = text.split(/[,;]|\s+y\s+|\s+e\s+/).map(s => s.trim()).filter(Boolean);
 
