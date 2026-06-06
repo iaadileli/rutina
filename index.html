@@ -675,13 +675,13 @@ const ALIMENTOS_BASE = [
   { id: "tomate_g",        nombre: "Tomate",                        kcal: 18,  cantidad: 100, unidad: "g", pesoUd: 120  },
   { id: "remolacha",       nombre: "Remolacha",                     kcal: 43,  cantidad: 100, unidad: "g", pesoUd: 80   },
   // Pescados y mariscos (BEDCA, por 100 g)
-  { id: "merluza",         nombre: "Merluza",                       kcal: 82,  cantidad: 100, unidad: "g" },
-  { id: "atun_fresco",     nombre: "Atún fresco",                   kcal: 144, cantidad: 100, unidad: "g" },
-  { id: "dorada",          nombre: "Dorada",                        kcal: 96,  cantidad: 100, unidad: "g" },
-  { id: "lubina",          nombre: "Lubina",                        kcal: 82,  cantidad: 100, unidad: "g" },
-  { id: "bacalao",         nombre: "Bacalao fresco",                kcal: 82,  cantidad: 100, unidad: "g" },
-  { id: "sardina",         nombre: "Sardina",                       kcal: 185, cantidad: 100, unidad: "g" },
-  { id: "boqueron",        nombre: "Boquerón / anchoa",             kcal: 96,  cantidad: 100, unidad: "g" },
+  { id: "merluza",         nombre: "Merluza",                       kcal: 82,  cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "atun_fresco",     nombre: "Atún fresco",                   kcal: 144, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "dorada",          nombre: "Dorada",                        kcal: 96,  cantidad: 100, unidad: "g", pesoUd: 250 },
+  { id: "lubina",          nombre: "Lubina",                        kcal: 82,  cantidad: 100, unidad: "g", pesoUd: 250 },
+  { id: "bacalao",         nombre: "Bacalao fresco",                kcal: 82,  cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "sardina",         nombre: "Sardina",                       kcal: 185, cantidad: 100, unidad: "g", pesoUd: 70  },
+  { id: "boqueron",        nombre: "Boquerón / anchoa",             kcal: 96,  cantidad: 100, unidad: "g", pesoUd: 15  },
   { id: "gambas",          nombre: "Gambas / langostinos",          kcal: 96,  cantidad: 100, unidad: "g" },
   { id: "mejillones",      nombre: "Mejillones",                    kcal: 86,  cantidad: 100, unidad: "g" },
   { id: "calamar",         nombre: "Calamar / sepia",               kcal: 92,  cantidad: 100, unidad: "g" },
@@ -824,22 +824,22 @@ const ALIMENTOS_BASE = [
   { id: "fideos_c",      nombre: "Fideos cocidos",                   kcal: 131, cantidad: 100, unidad: "g" },
 
   // ===== CARNES Y AVES — versiones CRUDAS =====
-  { id: "pechuga_cruda",    nombre: "Pechuga de pollo cruda",          kcal: 109, cantidad: 100, unidad: "g" },
-  { id: "pavo_crudo",       nombre: "Pechuga de pavo cruda",           kcal: 104, cantidad: 100, unidad: "g" },
-  { id: "muslo_crudo",      nombre: "Muslo de pollo crudo",            kcal: 130, cantidad: 100, unidad: "g" },
+  { id: "pechuga_cruda",    nombre: "Pechuga de pollo cruda",          kcal: 109, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "pavo_crudo",       nombre: "Pechuga de pavo cruda",           kcal: 104, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "muslo_crudo",      nombre: "Muslo de pollo crudo",            kcal: 130, cantidad: 100, unidad: "g", pesoUd: 180 },
   { id: "pollo_crudo",      nombre: "Pollo entero crudo",              kcal: 167, cantidad: 100, unidad: "g" },
-  { id: "ternera_cruda",    nombre: "Ternera magra cruda",             kcal: 143, cantidad: 100, unidad: "g" },
-  { id: "filete_crudo",     nombre: "Filete de ternera crudo",         kcal: 105, cantidad: 100, unidad: "g" },
-  { id: "cerdo_crudo",      nombre: "Lomo de cerdo crudo",             kcal: 122, cantidad: 100, unidad: "g" },
-  { id: "solomillo_crudo",  nombre: "Solomillo de cerdo crudo",        kcal: 118, cantidad: 100, unidad: "g" },
-  { id: "solomillo_res",    nombre: "Solomillo de ternera crudo",      kcal: 140, cantidad: 100, unidad: "g" },
-  { id: "cordero_crudo",    nombre: "Cordero crudo",                   kcal: 153, cantidad: 100, unidad: "g" },
+  { id: "ternera_cruda",    nombre: "Ternera magra cruda",             kcal: 143, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "filete_crudo",     nombre: "Filete de ternera crudo",         kcal: 105, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "cerdo_crudo",      nombre: "Lomo de cerdo crudo",             kcal: 122, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "solomillo_crudo",  nombre: "Solomillo de cerdo crudo",        kcal: 118, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "solomillo_res",    nombre: "Solomillo de ternera crudo",      kcal: 140, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "cordero_crudo",    nombre: "Cordero crudo",                   kcal: 153, cantidad: 100, unidad: "g", pesoUd: 160 },
   { id: "conejo_crudo",     nombre: "Conejo crudo",                    kcal: 114, cantidad: 100, unidad: "g" },
-  { id: "pechuga_plancha",  nombre: "Pechuga de pollo a la plancha",   kcal: 165, cantidad: 100, unidad: "g" },
-  { id: "pechuga_horno",    nombre: "Pechuga de pollo al horno",       kcal: 163, cantidad: 100, unidad: "g" },
-  { id: "pollo_hervido",    nombre: "Pollo hervido / cocido",          kcal: 153, cantidad: 100, unidad: "g" },
-  { id: "ternera_plancha",  nombre: "Ternera a la plancha",            kcal: 190, cantidad: 100, unidad: "g" },
-  { id: "cerdo_plancha",    nombre: "Lomo de cerdo a la plancha",      kcal: 175, cantidad: 100, unidad: "g" },
+  { id: "pechuga_plancha",  nombre: "Pechuga de pollo a la plancha",   kcal: 165, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "pechuga_horno",    nombre: "Pechuga de pollo al horno",       kcal: 163, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "pollo_hervido",    nombre: "Pollo hervido / cocido",          kcal: 153, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "ternera_plancha",  nombre: "Ternera a la plancha",            kcal: 190, cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "cerdo_plancha",    nombre: "Lomo de cerdo a la plancha",      kcal: 175, cantidad: 100, unidad: "g", pesoUd: 150 },
 
   // ===== CEREALES Y PASTA — versiones CRUDAS (en seco) =====
   { id: "arroz_crudo",      nombre: "Arroz blanco crudo",              kcal: 350, cantidad: 100, unidad: "g" },
@@ -2819,6 +2819,10 @@ async function stopVoiceInput() {
   toast(msg);
 }
 
+function normVoz(s) {
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
 function parseVoiceTranscript(text) {
   text = text.toLowerCase()
     // Errores frecuentes del reconocedor en español
@@ -2866,7 +2870,17 @@ function parseVoiceTranscript(text) {
     .replace(/\bplatanos?\b/g, 'plátano')
     .replace(/\bchirimoyas?\b/g, 'chirimoya')
     .replace(/\bpapayas?\b/g, 'papaya')
-    .replace(/\bguacamole\b/g, 'aguacate');
+    .replace(/\bguacamole\b/g, 'aguacate')
+    .replace(/\bsalmon\b/g, 'salmón')
+    .replace(/\batun\b/g, 'atún')
+    .replace(/\bjamon\b/g, 'jamón')
+    .replace(/\bnucleos?\b/g, 'nueces')
+    .replace(/\btunas?\b/g, 'atún')
+    .replace(/\besparagos?\b/g, 'espárragos');
+
+  // Fusionar números compuestos ANTES de dividir en "y"
+  // "30 y 5" → "35", "40 y 2" → "42", etc.
+  text = text.replace(/\b(\d{1,2})\s+y\s+(\d)\b/g, (_, a, b) => String(parseInt(a) + parseInt(b)));
 
   // Dividir por delimitadores explícitos
   const rawSegs = text.split(/[,;]|\s+y\s+|\s+e\s+/);
@@ -2909,10 +2923,10 @@ function parseVoiceTranscript(text) {
       foodQuery = m[3].trim();
     }
 
-    const lq = foodQuery.toLowerCase();
+    const lq = normVoz(foodQuery);
     let bestFood = null, bestScore = 0;
     getAllFoods().forEach(f => {
-      const fn = f.nombre.toLowerCase();
+      const fn = normVoz(f.nombre);
       let score = 0;
       if (fn === lq) score = 100;
       else if (fn.includes(lq) || lq.includes(fn)) score = 70;
@@ -2920,7 +2934,10 @@ function parseVoiceTranscript(text) {
         const qw = lq.split(/\s+/), nw = fn.split(/\s+/);
         score = qw.filter(w => w.length > 2 && nw.some(n => n.includes(w) || w.includes(n))).length * 25;
       }
-      if (score > bestScore) { bestScore = score; bestFood = f; }
+      // Tiebreaker: preferir nombre más corto (match más preciso)
+      if (score > bestScore || (score === bestScore && score > 0 && f.nombre.length < (bestFood?.nombre.length ?? 999))) {
+        bestScore = score; bestFood = f;
+      }
     });
 
     const food = bestScore >= 25 ? bestFood : null;
