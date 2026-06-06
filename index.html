@@ -485,6 +485,11 @@
       <button class="btn" onclick="exportCSV()">Descargar CSV</button>
     </div>
     <div class="setting-card">
+      <h3>Exportar base de datos de alimentos</h3>
+      <p>Descarga el catálogo completo de alimentos (BEDCA/USDA + tus alimentos personalizados) en formato CSV.</p>
+      <button class="btn" onclick="exportAlimentosCSV()">Descargar BD Alimentos CSV</button>
+    </div>
+    <div class="setting-card">
       <h3>Copia de seguridad (JSON)</h3>
       <p>Guarda todos los datos en un fichero por si quieres tenerlo a buen recaudo o moverlo a otro móvil.</p>
       <button class="btn secondary" onclick="exportJSON()">Descargar JSON</button>
@@ -3090,6 +3095,27 @@ function exportCSV() {
   a.click();
   URL.revokeObjectURL(url);
   toast("CSV descargado");
+}
+
+function exportAlimentosCSV() {
+  const foods = getAllFoods();
+  let csv = "id,nombre,kcal_por_100g,cantidad_base,unidad,peso_ud_g\n";
+  foods.forEach(f => {
+    const nombre = `"${(f.nombre || "").replace(/"/g, '""')}"`;
+    const id = `"${(f.id || "").replace(/"/g, '""')}"`;
+    const kcal100 = f.cantidad > 0 && f.unidad === "g"
+      ? f.kcal
+      : "";
+    csv += [id, nombre, kcal100, f.cantidad, f.unidad, f.pesoUd ?? ""].join(",") + "\n";
+  });
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `alimentos_bedca_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("CSV de alimentos descargado (" + foods.length + " alimentos)");
 }
 
 function exportJSON() {
