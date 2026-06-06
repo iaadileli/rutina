@@ -1069,217 +1069,180 @@ const ALIMENTOS_BASE = [
   { id: "arroz_tortitas",   nombre: "Tortitas de arroz y maíz",       kcal: 372, cantidad: 100, unidad: "g" },
   { id: "barritas_cereal",  nombre: "Barrita de cereales",             kcal: 370, cantidad: 100, unidad: "g" },
   { id: "fruta_seca_mix",   nombre: "Mix de frutos secos",             kcal: 560, cantidad: 100, unidad: "g" },
+
+  // ===== PREPARACIONES REALES — FUENTE: USDA FoodData Central / BEDCA =====
+
+  // PECHUGA DE POLLO (todas las preparaciones)
+  { id: "pechuga_vapor",     nombre: "Pechuga de pollo al vapor",        kcal: 151, cantidad: 100, unidad: "g" },
+  { id: "pechuga_frita",     nombre: "Pechuga de pollo frita rebozada",  kcal: 245, cantidad: 100, unidad: "g" },
+  { id: "pechuga_airfryer",  nombre: "Pechuga de pollo air fryer",       kcal: 161, cantidad: 100, unidad: "g" },
+  { id: "pechuga_salteada",  nombre: "Pechuga de pollo salteada",        kcal: 180, cantidad: 100, unidad: "g" },
+
+  // MUSLO DE POLLO
+  { id: "muslo_plancha",     nombre: "Muslo de pollo a la plancha",      kcal: 185, cantidad: 100, unidad: "g" },
+  { id: "muslo_horno",       nombre: "Muslo de pollo al horno",          kcal: 177, cantidad: 100, unidad: "g" },
+  { id: "muslo_frito",       nombre: "Muslo de pollo frito",             kcal: 230, cantidad: 100, unidad: "g" },
+  { id: "muslo_airfryer",    nombre: "Muslo de pollo air fryer",         kcal: 172, cantidad: 100, unidad: "g" },
+
+  // PECHUGA DE PAVO
+  { id: "pavo_horno",        nombre: "Pechuga de pavo al horno",         kcal: 154, cantidad: 100, unidad: "g" },
+  { id: "pavo_vapor",        nombre: "Pechuga de pavo al vapor",         kcal: 148, cantidad: 100, unidad: "g" },
+  { id: "pavo_airfryer",     nombre: "Pechuga de pavo air fryer",        kcal: 157, cantidad: 100, unidad: "g" },
+  { id: "pavo_salteado",     nombre: "Pechuga de pavo salteada",         kcal: 166, cantidad: 100, unidad: "g" },
+
+  // TERNERA (filete magro)
+  { id: "ternera_horno",     nombre: "Ternera al horno",                 kcal: 185, cantidad: 100, unidad: "g" },
+  { id: "ternera_vapor",     nombre: "Ternera al vapor",                 kcal: 165, cantidad: 100, unidad: "g" },
+  { id: "ternera_frita",     nombre: "Ternera frita / empanada",         kcal: 220, cantidad: 100, unidad: "g" },
+  { id: "ternera_salteada",  nombre: "Ternera salteada",                 kcal: 195, cantidad: 100, unidad: "g" },
+  { id: "ternera_airfryer",  nombre: "Ternera air fryer",                kcal: 188, cantidad: 100, unidad: "g" },
+
+  // SOLOMILLO DE CERDO
+  { id: "solomillo_plancha", nombre: "Solomillo de cerdo a la plancha",  kcal: 166, cantidad: 100, unidad: "g" },
+  { id: "solomillo_horno",   nombre: "Solomillo de cerdo al horno",      kcal: 162, cantidad: 100, unidad: "g" },
+  { id: "solomillo_vapor",   nombre: "Solomillo de cerdo al vapor",      kcal: 153, cantidad: 100, unidad: "g" },
+  { id: "solomillo_airfry",  nombre: "Solomillo de cerdo air fryer",     kcal: 165, cantidad: 100, unidad: "g" },
+
+  // LOMO DE CERDO
+  { id: "cerdo_horno",       nombre: "Lomo de cerdo al horno",           kcal: 180, cantidad: 100, unidad: "g" },
+  { id: "cerdo_vapor",       nombre: "Lomo de cerdo al vapor",           kcal: 155, cantidad: 100, unidad: "g" },
+  { id: "cerdo_airfryer",    nombre: "Lomo de cerdo air fryer",          kcal: 178, cantidad: 100, unidad: "g" },
+
+  // CORDERO
+  { id: "cordero_horno",     nombre: "Cordero al horno",                 kcal: 218, cantidad: 100, unidad: "g" },
+  { id: "cordero_plancha",   nombre: "Cordero a la plancha",             kcal: 195, cantidad: 100, unidad: "g" },
+  { id: "cordero_guiso",     nombre: "Cordero guisado",                  kcal: 210, cantidad: 100, unidad: "g" },
+
+  // CONEJO
+  { id: "conejo_horno",      nombre: "Conejo al horno",                  kcal: 158, cantidad: 100, unidad: "g" },
+  { id: "conejo_plancha",    nombre: "Conejo a la plancha",              kcal: 148, cantidad: 100, unidad: "g" },
+
+  // PATO
+  { id: "pato_horno",        nombre: "Pato al horno",                    kcal: 265, cantidad: 100, unidad: "g" },
+  { id: "pato_plancha",      nombre: "Pato a la plancha (sin piel)",     kcal: 231, cantidad: 100, unidad: "g" },
+
+  // SALMÓN
+  { id: "salmon_crudo",      nombre: "Salmón crudo",                     kcal: 208, cantidad: 100, unidad: "g" },
+  { id: "salmon_plancha",    nombre: "Salmón a la plancha",              kcal: 232, cantidad: 100, unidad: "g" },
+  { id: "salmon_horno",      nombre: "Salmón al horno",                  kcal: 220, cantidad: 100, unidad: "g" },
+  { id: "salmon_vapor",      nombre: "Salmón al vapor",                  kcal: 215, cantidad: 100, unidad: "g" },
+  { id: "salmon_airfryer",   nombre: "Salmón air fryer",                 kcal: 218, cantidad: 100, unidad: "g" },
+
+  // MERLUZA
+  { id: "merluza_plancha",   nombre: "Merluza a la plancha",             kcal: 88,  cantidad: 100, unidad: "g" },
+  { id: "merluza_vapor",     nombre: "Merluza al vapor",                 kcal: 85,  cantidad: 100, unidad: "g" },
+  { id: "merluza_horno2",    nombre: "Merluza al horno",                 kcal: 95,  cantidad: 100, unidad: "g" },
+  { id: "merluza_airfryer",  nombre: "Merluza air fryer",                kcal: 90,  cantidad: 100, unidad: "g" },
+
+  // BACALAO
+  { id: "bacalao_plancha",   nombre: "Bacalao a la plancha",             kcal: 88,  cantidad: 100, unidad: "g" },
+  { id: "bacalao_vapor",     nombre: "Bacalao al vapor",                 kcal: 85,  cantidad: 100, unidad: "g" },
+  { id: "bacalao_airfryer",  nombre: "Bacalao air fryer",                kcal: 90,  cantidad: 100, unidad: "g" },
+
+  // DORADA
+  { id: "dorada_plancha",    nombre: "Dorada a la plancha",              kcal: 105, cantidad: 100, unidad: "g" },
+  { id: "dorada_vapor",      nombre: "Dorada al vapor",                  kcal: 101, cantidad: 100, unidad: "g" },
+  { id: "dorada_airfryer",   nombre: "Dorada air fryer",                 kcal: 104, cantidad: 100, unidad: "g" },
+
+  // LUBINA
+  { id: "lubina_plancha",    nombre: "Lubina a la plancha",              kcal: 93,  cantidad: 100, unidad: "g" },
+  { id: "lubina_vapor",      nombre: "Lubina al vapor",                  kcal: 88,  cantidad: 100, unidad: "g" },
+  { id: "lubina_airfryer",   nombre: "Lubina air fryer",                 kcal: 91,  cantidad: 100, unidad: "g" },
+
+  // ATÚN
+  { id: "atun_vapor",        nombre: "Atún al vapor",                    kcal: 165, cantidad: 100, unidad: "g" },
+  { id: "atun_horno",        nombre: "Atún al horno",                    kcal: 175, cantidad: 100, unidad: "g" },
+
+  // SARDINA
+  { id: "sardina_horno",     nombre: "Sardinas al horno",                kcal: 190, cantidad: 100, unidad: "g" },
+  { id: "sardina_fritas",    nombre: "Sardinas fritas",                  kcal: 225, cantidad: 100, unidad: "g" },
+
+  // CABALLA
+  { id: "caballa_horno",     nombre: "Caballa al horno",                 kcal: 230, cantidad: 100, unidad: "g" },
+  { id: "caballa_plancha",   nombre: "Caballa a la plancha",             kcal: 225, cantidad: 100, unidad: "g" },
+  { id: "caballa_aceite",    nombre: "Caballa en conserva en aceite",    kcal: 230, cantidad: 100, unidad: "g" },
+
+  // TRUCHA
+  { id: "trucha_horno",      nombre: "Trucha al horno",                  kcal: 140, cantidad: 100, unidad: "g" },
+  { id: "trucha_plancha",    nombre: "Trucha a la plancha",              kcal: 135, cantidad: 100, unidad: "g" },
+  { id: "trucha_vapor",      nombre: "Trucha al vapor",                  kcal: 130, cantidad: 100, unidad: "g" },
+
+  // RAPE
+  { id: "rape_horno",        nombre: "Rape al horno",                    kcal: 86,  cantidad: 100, unidad: "g" },
+  { id: "rape_plancha",      nombre: "Rape a la plancha",                kcal: 81,  cantidad: 100, unidad: "g" },
+
+  // CORVINA
+  { id: "corvina_plancha",   nombre: "Corvina a la plancha",             kcal: 108, cantidad: 100, unidad: "g" },
+  { id: "corvina_horno",     nombre: "Corvina al horno",                 kcal: 104, cantidad: 100, unidad: "g" },
+  { id: "corvina_vapor",     nombre: "Corvina al vapor",                 kcal: 101, cantidad: 100, unidad: "g" },
+
+  // RODABALLO
+  { id: "rodaballo_horno",   nombre: "Rodaballo al horno",               kcal: 103, cantidad: 100, unidad: "g" },
+  { id: "rodaballo_plancha", nombre: "Rodaballo a la plancha",           kcal: 99,  cantidad: 100, unidad: "g" },
+
+  // FLETÁN
+  { id: "fletan_horno",      nombre: "Fletán al horno",                  kcal: 131, cantidad: 100, unidad: "g" },
+  { id: "fletan_plancha",    nombre: "Fletán a la plancha",              kcal: 126, cantidad: 100, unidad: "g" },
+
+  // MARISCOS (preparaciones)
+  { id: "gambas_vapor",      nombre: "Gambas cocidas / al vapor",        kcal: 100, cantidad: 100, unidad: "g" },
+  { id: "gambas_fritas",     nombre: "Gambas fritas rebozadas",          kcal: 200, cantidad: 100, unidad: "g" },
+  { id: "gambas_horno",      nombre: "Gambas al horno",                  kcal: 105, cantidad: 100, unidad: "g" },
+  { id: "langostinos_plan",  nombre: "Langostinos a la plancha",         kcal: 112, cantidad: 100, unidad: "g" },
+  { id: "langostinos_vapor", nombre: "Langostinos cocidos",              kcal: 100, cantidad: 100, unidad: "g" },
+  { id: "almejas_vapor",     nombre: "Almejas al vapor",                 kcal: 80,  cantidad: 100, unidad: "g" },
+  { id: "almejas_salsa",     nombre: "Almejas en salsa verde",           kcal: 95,  cantidad: 100, unidad: "g" },
+  { id: "vieiras_plancha",   nombre: "Vieiras a la plancha",             kcal: 82,  cantidad: 100, unidad: "g" },
+  { id: "vieiras_horno",     nombre: "Vieiras al horno gratinadas",      kcal: 120, cantidad: 100, unidad: "g" },
+  { id: "navajas_plancha",   nombre: "Navajas a la plancha",             kcal: 90,  cantidad: 100, unidad: "g" },
+  { id: "pulpo_plancha",     nombre: "Pulpo a la plancha",               kcal: 62,  cantidad: 100, unidad: "g" },
+  { id: "bogavante_planch",  nombre: "Bogavante a la plancha",           kcal: 85,  cantidad: 100, unidad: "g" },
+  { id: "bogavante_cocido",  nombre: "Bogavante cocido",                 kcal: 77,  cantidad: 100, unidad: "g" },
+
+  // HUEVOS (todas las preparaciones)
+  { id: "huevo_crudo",       nombre: "Huevo crudo",                      kcal: 147, cantidad: 100, unidad: "g", pesoUd: 60 },
+  { id: "huevo_duro",        nombre: "Huevo duro",                       kcal: 155, cantidad: 100, unidad: "g", pesoUd: 50 },
+  { id: "huevo_revuelto",    nombre: "Huevos revueltos",                 kcal: 150, cantidad: 100, unidad: "g" },
+  { id: "huevo_pochado",     nombre: "Huevo pochado / escalfado",        kcal: 148, cantidad: 100, unidad: "g", pesoUd: 55 },
+  { id: "tortilla_3huevos",  nombre: "Tortilla francesa (3 huevos)",     kcal: 285, cantidad: 1,   unidad: "ud" },
+
+  // VERDURAS (preparaciones adicionales)
+  { id: "espinacas_crudas",  nombre: "Espinacas crudas",                 kcal: 23,  cantidad: 100, unidad: "g" },
+  { id: "espinacas_saltea",  nombre: "Espinacas salteadas",              kcal: 35,  cantidad: 100, unidad: "g" },
+  { id: "brocoli_horno",     nombre: "Brócoli al horno",                 kcal: 40,  cantidad: 100, unidad: "g" },
+  { id: "brocoli_saltea",    nombre: "Brócoli salteado",                 kcal: 45,  cantidad: 100, unidad: "g" },
+  { id: "brocoli_airfry",    nombre: "Brócoli air fryer",                kcal: 42,  cantidad: 100, unidad: "g" },
+  { id: "berenjena_plan",    nombre: "Berenjena a la plancha",           kcal: 28,  cantidad: 100, unidad: "g" },
+  { id: "berenjena_frita",   nombre: "Berenjena frita",                  kcal: 167, cantidad: 100, unidad: "g" },
+  { id: "cebolla_pochada",   nombre: "Cebolla pochada / caramelizada",   kcal: 50,  cantidad: 100, unidad: "g" },
+  { id: "cebolla_asada",     nombre: "Cebolla asada al horno",           kcal: 42,  cantidad: 100, unidad: "g" },
+  { id: "pimiento_verde_p",  nombre: "Pimiento verde a la plancha",      kcal: 25,  cantidad: 100, unidad: "g" },
+  { id: "pimiento_saltea",   nombre: "Pimiento salteado",                kcal: 45,  cantidad: 100, unidad: "g" },
+  { id: "calabaza_asada",    nombre: "Calabaza asada",                   kcal: 28,  cantidad: 100, unidad: "g" },
+  { id: "champi_plancha",    nombre: "Champiñones a la plancha",         kcal: 25,  cantidad: 100, unidad: "g" },
+  { id: "champi_saltea",     nombre: "Champiñones salteados",            kcal: 35,  cantidad: 100, unidad: "g" },
+  { id: "zanahoria_asada",   nombre: "Zanahoria asada",                  kcal: 45,  cantidad: 100, unidad: "g" },
+  { id: "guisantes_salt",    nombre: "Guisantes salteados",              kcal: 90,  cantidad: 100, unidad: "g" },
+  { id: "maiz_plancha",      nombre: "Maíz a la plancha / brasa",        kcal: 90,  cantidad: 100, unidad: "g" },
+  { id: "patata_cocida",     nombre: "Patata cocida en agua",            kcal: 87,  cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "boniato_vapor",     nombre: "Boniato al vapor / cocido",        kcal: 76,  cantidad: 100, unidad: "g", pesoUd: 150 },
+  { id: "patata_airfryer",   nombre: "Patata air fryer (gajos)",         kcal: 150, cantidad: 100, unidad: "g" },
+
+  // PASTA Y CEREALES (formas adicionales)
+  { id: "pasta_integral_c",  nombre: "Pasta integral cocida",            kcal: 148, cantidad: 100, unidad: "g" },
+  { id: "pasta_integral_r",  nombre: "Pasta integral cruda",             kcal: 348, cantidad: 100, unidad: "g" },
+  { id: "avena_porridge",    nombre: "Avena en porridge (con agua)",     kcal: 71,  cantidad: 100, unidad: "g" },
+  { id: "arroz_japon_c",     nombre: "Arroz japonés / sushi cocido",     kcal: 175, cantidad: 100, unidad: "g" },
+  { id: "trigo_sarraceno_c", nombre: "Trigo sarraceno cocido",           kcal: 92,  cantidad: 100, unidad: "g" },
+  { id: "mijo_cocido",       nombre: "Mijo cocido",                      kcal: 119, cantidad: 100, unidad: "g" },
+
+  // LEGUMBRES Y PROTEÍNA VEGETAL
+  { id: "garbanzos_tost",    nombre: "Garbanzos tostados",               kcal: 378, cantidad: 100, unidad: "g" },
+  { id: "tofu_firme",        nombre: "Tofu firme",                       kcal: 76,  cantidad: 100, unidad: "g" },
+  { id: "tofu_plancha",      nombre: "Tofu a la plancha",                kcal: 120, cantidad: 100, unidad: "g" },
+  { id: "tempeh",            nombre: "Tempeh",                           kcal: 193, cantidad: 100, unidad: "g" },
+  { id: "soja_germinada",    nombre: "Brotes de soja",                   kcal: 30,  cantidad: 100, unidad: "g" },
 ];
-
-// ====================================================================
-// SISTEMA DE VARIANTES POR MÉTODO DE COCCIÓN
-// ~110 alimentos base (kcal en crudo/100g) × 6-9 métodos = ~800 variantes
-// Se generan automáticamente al cargar la app
-// ====================================================================
-
-const ALIMENTOS_VARIANTABLES = [
-  // ---- CARNES MAGRAS (tipo:'magra') ----
-  { id:'vm_pech_pollo',  nombre:'Pechuga de pollo',        kcal:109, tipo:'magra' },
-  { id:'vm_pech_pavo',   nombre:'Pechuga de pavo',         kcal:104, tipo:'magra' },
-  { id:'vm_solomillo_c', nombre:'Solomillo de cerdo',      kcal:118, tipo:'magra' },
-  { id:'vm_solomillo_t', nombre:'Solomillo de ternera',    kcal:140, tipo:'magra' },
-  { id:'vm_filete_t',    nombre:'Filete de ternera',       kcal:105, tipo:'magra' },
-  { id:'vm_conejo',      nombre:'Conejo',                  kcal:114, tipo:'magra' },
-  { id:'vm_codorniz',    nombre:'Codorniz',                kcal:192, tipo:'magra' },
-  { id:'vm_perdiz',      nombre:'Perdiz',                  kcal:140, tipo:'magra' },
-  { id:'vm_pechuga_rel', nombre:'Pechuga de pollo rellena',kcal:140, tipo:'magra' },
-  { id:'vm_venado',      nombre:'Venado / ciervo',         kcal:120, tipo:'magra' },
-  { id:'vm_jabali',      nombre:'Jabalí',                  kcal:122, tipo:'magra' },
-  // ---- CARNES GRASAS (tipo:'grasa') ----
-  { id:'vg_muslo',       nombre:'Muslo de pollo',          kcal:155, tipo:'grasa' },
-  { id:'vg_pollo_piel',  nombre:'Pollo con piel',          kcal:167, tipo:'grasa' },
-  { id:'vg_lomo_cerdo',  nombre:'Lomo de cerdo',           kcal:122, tipo:'grasa' },
-  { id:'vg_costilla',    nombre:'Costilla de cerdo',       kcal:165, tipo:'grasa' },
-  { id:'vg_ternera_g',   nombre:'Ternera (corte graso)',   kcal:143, tipo:'grasa' },
-  { id:'vg_cordero',     nombre:'Cordero',                 kcal:153, tipo:'grasa' },
-  { id:'vg_pato',        nombre:'Pato',                    kcal:201, tipo:'grasa' },
-  { id:'vg_cerdo_barrig',nombre:'Panceta / barriga cerdo', kcal:336, tipo:'grasa' },
-  // ---- PESCADO BLANCO (tipo:'blanco') ----
-  { id:'vb_merluza',     nombre:'Merluza',                 kcal: 82, tipo:'blanco' },
-  { id:'vb_bacalao',     nombre:'Bacalao',                 kcal: 82, tipo:'blanco' },
-  { id:'vb_dorada',      nombre:'Dorada',                  kcal: 96, tipo:'blanco' },
-  { id:'vb_lubina',      nombre:'Lubina',                  kcal: 82, tipo:'blanco' },
-  { id:'vb_lenguado',    nombre:'Lenguado',                kcal: 83, tipo:'blanco' },
-  { id:'vb_rape',        nombre:'Rape',                    kcal: 73, tipo:'blanco' },
-  { id:'vb_rodaballo',   nombre:'Rodaballo',               kcal: 91, tipo:'blanco' },
-  { id:'vb_corvina',     nombre:'Corvina',                 kcal: 96, tipo:'blanco' },
-  { id:'vb_mero',        nombre:'Mero',                    kcal:110, tipo:'blanco' },
-  { id:'vb_gallo',       nombre:'Gallo (pescado)',         kcal: 82, tipo:'blanco' },
-  { id:'vb_panga',       nombre:'Panga',                   kcal: 83, tipo:'blanco' },
-  { id:'vb_tilapia',     nombre:'Tilapia',                 kcal: 96, tipo:'blanco' },
-  { id:'vb_cazón',       nombre:'Cazón',                   kcal:111, tipo:'blanco' },
-  { id:'vb_fletan',      nombre:'Fletán / halibut',        kcal:116, tipo:'blanco' },
-  { id:'vb_cherne',      nombre:'Cherne',                  kcal:103, tipo:'blanco' },
-  { id:'vb_salmonete',   nombre:'Salmonete',               kcal:109, tipo:'blanco' },
-  { id:'vb_besugo',      nombre:'Besugo',                  kcal: 97, tipo:'blanco' },
-  // ---- PESCADO AZUL (tipo:'azul') ----
-  { id:'va_salmon',      nombre:'Salmón',                  kcal:208, tipo:'azul' },
-  { id:'va_atun',        nombre:'Atún',                    kcal:144, tipo:'azul' },
-  { id:'va_caballa',     nombre:'Caballa',                 kcal:205, tipo:'azul' },
-  { id:'va_sardina',     nombre:'Sardina',                 kcal:185, tipo:'azul' },
-  { id:'va_boqueron',    nombre:'Boquerón',                kcal: 96, tipo:'azul' },
-  { id:'va_trucha',      nombre:'Trucha',                  kcal:119, tipo:'azul' },
-  { id:'va_pez_espada',  nombre:'Pez espada / emperador',  kcal:121, tipo:'azul' },
-  { id:'va_anguila',     nombre:'Anguila',                 kcal:236, tipo:'azul' },
-  // ---- MARISCOS Y CRUSTÁCEOS (tipo:'marisco') ----
-  { id:'vr_gambas',      nombre:'Gambas',                  kcal: 96, tipo:'marisco' },
-  { id:'vr_gambones',    nombre:'Gambones',                kcal: 85, tipo:'marisco' },
-  { id:'vr_langostinos', nombre:'Langostinos',             kcal: 95, tipo:'marisco' },
-  { id:'vr_langosta',    nombre:'Langosta',                kcal: 90, tipo:'marisco' },
-  { id:'vr_bogavante',   nombre:'Bogavante',               kcal: 77, tipo:'marisco' },
-  { id:'vr_centollo',    nombre:'Centollo',                kcal: 89, tipo:'marisco' },
-  { id:'vr_necora',      nombre:'Nécora',                  kcal: 87, tipo:'marisco' },
-  { id:'vr_galeras',     nombre:'Galeras',                 kcal: 82, tipo:'marisco' },
-  { id:'vr_percebes',    nombre:'Percebes',                kcal: 47, tipo:'marisco' },
-  { id:'vr_cangrejo_rio',nombre:'Cangrejos de río',        kcal: 82, tipo:'marisco' },
-  // ---- MOLUSCOS (tipo:'molusco') ----
-  { id:'vo_vieiras',     nombre:'Vieiras',                 kcal: 69, tipo:'molusco' },
-  { id:'vo_zamburinas',  nombre:'Zamburiñas',              kcal: 69, tipo:'molusco' },
-  { id:'vo_mejillones',  nombre:'Mejillones',              kcal: 86, tipo:'molusco' },
-  { id:'vo_berberechos', nombre:'Berberechos',             kcal: 82, tipo:'molusco' },
-  { id:'vo_almejas',     nombre:'Almejas',                 kcal: 74, tipo:'molusco' },
-  { id:'vo_ostras',      nombre:'Ostras',                  kcal: 68, tipo:'molusco' },
-  { id:'vo_navajas',     nombre:'Navajas',                 kcal: 82, tipo:'molusco' },
-  { id:'vo_coquinas',    nombre:'Coquinas / chirlas',      kcal: 74, tipo:'molusco' },
-  { id:'vo_calamar',     nombre:'Calamar',                 kcal: 92, tipo:'molusco' },
-  { id:'vo_sepia',       nombre:'Sepia',                   kcal: 79, tipo:'molusco' },
-  { id:'vo_chipirón',    nombre:'Chipirones',              kcal: 79, tipo:'molusco' },
-  { id:'vo_pulpo',       nombre:'Pulpo',                   kcal: 57, tipo:'molusco' },
-  // ---- VERDURAS (tipo:'verdura') ----
-  { id:'vv_brocoli',     nombre:'Brócoli',                 kcal: 30, tipo:'verdura' },
-  { id:'vv_coliflor',    nombre:'Coliflor',                kcal: 25, tipo:'verdura' },
-  { id:'vv_espinacas',   nombre:'Espinacas',               kcal: 23, tipo:'verdura' },
-  { id:'vv_acelgas',     nombre:'Acelgas',                 kcal: 19, tipo:'verdura' },
-  { id:'vv_judias_v',    nombre:'Judías verdes',           kcal: 31, tipo:'verdura' },
-  { id:'vv_esparragos',  nombre:'Espárragos',              kcal: 20, tipo:'verdura' },
-  { id:'vv_calabacin',   nombre:'Calabacín',               kcal: 17, tipo:'verdura' },
-  { id:'vv_pim_rojo',    nombre:'Pimiento rojo',           kcal: 31, tipo:'verdura' },
-  { id:'vv_pim_verde',   nombre:'Pimiento verde',          kcal: 20, tipo:'verdura' },
-  { id:'vv_berenjena',   nombre:'Berenjena',               kcal: 25, tipo:'verdura' },
-  { id:'vv_zanahoria',   nombre:'Zanahoria',               kcal: 41, tipo:'verdura' },
-  { id:'vv_champi',      nombre:'Champiñones',             kcal: 22, tipo:'verdura' },
-  { id:'vv_setas',       nombre:'Setas',                   kcal: 35, tipo:'verdura' },
-  { id:'vv_calabaza',    nombre:'Calabaza',                kcal: 26, tipo:'verdura' },
-  { id:'vv_alcachofas',  nombre:'Alcachofas',              kcal: 47, tipo:'verdura' },
-  { id:'vv_col',         nombre:'Col / repollo',           kcal: 25, tipo:'verdura' },
-  { id:'vv_col_bruselas',nombre:'Coles de Bruselas',       kcal: 43, tipo:'verdura' },
-  { id:'vv_puerro',      nombre:'Puerro',                  kcal: 31, tipo:'verdura' },
-  { id:'vv_cebolla',     nombre:'Cebolla',                 kcal: 40, tipo:'verdura' },
-  { id:'vv_tomate',      nombre:'Tomate',                  kcal: 18, tipo:'verdura' },
-  { id:'vv_lechuga',     nombre:'Lechuga',                 kcal: 15, tipo:'verdura' },
-  { id:'vv_rucula',      nombre:'Rúcula',                  kcal: 25, tipo:'verdura' },
-  { id:'vv_pepino',      nombre:'Pepino',                  kcal: 16, tipo:'verdura' },
-  { id:'vv_patata',      nombre:'Patata',                  kcal: 77, tipo:'verdura' },
-  { id:'vv_boniato',     nombre:'Boniato / batata',        kcal: 86, tipo:'verdura' },
-  { id:'vv_pak_choi',    nombre:'Pak choi',                kcal: 13, tipo:'verdura' },
-  { id:'vv_endivia',     nombre:'Endivias / escarola',     kcal: 17, tipo:'verdura' },
-  { id:'vv_berros',      nombre:'Berros',                  kcal: 11, tipo:'verdura' },
-  { id:'vv_hinojo',      nombre:'Hinojo',                  kcal: 31, tipo:'verdura' },
-  { id:'vv_nabo',        nombre:'Nabo',                    kcal: 28, tipo:'verdura' },
-  { id:'vv_remolacha',   nombre:'Remolacha',               kcal: 43, tipo:'verdura' },
-  { id:'vv_maiz',        nombre:'Maíz dulce',              kcal: 86, tipo:'verdura' },
-  { id:'vv_espar_blanc', nombre:'Espárragos blancos',      kcal: 18, tipo:'verdura' },
-  { id:'vv_espar_trig',  nombre:'Espárragos trigueros',    kcal: 20, tipo:'verdura' },
-  { id:'vv_lombarda',    nombre:'Lombarda',                kcal: 35, tipo:'verdura' },
-  { id:'vv_canonigos',   nombre:'Canónigos',               kcal: 21, tipo:'verdura' },
-  { id:'vv_rabano',      nombre:'Rábano',                  kcal: 16, tipo:'verdura' },
-  { id:'vv_guisantes',   nombre:'Guisantes frescos',       kcal: 81, tipo:'verdura' },
-  { id:'vv_habas_fres',  nombre:'Habas frescas',           kcal: 88, tipo:'verdura' },
-];
-
-// Multiplicadores por método de cocción y tipo de alimento
-// Los valores están calculados sobre el peso en CRUDO (raw=1.0)
-const METODOS_COCCION = {
-  magra: [
-    { key:'cruda',     label:'cruda',                mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.50 },
-    { key:'horno',     label:'al horno',              mult:1.45 },
-    { key:'vapor',     label:'al vapor',              mult:1.30 },
-    { key:'hervida',   label:'hervida / cocida',      mult:1.35 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.40 },
-    { key:'frita',     label:'frita',                 mult:2.10 },
-    { key:'salteada',  label:'salteada',              mult:1.70 },
-    { key:'guisada',   label:'guisada / en salsa',    mult:1.20 },
-  ],
-  grasa: [
-    { key:'cruda',     label:'cruda',                mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.30 },
-    { key:'horno',     label:'al horno',              mult:1.25 },
-    { key:'vapor',     label:'al vapor',              mult:1.15 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.20 },
-    { key:'frita',     label:'frita',                 mult:1.60 },
-    { key:'guisada',   label:'guisada / estofada',    mult:1.10 },
-    { key:'asada',     label:'asada',                 mult:1.20 },
-  ],
-  blanco: [
-    { key:'crudo',     label:'crudo',                mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.10 },
-    { key:'horno',     label:'al horno',              mult:1.10 },
-    { key:'vapor',     label:'al vapor',              mult:1.00 },
-    { key:'hervido',   label:'hervido',               mult:1.05 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.08 },
-    { key:'frito',     label:'frito',                 mult:2.00 },
-    { key:'rebozado',  label:'rebozado / empanado',   mult:1.80 },
-  ],
-  azul: [
-    { key:'crudo',     label:'crudo',                mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.10 },
-    { key:'horno',     label:'al horno',              mult:1.05 },
-    { key:'vapor',     label:'al vapor',              mult:1.00 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.05 },
-    { key:'frito',     label:'frito',                 mult:1.70 },
-    { key:'ahumado',   label:'ahumado',               mult:1.30 },
-  ],
-  marisco: [
-    { key:'crudo',     label:'crudo',                mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.10 },
-    { key:'vapor',     label:'al vapor',              mult:1.00 },
-    { key:'hervido',   label:'hervido / cocido',      mult:1.00 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.05 },
-    { key:'frito',     label:'frito / rebozado',      mult:2.20 },
-    { key:'ajillo',    label:'al ajillo',             mult:1.40 },
-  ],
-  molusco: [
-    { key:'crudo',     label:'crudo',                mult:1.00 },
-    { key:'vapor',     label:'al vapor',              mult:1.00 },
-    { key:'plancha',   label:'a la plancha',          mult:1.10 },
-    { key:'horno',     label:'al horno',              mult:1.10 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.05 },
-    { key:'frito',     label:'frito / rebozado',      mult:2.20 },
-    { key:'guisado',   label:'en salsa / guisado',    mult:1.20 },
-  ],
-  verdura: [
-    { key:'cruda',     label:'cruda',                mult:1.00 },
-    { key:'vapor',     label:'al vapor',              mult:0.95 },
-    { key:'hervida',   label:'hervida / cocida',      mult:0.90 },
-    { key:'plancha',   label:'a la plancha',          mult:1.05 },
-    { key:'horno',     label:'al horno',              mult:1.20 },
-    { key:'airfryer',  label:'en air fryer',          mult:1.10 },
-    { key:'frita',     label:'frita',                 mult:2.80 },
-    { key:'salteada',  label:'salteada',              mult:1.40 },
-  ],
-};
-
-// Generar todas las variantes al cargar (se ejecuta una vez)
-const VARIANTES_COCCION = [];
-(function generateVariants() {
-  ALIMENTOS_VARIANTABLES.forEach(food => {
-    (METODOS_COCCION[food.tipo] || []).forEach(m => {
-      VARIANTES_COCCION.push({
-        id: `${food.id}_${m.key}`,
-        nombre: `${food.nombre} ${m.label}`,
-        kcal: Math.round(food.kcal * m.mult),
-        cantidad: 100,
-        unidad: 'g'
-      });
-    });
-  });
-})();
 
 /* ================== ESTADO ================== */
 let state = {
@@ -2356,7 +2319,7 @@ function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function getAllFoods() { return [...ALIMENTOS_BASE, ...VARIANTES_COCCION, ...state.foods]; }
+function getAllFoods() { return [...ALIMENTOS_BASE, ...state.foods]; }
 
 function searchFoods(q) {
   const all = getAllFoods();
