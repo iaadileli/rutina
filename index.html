@@ -336,6 +336,37 @@
   @media (min-width: 600px) {
     .serie-row { grid-template-columns: 40px 1fr 1fr 1fr auto; }
   }
+
+  /* ===== CALORÍAS FOOD TRACKING ===== */
+  .cal-progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin: 10px 0 14px; overflow: hidden; }
+  .cal-progress-fill { height: 100%; background: var(--accent-strong); border-radius: 4px; transition: width 0.4s; }
+  .cal-progress-fill.over { background: var(--danger); }
+  .cal-numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; }
+  .cal-val { font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .cal-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cal-add-panel { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: var(--shadow); }
+  .food-search { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; background: var(--bg); color: var(--text); box-sizing: border-box; margin-bottom: 12px; font-family: inherit; }
+  .food-search:focus { outline: none; border-color: var(--primary); background: white; }
+  .recientes-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; display: block; }
+  .recientes-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .reciente-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 13px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .reciente-chip:hover { border-color: var(--primary); background: var(--primary-soft); }
+  .food-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px; border-top: 1px solid var(--border); cursor: pointer; border-radius: 6px; transition: all 0.1s; }
+  .food-list-item:hover { background: var(--primary-soft); padding-left: 8px; }
+  .food-list-item:first-child { border-top: none; }
+  .food-item-name { font-size: 14px; font-weight: 500; }
+  .food-item-kcal { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .qty-btn { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .qty-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+  .qty-kcal-preview { text-align: center; font-size: 42px; font-weight: 800; color: var(--accent-strong); line-height: 1; margin-bottom: 4px; }
+  .qty-kcal-sub { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .qty-input-field { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; text-align: center; margin-bottom: 12px; font-weight: 700; background: var(--bg); color: var(--text); box-sizing: border-box; font-family: inherit; }
+  .qty-input-field:focus { outline: none; border-color: var(--primary); background: white; }
+  .food-log-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--border); }
+  .food-log-row:first-child { border-top: none; }
+  .food-log-name { font-size: 14px; font-weight: 500; }
+  .food-log-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .food-log-del { background: none; border: none; color: var(--danger); font-size: 18px; cursor: pointer; padding: 4px 8px; }
 </style>
 </head>
 <body>
@@ -510,6 +541,50 @@ const RUTINA = {
 
 const DIA_KEYS = ["Día 1","Día 2","Día 3","Día 4","Día 5"];
 
+const ALIMENTOS_BASE = [
+  { id: "huevo",           nombre: "Huevo entero",                  kcal: 90,  cantidad: 1,   unidad: "ud" },
+  { id: "clara",           nombre: "Clara de huevo",                kcal: 17,  cantidad: 1,   unidad: "ud" },
+  { id: "pechuga_pollo",   nombre: "Pechuga de pollo",              kcal: 165, cantidad: 100, unidad: "g" },
+  { id: "pechuga_pavo",    nombre: "Pechuga de pavo",               kcal: 135, cantidad: 100, unidad: "g" },
+  { id: "atun_lata",       nombre: "Atún en agua (lata 80g)",       kcal: 80,  cantidad: 1,   unidad: "lata" },
+  { id: "salmon",          nombre: "Salmón",                        kcal: 208, cantidad: 100, unidad: "g" },
+  { id: "ternera_magra",   nombre: "Ternera magra",                 kcal: 190, cantidad: 100, unidad: "g" },
+  { id: "jamon_york",      nombre: "Jamón de York",                 kcal: 110, cantidad: 100, unidad: "g" },
+  { id: "jamon_serrano",   nombre: "Jamón serrano",                 kcal: 250, cantidad: 100, unidad: "g" },
+  { id: "leche_entera",    nombre: "Leche entera (vaso 200ml)",     kcal: 122, cantidad: 1,   unidad: "vaso" },
+  { id: "leche_semi",      nombre: "Leche semi (vaso 200ml)",       kcal: 92,  cantidad: 1,   unidad: "vaso" },
+  { id: "yogur_natural",   nombre: "Yogur natural",                 kcal: 76,  cantidad: 1,   unidad: "ud" },
+  { id: "yogur_griego",    nombre: "Yogur griego",                  kcal: 130, cantidad: 1,   unidad: "ud" },
+  { id: "queso_fresco",    nombre: "Queso fresco (porción 50g)",    kcal: 70,  cantidad: 1,   unidad: "porción" },
+  { id: "whey",            nombre: "Proteína whey (dosis)",         kcal: 120, cantidad: 1,   unidad: "dosis" },
+  { id: "arroz_cocido",    nombre: "Arroz cocido",                  kcal: 130, cantidad: 100, unidad: "g" },
+  { id: "pasta_cocida",    nombre: "Pasta cocida",                  kcal: 131, cantidad: 100, unidad: "g" },
+  { id: "patata_cocida",   nombre: "Patata cocida",                 kcal: 77,  cantidad: 100, unidad: "g" },
+  { id: "avena",           nombre: "Avena en copos (seca)",         kcal: 370, cantidad: 100, unidad: "g" },
+  { id: "pan_barra",       nombre: "Pan de barra (rebanada)",       kcal: 80,  cantidad: 1,   unidad: "rebanada" },
+  { id: "tostada_molde",   nombre: "Tostada pan de molde",          kcal: 70,  cantidad: 1,   unidad: "ud" },
+  { id: "platano",         nombre: "Plátano mediano",               kcal: 90,  cantidad: 1,   unidad: "ud" },
+  { id: "manzana",         nombre: "Manzana mediana",               kcal: 72,  cantidad: 1,   unidad: "ud" },
+  { id: "naranja",         nombre: "Naranja mediana",               kcal: 62,  cantidad: 1,   unidad: "ud" },
+  { id: "fresas",          nombre: "Fresas",                        kcal: 32,  cantidad: 100, unidad: "g" },
+  { id: "aguacate_medio",  nombre: "Aguacate (½ ud)",               kcal: 120, cantidad: 1,   unidad: "½ ud" },
+  { id: "ensalada_bol",    nombre: "Ensalada verde (bol grande)",   kcal: 25,  cantidad: 1,   unidad: "bol" },
+  { id: "brocoli",         nombre: "Brócoli cocido",                kcal: 34,  cantidad: 100, unidad: "g" },
+  { id: "espinacas",       nombre: "Espinacas",                     kcal: 23,  cantidad: 100, unidad: "g" },
+  { id: "tomate_med",      nombre: "Tomate mediano",                kcal: 22,  cantidad: 1,   unidad: "ud" },
+  { id: "aceite_oliva",    nombre: "Aceite de oliva (cucharada)",   kcal: 90,  cantidad: 1,   unidad: "cda" },
+  { id: "almendras",       nombre: "Almendras (~30g)",              kcal: 175, cantidad: 1,   unidad: "puñado" },
+  { id: "nueces",          nombre: "Nueces (~30g)",                 kcal: 200, cantidad: 1,   unidad: "puñado" },
+  { id: "cafe_solo",       nombre: "Café solo",                     kcal: 5,   cantidad: 1,   unidad: "ud" },
+  { id: "cafe_con_leche",  nombre: "Café con leche",                kcal: 40,  cantidad: 1,   unidad: "ud" },
+  { id: "zumo_naranja",    nombre: "Zumo de naranja (vaso)",        kcal: 90,  cantidad: 1,   unidad: "vaso" },
+  { id: "cerveza_330",     nombre: "Cerveza (330ml)",               kcal: 143, cantidad: 1,   unidad: "lata" },
+  { id: "vino_copa",       nombre: "Vino (copa 150ml)",             kcal: 105, cantidad: 1,   unidad: "copa" },
+  { id: "tortilla_esp",    nombre: "Tortilla española (porción)",   kcal: 200, cantidad: 1,   unidad: "porción" },
+  { id: "pizza_porcion",   nombre: "Porción de pizza",              kcal: 285, cantidad: 1,   unidad: "porción" },
+  { id: "hamburguesa",     nombre: "Hamburguesa (restaurante)",     kcal: 500, cantidad: 1,   unidad: "ud" },
+];
+
 /* ================== ESTADO ================== */
 let state = {
   currentDay: "Día 1",
@@ -519,7 +594,19 @@ let state = {
   lastWeights: {},  // {ejercicio: peso}
   repsVisible: {},  // {"dia-ejIdx": true} → mostrar columna reps en ese ejercicio
   selectedExercise: null, // ejercicio seleccionado en el histórico para la gráfica
-  todayInputs: {}   // estado temporal de la sesión en curso (no persistido entre días)
+  todayInputs: {},  // estado temporal de la sesión en curso (no persistido entre días)
+  foodLog: [],      // [{date, foodId, nombre, kcalPorUnidad, cantidadBase, unidad, cantidad, totalKcal}]
+  foods: [],        // custom foods [{id, nombre, kcal, cantidad, unidad}]
+  caloriaObjetivo: 2000
+};
+
+let calUi = {
+  panelOpen: false,
+  searchQuery: '',
+  selectedFood: null,
+  selectedMultiplier: 1,
+  customCantidad: null,
+  addCustomMode: false
 };
 
 function loadState() {
@@ -533,6 +620,9 @@ function loadState() {
       // Las notas solo se cargan si son de la semana actual
       const currentWeek = getCurrentWeekStartStr();
       state.notes = (parsed.notesWeek === currentWeek) ? (parsed.notes || {}) : {};
+      state.foodLog = parsed.foodLog || [];
+      state.foods = parsed.foods || [];
+      state.caloriaObjetivo = parsed.caloriaObjetivo || 2000;
     } catch(e) { console.error(e); }
   }
   // Seleccionar el primer día de la secuencia que no se haya completado esta semana
@@ -545,7 +635,10 @@ function saveState() {
     lastWeights: state.lastWeights,
     medidas: state.medidas,
     notes: state.notes,
-    notesWeek: getCurrentWeekStartStr()
+    notesWeek: getCurrentWeekStartStr(),
+    foodLog: state.foodLog,
+    foods: state.foods,
+    caloriaObjetivo: state.caloriaObjetivo
   }));
 }
 
