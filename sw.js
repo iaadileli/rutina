@@ -1,5 +1,5 @@
 // Service worker mínimo para que la app funcione offline
-const CACHE = "rutina-v7";
+const CACHE = "rutina-v8";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./logo.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
