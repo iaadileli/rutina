@@ -1,5 +1,4 @@
-// Service worker mínimo para que la app funcione offline
-const CACHE = "rutina-v8";
+const CACHE = "rutina-v9";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./logo.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -17,6 +16,22 @@ self.addEventListener("activate", e => {
 
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
+  const url = new URL(e.request.url);
+  const isLocal = url.origin === self.location.origin;
+
+  // HTML: network first — always get the freshest version when online
+  if (isLocal && (url.pathname.endsWith(".html") || url.pathname.endsWith("/"))) {
+    e.respondWith(
+      fetch(e.request).then(resp => {
+        const copy = resp.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy));
+        return resp;
+      }).catch(() => caches.match(e.request).then(r => r || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  // Everything else: cache first, fallback to network
   e.respondWith(
     caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
       const copy = resp.clone();
