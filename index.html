@@ -367,6 +367,12 @@
   .food-log-name { font-size: 14px; font-weight: 500; }
   .food-log-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
   .food-log-del { background: none; border: none; color: var(--danger); font-size: 18px; cursor: pointer; padding: 4px 8px; }
+  .mic-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.15s; }
+  .mic-btn:hover { opacity: 0.8; }
+  .mic-btn.listening { background: var(--danger); animation: mic-pulse 1s ease-in-out infinite; }
+  @keyframes mic-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); } 50% { box-shadow: 0 0 0 8px rgba(220,38,38,0); } }
+  .voice-item-matched { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-top:1px solid var(--border); }
+  .voice-item-unmatched { padding:8px 0; border-top:1px solid var(--border); font-size:13px; color:var(--danger); }
 </style>
 </head>
 <body>
@@ -621,7 +627,10 @@ let calUi = {
   selectedFood: null,
   selectedMultiplier: 1,
   customCantidad: null,
-  addCustomMode: false
+  addCustomMode: false,
+  isListening: false,
+  voiceMode: false,
+  voiceResults: []
 };
 
 function loadState() {
@@ -1670,7 +1679,11 @@ function renderCalorias() {
   if (calUi.panelOpen) {
     const panel = document.createElement("div");
     panel.className = "cal-add-panel";
-    if (calUi.selectedFood) {
+    if (calUi.isListening) {
+      buildListeningIndicator(panel);
+    } else if (calUi.voiceMode) {
+      buildVoiceConfirmPanel(panel);
+    } else if (calUi.selectedFood) {
       buildQtyPicker(panel, calUi.selectedFood);
     } else if (calUi.addCustomMode) {
       buildCustomFoodForm(panel);
@@ -1734,7 +1747,10 @@ function buildFoodSearchPanel(panel) {
   let html = `
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <span style="font-size:16px;font-weight:700">Añadir alimento</span>
-      <button id="close-add-panel" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px">×</button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="mic-btn" class="mic-btn" title="Dictar alimentos por voz">🎤</button>
+        <button id="close-add-panel" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px">×</button>
+      </div>
     </div>
     <input class="food-search" id="food-search-input" type="text" placeholder="Buscar alimento..." value="${escHtml(calUi.searchQuery)}">
   `;
@@ -1757,6 +1773,7 @@ function buildFoodSearchPanel(panel) {
   panel.innerHTML = html;
 
   panel.querySelector("#close-add-panel").addEventListener("click", () => { calUi.panelOpen = false; renderCalorias(); });
+  panel.querySelector("#mic-btn").addEventListener("click", () => startVoiceInput());
 
   panel.querySelector("#food-search-input").addEventListener("input", e => {
     calUi.searchQuery = e.target.value;
@@ -1884,6 +1901,145 @@ function buildCustomFoodForm(panel) {
     calUi.panelOpen = false; calUi.addCustomMode = false; calUi.searchQuery = '';
     renderCalorias();
     toast(`${nombre} · ${kcal} kcal añadido`);
+  });
+}
+
+/* ================== VOZ ================== */
+function startVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { toast("Tu navegador no soporta voz. Prueba Chrome o Safari."); return; }
+  const rec = new SR();
+  rec.lang = 'es-ES';
+  rec.continuous = false;
+  rec.interimResults = false;
+  calUi.isListening = true;
+  calUi.panelOpen = true;
+  renderCalorias();
+  rec.onresult = e => {
+    calUi.isListening = false;
+    const transcript = e.results[0][0].transcript;
+    calUi.voiceResults = parseVoiceTranscript(transcript);
+    calUi.voiceMode = true;
+    renderCalorias();
+  };
+  rec.onerror = () => {
+    calUi.isListening = false;
+    toast("No te he entendido, inténtalo de nuevo");
+    renderCalorias();
+  };
+  rec.onend = () => { if (calUi.isListening) { calUi.isListening = false; renderCalorias(); } };
+  rec.start();
+}
+
+function parseVoiceTranscript(text) {
+  text = text.toLowerCase()
+    .replace(/\bgranos?\b/g, 'gramos')
+    .replace(/\bgr\b/g, 'gramos')
+    .replace(/\bkilos?\b/g, 'kg')
+    .replace(/\bun\b/g, '1').replace(/\buna\b/g, '1')
+    .replace(/\bdos\b/g, '2').replace(/\btres\b/g, '3')
+    .replace(/\bcuatro\b/g, '4').replace(/\bcinco\b/g, '5')
+    .replace(/\bseis\b/g, '6').replace(/\bsiete\b/g, '7')
+    .replace(/\bocho\b/g, '8').replace(/\bnueve\b/g, '9');
+
+  const segments = text.split(/[,;]|\s+y\s+|\s+e\s+/).map(s => s.trim()).filter(Boolean);
+
+  return segments.map(seg => {
+    const m = seg.match(/^(\d+(?:[.,]\d+)?)\s*(gramos?|g\b|kilos?|kg|ml|unidades?|ud\.?|latas?|vasos?|porciones?|puñados?|cdas?|rebanadas?|copas?|dosis)?\s*(?:de\s+)?(.+)$/);
+    let cantidad = 1, foodQuery = seg;
+    if (m) {
+      cantidad = parseFloat(m[1].replace(',', '.'));
+      const u = (m[2] || '').toLowerCase();
+      if (u.startsWith('k')) cantidad *= 1000;
+      foodQuery = m[3].trim();
+    }
+
+    const lq = foodQuery.toLowerCase();
+    let bestFood = null, bestScore = 0;
+    getAllFoods().forEach(f => {
+      const fn = f.nombre.toLowerCase();
+      let score = 0;
+      if (fn === lq) score = 100;
+      else if (fn.includes(lq) || lq.includes(fn)) score = 70;
+      else {
+        const qw = lq.split(/\s+/), nw = fn.split(/\s+/);
+        score = qw.filter(w => w.length > 2 && nw.some(n => n.includes(w) || w.includes(n))).length * 25;
+      }
+      if (score > bestScore) { bestScore = score; bestFood = f; }
+    });
+
+    const food = bestScore >= 25 ? bestFood : null;
+    return {
+      raw: seg, foodQuery, cantidad,
+      food, matched: !!food,
+      totalKcal: food ? Math.round((food.kcal / food.cantidad) * cantidad) : 0
+    };
+  });
+}
+
+function buildListeningIndicator(panel) {
+  panel.innerHTML = `
+    <div style="text-align:center;padding:28px 0">
+      <button class="mic-btn listening" style="width:56px;height:56px;font-size:24px;margin:0 auto 14px">🎤</button>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">Escuchando...</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.5">Di los alimentos con cantidad:<br><i>"100 gramos de arroz, 2 huevos y 300 gramos de pollo"</i></div>
+    </div>
+  `;
+}
+
+function buildVoiceConfirmPanel(panel) {
+  const results = calUi.voiceResults;
+  const matched = results.filter(r => r.matched);
+  const total = matched.reduce((s, r) => s + r.totalKcal, 0);
+
+  let html = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <button id="back-voice" style="background:none;border:none;font-size:26px;cursor:pointer;color:var(--muted);padding:0;line-height:1">‹</button>
+      <span style="font-size:16px;font-weight:700;flex:1">Confirmar</span>
+      <button id="close-voice" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);padding:0 4px;line-height:1">×</button>
+    </div>
+  `;
+  results.forEach((r, i) => {
+    if (r.matched) {
+      html += `
+        <div class="voice-item-matched">
+          <div style="min-width:0;flex:1">
+            <div style="font-size:14px;font-weight:500">${escHtml(r.food.nombre)}</div>
+            <div style="font-size:12px;color:var(--muted)">${r.cantidad} ${r.food.unidad}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <span style="font-weight:700">${r.totalKcal} kcal</span>
+            <button class="voice-remove food-log-del" data-idx="${i}">✕</button>
+          </div>
+        </div>`;
+    } else {
+      html += `<div class="voice-item-unmatched">No reconocido: &ldquo;${escHtml(r.raw)}&rdquo;</div>`;
+    }
+  });
+  html += `
+    <div style="margin-top:14px;padding-top:12px;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-weight:700">Total</span>
+      <span style="font-size:24px;font-weight:800;color:var(--accent-strong)">${total} kcal</span>
+    </div>
+    <button class="btn" id="voice-confirm" style="margin-top:12px">Añadir ${matched.length} alimento${matched.length !== 1 ? 's' : ''} · ${total} kcal</button>
+    <button class="btn secondary" id="voice-retry" style="margin-top:8px">Repetir</button>
+  `;
+  panel.innerHTML = html;
+
+  panel.querySelector("#back-voice").addEventListener("click", () => { calUi.voiceMode = false; calUi.voiceResults = []; renderCalorias(); });
+  panel.querySelector("#close-voice").addEventListener("click", () => { calUi.panelOpen = false; calUi.voiceMode = false; calUi.voiceResults = []; renderCalorias(); });
+  panel.querySelector("#voice-retry").addEventListener("click", () => { calUi.voiceMode = false; calUi.voiceResults = []; startVoiceInput(); });
+  panel.querySelector("#voice-confirm").addEventListener("click", () => {
+    calUi.voiceResults.filter(r => r.matched).forEach(r => addFoodEntry(r.food, r.cantidad));
+    calUi.panelOpen = false; calUi.voiceMode = false; calUi.voiceResults = [];
+    renderCalorias();
+    toast(`${matched.length} alimento${matched.length !== 1 ? 's' : ''} añadido${matched.length !== 1 ? 's' : ''} · ${total} kcal`);
+  });
+  panel.querySelectorAll(".voice-remove").forEach(btn => {
+    btn.addEventListener("click", () => {
+      calUi.voiceResults.splice(parseInt(btn.dataset.idx), 1);
+      buildVoiceConfirmPanel(panel);
+    });
   });
 }
 
