@@ -317,11 +317,11 @@ aJq(a){var s,r,q,p=new Float32Array(16)
 for(s=0;s<4;++s)for(r=s*4,q=0;q<4;++q)p[q*4+s]=a[r+q]
 return p},
 aJr(a){var s,r,q,p=new Float32Array(9)
-for(s=a.length,r=0;r<9;++r){q=B.pE[r]
+for(s=a.length,r=0;r<9;++r){q=B.pD[r]
 if(q<s)p[r]=a[q]
 else p[r]=0}return p},
 b7E(a){var s,r,q,p=new Float32Array(9)
-for(s=a.length,r=0;r<9;++r){q=B.pE[r]
+for(s=a.length,r=0;r<9;++r){q=B.pD[r]
 if(q<s)p[r]=a[q]
 else p[r]=0}return p},
 aS4(a){var s=new Float32Array(2)
@@ -7520,9 +7520,9 @@ r=a<2.5?(a-2)*10:(a-2.5)*2+6-1
 q=B.h.eu(B.d.hH(r),0,9)
 p=r-q
 s=1-p
-o=B.pF[q]
+o=B.pE[q]
 n=o[0]
-m=B.pF[q+1]
+m=B.pE[q+1]
 return new A.al(s*n+p*m[0],1-1/(s*o[1]+p*m[1]))},
 a_d(a,b,c,d){var s,r=b.Y(0,a),q=new A.C(Math.abs(c.a),Math.abs(c.b)),p=q.gf0(),o=p===0?B.jj:q.cD(0,p),n=r.a,m=Math.abs(n)/o.a,l=r.b,k=Math.abs(l)/o.b
 n/=m
@@ -12460,8 +12460,8 @@ break
 case 4:s=l.a
 s===$&&A.a()
 s=A.bQ(s,200)
-r=A.bQ(A.a8Y(l,B.pJ,B.Lu),24)
-q=A.bQ(A.a8Y(l,B.pJ,B.Ma),32)
+r=A.bQ(A.a8Y(l,B.pJ,B.Lv),24)
+q=A.bQ(A.a8Y(l,B.pJ,B.Me),32)
 p=A.bQ(l.a,10)
 o=A.bQ(l.a,12)
 l.d===$&&A.a()
@@ -12471,8 +12471,8 @@ break
 case 5:s=l.a
 s===$&&A.a()
 s=A.bQ(A.CE(s+240),40)
-r=A.bQ(A.a8Y(l,B.pL,B.MO),24)
-q=A.bQ(A.a8Y(l,B.pL,B.MQ),32)
+r=A.bQ(A.a8Y(l,B.pL,B.MR),24)
+q=A.bQ(A.a8Y(l,B.pL,B.MS),32)
 p=A.bQ(l.a+15,8)
 o=A.bQ(l.a+15,12)
 l.d===$&&A.a()
@@ -21112,7 +21112,7 @@ r.toString
 A.d_(r)
 q=a.i(0,"swipeEdge")
 q.toString
-return new A.oq(s,r,B.LW[A.eq(q)])},
+return new A.oq(s,r,B.LZ[A.eq(q)])},
 Fd:function Fd(a,b){this.a=a
 this.b=b},
 oq:function oq(a,b,c){this.a=a
@@ -23483,7 +23483,7 @@ if(a.as!==q)return q?-1:1
 return 0},
 aXH(a,b){var s=A.W(b).h("Y<1,e3>")
 s=A.V(new A.Y(b,new A.a9R(),s),s.h("ad.E"))
-return A.aX1(!0,s,a,B.Mx,!0,B.H2,null)},
+return A.aX1(!0,s,a,B.MB,!0,B.H2,null)},
 aGw(a){var s
 try{a.dZ()}catch(s){a.Q5()}a.w=B.a0f
 try{a.bl(A.b6l())}catch(s){}},
@@ -24059,7 +24059,7 @@ _.as=!0
 _.at=!1
 _.$ti=d},
 vr(a,b){var s
-if(a.j(0,b))return new A.Mn(B.Mv)
+if(a.j(0,b))return new A.Mn(B.Mz)
 s=A.b([],t.fJ)
 A.cb()
 a.ll(new A.acZ(b,A.aI(t.u),s))
@@ -24453,7 +24453,7 @@ t.Dn.a(a)
 s=J.aA(a)
 r=s.i(a,0)
 r.toString
-switch(B.L9[A.eq(r)].a){case 0:s=s.hW(a,1)
+switch(B.L8[A.eq(r)].a){case 0:s=s.hW(a,1)
 r=s[0]
 r.toString
 A.eq(r)
@@ -28342,14 +28342,13 @@ QR:function QR(a,b){this.a=a
 this.b=b},
 QQ:function QQ(a,b){this.a=a
 this.b=b},
-cs:function cs(a,b,c,d,e,f,g){var _=this
+cs:function cs(a,b,c,d,e,f){var _=this
 _.a=a
 _.b=b
 _.c=c
 _.d=d
 _.e=e
-_.f=f
-_.w=g},
+_.w=f},
 oF:function oF(a,b,c,d){var _=this
 _.a=a
 _.b=b
@@ -28766,8 +28765,7 @@ _.a=f},
 WX:function WX(){var _=this
 _.f=_.e=_.d=$
 _.c=_.a=null},
-ava:function ava(a,b){this.a=a
-this.b=b},
+ava:function ava(a){this.a=a},
 avb:function avb(a,b){this.a=a
 this.b=b},
 avc:function avc(a){this.a=a},
@@ -29309,7 +29307,7 @@ a5Q:function a5Q(a){this.a=a},
 a5R:function a5R(){},
 tf:function tf(a,b){this.a=a
 this.b=b},
-akN(a){return B.b.B5(B.LQ,new A.akO(a),new A.akP(a))},
+akN(a){return B.b.B5(B.LT,new A.akO(a),new A.akP(a))},
 b1A(a){var s=J.aA(a),r=J.et(t.j.a(s.i(a,"alternates")),new A.aqy(),t.Rq)
 r=A.V(r,r.$ti.h("ad.E"))
 return new A.mE(r,B.d.dm(A.d_(s.i(a,"resultType"))))},
@@ -29905,7 +29903,7 @@ ace(a){var s=a/100
 return(s<=0.0031308?s*12.92:1.055*Math.pow(s,0.4166666666666667)-0.055)*255},
 aGO(a){var s=Math.pow(Math.abs(a),0.42)
 return A.ri(a)*400*s/(s+27.13)},
-aGP(a){var s=A.o9(a,B.MN),r=A.aGO(s[0]),q=A.aGO(s[1]),p=A.aGO(s[2])
+aGP(a){var s=A.o9(a,B.MQ),r=A.aGO(s[0]),q=A.aGO(s[1]),p=A.aGO(s[2])
 return Math.atan2((r+q-2*p)/9,(11*r+-12*q+p)/11)},
 aYy(a,b){var s,r,q,p,o,n=B.h.bh(b,4)<=1?0:100,m=(b&1)===0?0:100
 if(b<4){s=(a-n*0.7152-m*0.0722)/0.2126
@@ -31120,7 +31118,7 @@ x4(){var s=this.Q
 s===$&&A.a()
 return s},
 x5(a,b,c,d){var s,r,q,p
-if(a<0||b<0)return B.Mp
+if(a<0||b<0)return B.Mt
 s=this.a
 s===$&&A.a()
 s=s.a
@@ -31139,7 +31137,7 @@ l.push(new A.eE(n[0],n[1],n[2],n[3],B.lr[m]))}return l},
 dd(a){var s,r,q=this.a
 q===$&&A.a()
 s=q.a.getGlyphPositionAtCoordinate(a.a,a.b)
-r=B.LY[J.aU(s.affinity.value)]
+r=B.M0[J.aU(s.affinity.value)]
 return new A.at(J.aU(s.pos),r)},
 M9(a){var s=this.a
 s===$&&A.a()
@@ -31625,7 +31623,7 @@ A.q3.prototype={
 H(){return"CanvasKitVariant."+this.b}}
 A.aaW.prototype={
 gn2(){var s=this.b,r=s==null?null:s.canvasKitVariant
-return A.aXT(B.M5,r==null?"auto":r)},
+return A.aXT(B.M8,r==null?"auto":r)},
 gIm(){var s,r=this.b
 if(r==null)s=null
 else{r=r.canvasKitMaximumSurfaces
@@ -36113,14 +36111,14 @@ abX(){var s=this,r=s.r
 if(r==null){r=s.r=new A.LF(s.c)
 r.d=new A.aaj(s)}return r},
 Lb(a){var s,r=this
-if(B.b.q(B.MW,a.type)){s=r.abX()
+if(B.b.q(B.MX,a.type)){s=r.abX()
 s.toString
 s.saqx(r.c.$0().Of(5e5))
 if(r.f!==B.pc){r.f=B.pc
 r.Sj()}}return r.d.a.a2f(a)},
 Sj(){var s,r
 for(s=this.w,r=0;r<s.length;++r)s[r].$1(this.f)},
-a2e(a){if(B.b.q(B.Md,a))return this.f===B.io
+a2e(a){if(B.b.q(B.Mh,a))return this.f===B.io
 return!1}}
 A.aak.prototype={
 $0(){return new A.d2(Date.now(),0,!1)},
@@ -43392,7 +43390,7 @@ if(r>255){if(s>b){q=this.a
 q.toString
 q.E(0,A.ir(a,b,s))}q=this.a
 q.toString
-q.E(0,A.ir(B.Ld,0,1))
+q.E(0,A.ir(B.Lc,0,1))
 b=s+1}}if(b<c)this.Oh(a,b,c,!1)}}
 A.T1.prototype={
 E(a,b){this.hB(b,0,b.length,!1)},
@@ -46974,7 +46972,7 @@ h=r[4]
 g=r[5]
 f=r[6]
 e=r[7]
-for(d=l,q=0;q<64;++q,e=f,f=g,g=h,h=b,i=j,j=k,k=d,d=a){c=(e+(((h>>>6|h<<26)^(h>>>11|h<<21)^(h>>>25|h<<7))>>>0)>>>0)+(((h&g^~h&f)>>>0)+(B.LB[q]+s[q]>>>0)>>>0)>>>0
+for(d=l,q=0;q<64;++q,e=f,f=g,g=h,h=b,i=j,j=k,k=d,d=a){c=(e+(((h>>>6|h<<26)^(h>>>11|h<<21)^(h>>>25|h<<7))>>>0)>>>0)+(((h&g^~h&f)>>>0)+(B.LD[q]+s[q]>>>0)>>>0)>>>0
 b=i+c>>>0
 a=c+((((d>>>2|d<<30)^(d>>>13|d<<19)^(d>>>22|d<<10))>>>0)+((d&k^d&j^k&j)>>>0)>>>0)>>>0}r.$flags&2&&A.aD(r)
 r[0]=d+l>>>0
@@ -50019,7 +50017,7 @@ r=A.j0(B.PB,B.f,r==null?1:r)
 r.toString
 q=p.ag(0,q.gn(q))
 if(q==null)q=1
-return A.Tx(A.aNu(null,B.m,new A.vL(q,B.LU,new A.d1(B.Ch,this.e)),s,1,B.TS),r)}}
+return A.Tx(A.aNu(null,B.m,new A.vL(q,B.LX,new A.d1(B.Ch,this.e)),s,1,B.TS),r)}}
 A.KA.prototype={
 l(){var s=this,r=s.bA$
 if(r!=null)r.K(0,s.ghz())
@@ -53601,7 +53599,7 @@ A.xx.prototype={
 H(){return"_CornerId."+this.b}}
 A.mX.prototype={}
 A.vO.prototype={
-lz(){var s,r,q,p=this,o=A.b4E(B.M8,new A.agv(p,p.b.gaV().Y(0,p.a.gaV()))),n=p.a
+lz(){var s,r,q,p=this,o=A.b4E(B.Mb,new A.agv(p,p.b.gaV().Y(0,p.a.gaV()))),n=p.a
 n.toString
 s=o.a
 r=p.qe(n,s)
@@ -55086,7 +55084,7 @@ A.azO.prototype={
 $2(a,b){return this.a.B$.ce(a,this.b)},
 $S:12}
 A.Vj.prototype={
-gDH(){return B.LA},
+gDH(){return B.LC},
 Iq(a){var s
 switch(a.a){case 0:s=this.d.b
 break
@@ -58596,7 +58594,7 @@ A.aA2.prototype={
 $0(){return A.b([],t.q1)},
 $S:269}
 A.W8.prototype={
-gDH(){return B.LH},
+gDH(){return B.LJ},
 Iq(a){var s,r=this
 switch(a.a){case 0:s=r.d.ax
 break
@@ -59299,7 +59297,7 @@ return s.b}}
 A.k9.prototype={
 H(){return"_ListTileSlot."+this.b}}
 A.Yw.prototype={
-gDH(){return B.M3},
+gDH(){return B.M6},
 Iq(a){var s,r=this
 switch(a.a){case 0:s=r.d
 break
@@ -59621,7 +59619,7 @@ r.f=s.d},
 $S:0}
 A.PG.prototype={
 I(a){var s=this.c.R(0,new A.i(0,40.95))
-return A.aNu(A.MM(null,B.G8,!0),B.V,new A.vL(1,B.MD,new A.d1(B.Cg,B.r)),s,1.25,B.TT)}}
+return A.aNu(A.MM(null,B.G8,!0),B.V,new A.vL(1,B.MH,new A.d1(B.Cg,B.r)),s,1.25,B.TT)}}
 A.rh.prototype={
 H(){return"MaterialType."+this.b}}
 A.Cz.prototype={
@@ -60073,7 +60071,7 @@ $3(a,b,c){return new A.pC(b,this.a,!1,c,null)},
 $S:246}
 A.Ql.prototype={
 a7T(a){var s=t.Tr
-s=A.V(new A.Y(B.M7,new A.ai1(a),s),s.h("ad.E"))
+s=A.V(new A.Y(B.Ma,new A.ai1(a),s),s.h("ad.E"))
 return s},
 j(a,b){if(b==null)return!1
 if(this===b)return!0
@@ -60258,7 +60256,7 @@ q=this.a
 n=A.ui(new A.eP(new A.ab(0,1/0,48,1/0),new A.bF(B.oz,new A.eM(B.dJ,m,m,q.Q,m),m),m),B.N,B.Z,o)
 return new A.CJ(A.bV(!0,m,A.qY(!1,m,!0,A.aZ7(n,B.aA,m,o),m,!0,m,m,m,m,new A.WN(m,s.y),m,m,m,this.gJU(),m,m,m,m,m,m,m),!1,m,!0,m,!1,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,m,B.jc,m,m,m,m,m,m,m,m),m)}}
 A.yh.prototype={
-al(){return new A.Ii(B.Mk,this.$ti.h("Ii<1>"))}}
+al(){return new A.Ii(B.Mo,this.$ti.h("Ii<1>"))}}
 A.Ii.prototype={
 au(){this.aJ()
 this.TZ()},
@@ -65018,7 +65016,7 @@ return new A.nL(r.a.de(s.gj2()),r.b,r.c)},
 dd(a){var s=this.b
 return s.a.c.dd(a.Y(0,s.gj2()))},
 r7(){var s,r,q=this.b,p=q.gj2()
-if(!isFinite(p.a)||!isFinite(p.b))return B.Mu
+if(!isFinite(p.a)||!isFinite(p.b))return B.My
 s=q.f
 if(s==null){s=q.a.c.r7()
 q.f=s}if(p.j(0,B.f))r=s
@@ -74747,7 +74745,7 @@ break
 case 1:return A.O(q,r)}})
 return A.P($async$FR,r)},
 abD(a,b){var s,r,q,p
-if(a===b)return B.Mm
+if(a===b)return B.Mq
 s=A.b([],t.QP)
 if(a==null)s.push(b)
 else{r=B.b.hj(B.fy,a)
@@ -76785,7 +76783,7 @@ A.mk.prototype={}
 A.QO.prototype={
 ma(a,b,c){var s,r,q,p,o,n=$.a4.ak$.d.c
 if(n==null||n.e==null)return!1
-for(s=t.F,r=0;r<2;++r){q=B.Me[r]
+for(s=t.F,r=0;r<2;++r){q=B.Mi[r]
 p=n.e
 p.toString
 o=A.aFY(p,q,s)
@@ -76895,7 +76893,7 @@ this.hA()}}
 A.pb.prototype={
 k(a){return"Entry#"+A.bm(this)+"("+this.d.k(0)+")"}}
 A.zr.prototype={
-al(){return new A.Gi(A.aI(t.mf),B.Mj,null,null)},
+al(){return new A.Gi(A.aI(t.mf),B.Mn,null,null)},
 ayk(a,b){return this.w.$2(a,b)},
 auG(a,b){return this.x.$2(a,b)}}
 A.Gi.prototype={
@@ -77122,7 +77120,7 @@ r=n.gag7()
 q=n.a
 q=q.ch
 q.toString
-l.a=A.aYk(!0,A.aMZ(B.m,r,s,q,A.aRH(),n.gahE(),m,n.gaif(),B.Ml,!0,"nav",B.ZB),"Navigator Scope",!0,m,m,m,m)}else n.a.toString
+l.a=A.aYk(!0,A.aMZ(B.m,r,s,q,A.aRH(),n.gahE(),m,n.gaif(),B.Mp,!0,"nav",B.ZB),"Navigator Scope",!0,m,m,m,m)}else n.a.toString
 l.b=null
 s=n.a
 s.toString
@@ -79760,7 +79758,7 @@ h.HK()
 r=h.gacx()
 q=q.vW
 h.e!==$&&A.b4()
-h.e=new A.S9(s,new A.bP(B.Ov,l,t.kr),new A.rd(),p,B.cA,0,j,h.gaeL(),h.gaeN(),r,B.cA,0,i,h.gaeF(),h.gaeH(),r,k,B.Mi,f,g.CW,g.cx,g.cy,o,g,n,m,g.x,q,new A.MU(),new A.MU())
+h.e=new A.S9(s,new A.bP(B.Ov,l,t.kr),new A.rd(),p,B.cA,0,j,h.gaeL(),h.gaeN(),r,B.cA,0,i,h.gaeF(),h.gaeH(),r,k,B.Mm,f,g.CW,g.cx,g.cy,o,g,n,m,g.x,q,new A.MU(),new A.MU())
 return h},
 yc(a,b){var s,r,q,p=this,o=p.a.c,n=o.a.a.length
 if(n<a.b||n<a.a)return
@@ -83178,7 +83176,7 @@ j(a,b){var s=this
 if(b==null)return!1
 if(J.X(b)!==A.x(s))return!1
 return b instanceof A.cE&&b.a===s.a&&b.b==s.b&&b.d===s.d&&A.cQ(null,null)},
-gC(a){return A.T(this.a,this.b,null,this.d,A.bJ(B.Mw),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
+gC(a){return A.T(this.a,this.b,null,this.d,A.bJ(B.MA),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
 k(a){return"IconData(U+"+B.c.eJ(B.h.pD(this.a,16).toUpperCase(),5,"0")+")"}}
 A.qW.prototype={
 cC(a){return!this.w.j(0,a.w)},
@@ -84122,7 +84120,7 @@ b=r?a1:a3.fr
 if(b==null)b=a2.b.c.z
 a3=r?a1:a3.fx
 if(a3==null)a3=a2.b.c.Q
-a=new A.CG(a4,s,q,p,m,o,n,a5,g===!0,a6,a7,i,h,l,k,j,f,new A.uZ(a1),B.Mh,e===!0,d,c,b,a3,A.aZn(a2))
+a=new A.CG(a4,s,q,p,m,o,n,a5,g===!0,a6,a7,i,h,l,k,j,f,new A.uZ(a1),B.Ml,e===!0,d,c,b,a3,A.aZn(a2))
 if(!a.j(0,a0.e))a0.a8(new A.axM(a0,a))},
 XJ(){if(this.d==null)this.qP()},
 J5(){this.qP()},
@@ -90475,7 +90473,7 @@ r.zt()
 return s.b0()},
 l(){var s,r,q,p,o=this
 for(s=o.b,r=s.length,q=o.gFT(),p=0;p<s.length;s.length===r||(0,A.A)(s),++p)s[p].K(0,q)
-o.b=B.Mt
+o.b=B.Mx
 o.y=!1
 o.dH()},
 ev(a,b){return a.ng(b)},
@@ -96626,7 +96624,7 @@ return new A.zk(q,p,s,B.N,B.fi,s,s)}}
 A.Vl.prototype={
 I(a){var s=this,r=null,q=A.bN(a,r,t.w).w
 return A.bR(r,A.cl(A.b([A.ct(s.Ut(a,"rutina","Rutina"),1),A.ct(s.Ut(a,"comida","Alimentaci\xf3n"),1),new A.w7(new A.atm(s),new A.atn(s,a),A.ey(B.pm,s.c.e,r,r),B.a3,r,t.iX)],t.p),B.z,B.t,B.y,0),B.m,B.oh,r,r,r,r,r,r,new A.ac(8,q.r.b+6,8,0),r,r,r)},
-Ut(a,b,c){var s,r=null,q=this.d===b,p=b==="comida",o=p?B.lY:B.cL,n=q?o.b:B.oh,m=q?B.Lx:r,l=A.bR(r,r,B.m,r,r,new A.by(p?B.kf:B.hH,r,r,r,r,r,r,B.cG),r,8,r,r,r,r,r,8)
+Ut(a,b,c){var s,r=null,q=this.d===b,p=b==="comida",o=p?B.lY:B.cL,n=q?o.b:B.oh,m=q?B.Lz:r,l=A.bR(r,r,B.m,r,r,new A.by(p?B.kf:B.hH,r,r,r,r,r,r,B.cG),r,8,r,r,r,r,r,8)
 p=q?B.A:B.n
 s=q?o.e:o.f
 return A.fW(r,A.bR(r,A.cl(A.b([l,B.TY,A.ae(c,r,r,r,A.bu(this.c,s,14,p),r,r)],t.p),B.z,B.fM,B.y,0),B.m,r,r,new A.by(n,r,r,B.Ci,m,r,r,B.G),r,r,r,B.HK,B.oy,r,r,r),B.a9,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,r,new A.atl(a,b),r,r,r,r,r,r,!1,B.aW)},
@@ -96661,7 +96659,7 @@ return A.d7(A.b([B.du,r,B.cO,A.ae(p,q,q,q,A.fv(o,20,B.A),q,q),B.aY,A.ct(s,1)],t.
 $S:132}
 A.UZ.prototype={
 I(a){var s=null,r=this.c,q=A.bN(a,s,t.w).w,p=r.y,o=A.lx(p,1.5)
-return A.bR(s,A.fB(A.Tx(A.fW(B.aJ,A.d7(A.b([A.bR(s,A.fB(new A.NI(22,p,"medidas",s),s,s),B.m,s,s,new A.by(B.a3,s,o,s,B.M6,s,s,B.cG),s,46,s,s,s,s,s,46),B.mw,A.ae("MEDIDAS",s,s,s,A.fw(r,r.f,9,B.A).apL(1.4),s,s)],t.p),B.z,B.t,B.bn),B.a9,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.aso(this,a),s,s,s,s,s,s,!1,B.aW),B.PD),s,s),B.m,s,s,new A.by(B.a3,s,new A.e0(new A.aM(r.w,1,B.p,-1),B.r,B.r,B.r),s,B.Kx,s,s,B.G),s,66,s,s,new A.ac(0,0,0,q.r.d),s,s,s)},
+return A.bR(s,A.fB(A.Tx(A.fW(B.aJ,A.d7(A.b([A.bR(s,A.fB(new A.NI(22,p,"medidas",s),s,s),B.m,s,s,new A.by(B.a3,s,o,s,B.M9,s,s,B.cG),s,46,s,s,s,s,s,46),B.mw,A.ae("MEDIDAS",s,s,s,A.fw(r,r.f,9,B.A).apL(1.4),s,s)],t.p),B.z,B.t,B.bn),B.a9,!1,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,new A.aso(this,a),s,s,s,s,s,s,!1,B.aW),B.PD),s,s),B.m,s,s,new A.by(B.a3,s,new A.e0(new A.aM(r.w,1,B.p,-1),B.r,B.r,B.r),s,B.Kx,s,s,B.G),s,66,s,s,new A.ac(0,0,0,q.r.d),s,s,s)},
 air(a){A.aFl(this.c.b,new A.asn(this),a,!0,B.iY,t.z)}}
 A.aso.prototype={
 $0(){return this.a.air(this.b)},
@@ -96686,7 +96684,7 @@ this.a8(new A.awo(this))},
 l(){var s=this.d
 if(s!=null)s.aZ(0)
 this.aE()},
-I(a){var s,r,q,p,o,n,m,l,k,j,i=this,h=null,g=i.a.c,f=A.eX(a,!0,t.W),e=B.pC[f.c],d=e.a,c=e.d,b=B.b.ki(c,0,new A.aws())
+I(a){var s,r,q,p,o,n,m,l,k,j,i=this,h=null,g=i.a.c,f=A.eX(a,!0,t.W),e=B.pG[f.c],d=e.a,c=e.d,b=B.b.ki(c,0,new A.aws())
 for(s=c.length,r=0,q=0;q<s;++q)r+=f.Dv(d,c[q].a).a
 p=b===0?0:r/b
 o=f.LF(d)
@@ -96696,7 +96694,7 @@ s=A.bM(20)
 m=new A.d2(Date.now(),0,!1)
 l=g.f
 k=t.p
-s=A.b([new A.bF(B.I_,A.bR(h,A.cl(A.b([A.ct(A.d7(A.b([A.ae("HOY \xb7 "+(""+A.wd(m)+" "+B.LI[A.hC(m)-1]),h,h,h,A.e7(g,h),h,h),B.U3,A.ae("D\xeda "+(f.c+1),h,h,h,A.fv(g,23,B.cp),h,h),B.U_,A.ae(e.b,h,h,h,A.bu(g,l,13.5,B.n),h,h)],k),B.ah,B.t,B.y),1),A.aNH(A.ae(""+B.d.aC(p*100)+"%",h,h,h,A.fw(g,g.e,13,B.A),h,h),g.y,p,58,6,g.w)],k),B.z,B.t,B.y,0),B.m,h,h,new A.by(B.a3,h,h,s,B.aQ,h,h,B.G),h,h,h,h,B.bw,h,h,h),h),new A.bF(B.oA,A.cl(A.vF(5,new A.awt(f,g,a),!0,t.l7),B.z,B.t,B.y,0),h)],k)
+s=A.b([new A.bF(B.I_,A.bR(h,A.cl(A.b([A.ct(A.d7(A.b([A.ae("HOY \xb7 "+(""+A.wd(m)+" "+B.LK[A.hC(m)-1]),h,h,h,A.e7(g,h),h,h),B.U3,A.ae("D\xeda "+(f.c+1),h,h,h,A.fv(g,23,B.cp),h,h),B.U_,A.ae(e.b,h,h,h,A.bu(g,l,13.5,B.n),h,h)],k),B.ah,B.t,B.y),1),A.aNH(A.ae(""+B.d.aC(p*100)+"%",h,h,h,A.fw(g,g.e,13,B.A),h,h),g.y,p,58,6,g.w)],k),B.z,B.t,B.y,0),B.m,h,h,new A.by(B.a3,h,h,s,B.aQ,h,h,B.G),h,h,h,h,B.bw,h,h,h),h),new A.bF(B.oA,A.cl(A.vF(5,new A.awt(f,g,a),!0,t.l7),B.z,B.t,B.y,0),h)],k)
 if(n){j=A.bM(14)
 s.push(new A.bF(B.I0,A.bR(h,A.ae("Ya entrenaste este d\xeda esta semana ("+A.o(f.LF(d))+"). Est\xe1 bloqueado para no duplicar.",h,h,h,A.bu(g,l,12.5,B.n),h,h),B.m,h,h,new A.by(g.z,h,h,j,h,h,h,B.G),h,h,h,h,B.HO,h,h,h),h))}s.push(new A.bF(B.HW,A.ae("EJERCICIOS \xb7 "+r+"/"+b+" series",h,h,h,A.e7(g,h),h,h),h))
 B.b.N(s,new A.Y(c,new A.awu(i,d,g,n),A.W(c).h("Y<1,f>")))
@@ -96727,7 +96725,7 @@ A.aws.prototype={
 $2(a,b){return a+b.c},
 $S:624}
 A.awt.prototype={
-$1(a){var s,r,q,p,o,n,m,l=this,k=null,j=B.pC[a],i=l.a,h=a===i.c
+$1(a){var s,r,q,p,o,n,m,l=this,k=null,j=B.pG[a],i=l.a,h=a===i.c
 i=i.LF(j.a)
 s=j.c==="cardio"
 r=s?B.c4:l.b.y
@@ -96768,18 +96766,15 @@ a_n(){return this.r.$0()}}
 A.WX.prototype={
 au(){this.aJ()
 this.ag2()},
-ag2(){var s,r,q,p=this,o=p.c
-o.toString
-s=A.eX(o,!1,t.W)
-o=p.a
-r=s.Dv(o.e,o.d.a)
-o=p.a.d
-q=s.e.i(0,o.a)
-if(q==null)q=p.a.d.f
-o=t.QX
-p.d=A.vF(p.a.d.c,new A.ava(r,q),!0,o)
-p.e=A.vF(p.a.d.c,new A.avb(p,r),!0,o)
-p.f=A.vF(p.a.d.c,new A.avc(r),!0,o)},
+ag2(){var s,r,q=this,p=q.c
+p.toString
+s=A.eX(p,!1,t.W)
+p=q.a
+r=s.Dv(p.e,p.d.a)
+p=t.QX
+q.d=A.vF(q.a.d.c,new A.ava(r),!0,p)
+q.e=A.vF(q.a.d.c,new A.avb(q,r),!0,p)
+q.f=A.vF(q.a.d.c,new A.avc(r),!0,p)},
 l(){var s,r,q,p=this,o=p.d
 o===$&&A.a()
 o=A.V(o,t.QX)
@@ -96891,10 +96886,11 @@ a.hx()
 a.aj()}return A.O(null,r)}})
 return A.P($async$yd,r)}}
 A.ava.prototype={
-$1(a){var s,r=this.a.i(0,a+1),q=r==null?null:r.r
-if(q==null)q=this.b
-s=q==null?"":A.aIh(q)
-return new A.dO(new A.cv(s,B.bq,B.al),$.ao())},
+$1(a){var s,r=this.a.i(0,a+1)
+if((r==null?null:r.r)==null)s=""
+else{s=r.r
+s.toString
+s=A.aIh(s)}return new A.dO(new A.cv(s,B.bq,B.al),$.ao())},
 $S:133}
 A.avb.prototype={
 $1(a){var s,r=this.b.i(0,a+1)
@@ -102091,7 +102087,7 @@ B.Eh=new A.apZ()
 B.a8=new A.TO()
 B.c1=new A.TQ()
 B.eC=new A.TX(0,0,0,0)
-B.Mh=s([],A.av("D<a8D>"))
+B.Ml=s([],A.av("D<a8D>"))
 B.a1B=new A.aq7()
 B.eT=new A.Uh()
 B.bu=new A.Ui()
@@ -102570,9 +102566,9 @@ B.ib=new A.lR(!1,!1,!1,!1)
 B.ic=new A.lR(!1,!1,!1,!0)
 B.li=new A.lR(!0,!1,!1,!1)
 B.lj=new A.lR(!0,!1,!1,!0)
-B.Mn=s([],A.av("D<hw>"))
-B.Mo=s([],A.av("D<hN>"))
-B.oZ=new A.Bd(B.Mn,B.Mo,!0)
+B.Mr=s([],A.av("D<hw>"))
+B.Ms=s([],A.av("D<hN>"))
+B.oZ=new A.Bd(B.Mr,B.Ms,!0)
 B.p_=new A.aap(0,"center")
 B.p0=new A.qA(0)
 B.IM=new A.qA(1)
@@ -102814,64 +102810,24 @@ B.Gf=new A.q(0.050980392156862744,0.1568627450980392,0.11764705882352941,0.07843
 B.PE=new A.i(0,-6)
 B.D5=new A.bA(0,B.L,B.Gf,B.PE,20)
 B.Kx=s([B.D5],t.E)
-B.M9=s([1373.2198709594231,-1100.4251190754821,-7.278681089101213],t.n)
-B.LS=s([-271.815969077903,559.6580465940733,-32.46047482791194],t.n)
+B.Md=s([1373.2198709594231,-1100.4251190754821,-7.278681089101213],t.n)
+B.LV=s([-271.815969077903,559.6580465940733,-32.46047482791194],t.n)
 B.N1=s([1.9622899599665666,-57.173814538844006,308.7233197812385],t.n)
-B.Kz=s([B.M9,B.LS,B.N1],t.zg)
+B.Kz=s([B.Md,B.LV,B.N1],t.zg)
 B.pA=s(["text","multiline","number","phone","datetime","emailAddress","url","visiblePassword","name","address","none","webSearch","twitter"],t.s)
 B.KA=s([239,191,189],t.t)
 B.pB=s(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],t.s)
 B.KZ=s([4,9,14,19],t.t)
-B.It=new A.cs("Press banca plano (barra)","Compuesto",5,"5",null,50,"Compuesto 5\xd75. +2,5 kg cuando completes con RPE \u22647. \xb7 RPE 7-8 \xb7 desc 3 min")
-B.ID=new A.cs("Press inclinado (mancuernas)","Accesorio",4,"6-10",null,18,"\xc9nfasis clavicular. Doble progresi\xf3n. \xb7 RPE 7-8 \xb7 desc 2 min")
-B.IE=new A.cs("Aperturas pec-deck o cable","Accesorio",3,"10-15",null,20,"Tensi\xf3n continua, sin balanceo. \xb7 RPE 8 \xb7 desc 75-90 s")
-B.Im=new A.cs("Fondos asistidos o press cerrado","Accesorio",3,"8-10",null,null,"Codos pegados al cuerpo. \xb7 RPE 7-8 \xb7 desc 90-120 s")
-B.Is=new A.cs("Tr\xedceps polea con cuerda","Accesorio",3,"10-15",null,20,"\xdaltima serie cerca del fallo. \xb7 RPE 8-9 \xb7 desc 60-75 s")
-B.Ii=new A.cs("Face pull con cuerda","Recordatorio",3,"12-15",null,15,"Salud de hombro (recordatorio espalda). NO machacar. \xb7 RPE 8 \xb7 desc 60 s")
-B.If=new A.cs("Plancha frontal","Core",2,"30-45","s",null,"Anti-extensi\xf3n. Gl\xfateo activo. \xb7 RPE 7-8 \xb7 desc 45-60 s")
-B.L_=s([B.It,B.ID,B.IE,B.Im,B.Is,B.Ii,B.If],t.Fe)
-B.RP=new A.oF("A","Pecho + Tr\xedceps","pesas",B.L_)
-B.In=new A.cs("Peso muerto rumano (mancuerna)","Compuesto",5,"5",null,24,"Compuesto 5\xd75. Bisagra de cadera, espalda neutra. +2,5 kg/mancuerna con RPE \u22647. \xb7 RPE 7-8 \xb7 desc 3 min")
-B.Ih=new A.cs("Jal\xf3n al pecho o dominada asistida","Accesorio",4,"6-10",null,45,"Tir\xf3n vertical. \xb7 RPE 7-8 \xb7 desc 2 min")
-B.Io=new A.cs("Remo pecho apoyado","Accesorio",4,"6-10",null,20,"Codos atr\xe1s, esc\xe1pulas estables. \xb7 RPE 7-8 \xb7 desc 2 min")
-B.Ij=new A.cs("Remo sentado en cable (agarre neutro)","Accesorio",3,"8-12",null,45,"Recorrido completo. No tirar con lumbar. \xb7 RPE 7-8 \xb7 desc 90-120 s")
-B.IC=new A.cs("Curl mancuerna inclinado","Accesorio",3,"8-12",null,10,"Estiramiento largo del b\xedceps. \xb7 RPE 8 \xb7 desc 75-90 s")
-B.Ik=new A.cs("P\xe1jaros / deltoide posterior","Recordatorio",3,"12-20",null,8,"Sinergia con la espalda (recordatorio hombro). Carga baja. \xb7 RPE 8 \xb7 desc 60 s")
-B.Iq=new A.cs("Crunch en m\xe1quina","Core",2,"12-15",null,25,"Flexi\xf3n controlada. No tires del cuello. \xb7 RPE 8 \xb7 desc 60 s")
-B.MU=s([B.In,B.Ih,B.Io,B.Ij,B.IC,B.Ik,B.Iq],t.Fe)
-B.RT=new A.oF("B","Espalda + B\xedceps","pesas",B.MU)
-B.Iw=new A.cs("Cinta inclinada al 15%","Cardio",1,"35-45","min",null,"Ritmo de conversaci\xf3n. No HIIT. \xb7 RPE 5-6 \xb7 continuo")
-B.MK=s([B.Iw],t.Fe)
-B.RS=new A.oF("C","Cardio","cardio",B.MK)
-B.Iu=new A.cs("Press militar (barra) o sentado","Compuesto",5,"5",null,30,"Compuesto 5\xd75. Si lumbar protesta de pie, hazlo sentado. \xb7 RPE 7-8 \xb7 desc 3 min")
-B.Ir=new A.cs("Press Arnold o inclinado (mancuernas)","Accesorio",3,"8-12",null,14,"Variaci\xf3n angular del press. \xb7 RPE 7-8 \xb7 desc 90-120 s")
-B.Il=new A.cs("Elevaciones laterales (mancuernas)","Accesorio",4,"12-20",null,8,"Estricto, sin trampear. \xb7 RPE 8-9 \xb7 desc 60-75 s")
-B.Iz=new A.cs("Elevaciones laterales polea (un brazo)","Accesorio",3,"12-15",null,7,"Tensi\xf3n continua. \xb7 RPE 8-9 \xb7 desc 60 s")
-B.Ip=new A.cs("Face pull con cuerda","Accesorio",3,"12-15",null,15,"Deltoide posterior + manguito. \xb7 RPE 8 \xb7 desc 60 s")
-B.IG=new A.cs("Aperturas en pec-deck","Recordatorio",3,"10-15",null,20,"Mantiene frecuencia pecho 2x/sem (recordatorio pecho). \xb7 RPE 8 \xb7 desc 60-75 s")
-B.Iv=new A.cs("Pallof press en polea","Core",2,"12","/lado",15,"Anti-rotaci\xf3n. No dejes que el tronco gire. \xb7 RPE 7-8 \xb7 desc 45-60 s")
-B.MP=s([B.Iu,B.Ir,B.Il,B.Iz,B.Ip,B.IG,B.Iv],t.Fe)
-B.RR=new A.oF("D","Hombro","pesas",B.MP)
-B.Iy=new A.cs("Peso muerto convencional (barra)","Compuesto",5,"5",null,60,"Compuesto 5\xd75. Si rodilla protesta, prueba sumo o trap-bar. \xb7 RPE 7-8 \xb7 desc 3 min")
-B.IH=new A.cs("Hip thrust","Accesorio",4,"6-10",null,50,"Gl\xfateo dominante, amable con la rodilla. \xb7 RPE 7-8 \xb7 desc 2 min")
-B.IA=new A.cs("Prensa horizontal (rango ~90\xb0)","Accesorio",3,"10-12",null,80,"NO bajes hasta el pecho. Pies a anchura media o algo altos. \xb7 RPE 7-8 \xb7 desc 2 min")
-B.IF=new A.cs("Curl femoral tumbado","Accesorio",4,"10-15",null,25,"Isquios fuertes estabilizan la r\xf3tula. 1 s de pausa. \xb7 RPE 8-9 \xb7 desc 75-90 s")
-B.Ix=new A.cs("Abductor en m\xe1quina sentado","Accesorio",3,"12-15",null,30,"Gl\xfateo medio: clave para el tracking rotuliano. \xb7 RPE 8 \xb7 desc 60 s")
-B.Ig=new A.cs("Gemelo en prensa o de pie","Accesorio",4,"12-20",null,40,"Pausa al estiramiento y arriba. \xb7 RPE 8-9 \xb7 desc 60-75 s")
-B.IB=new A.cs("Remo con mancuerna unilateral","Recordatorio",3,"8-12",null,18,"Grosor de espalda con poco volumen lumbar (recordatorio espalda). \xb7 RPE 8 \xb7 desc 75 s")
-B.MX=s([B.Iy,B.IH,B.IA,B.IF,B.Ix,B.Ig,B.IB],t.Fe)
-B.RQ=new A.oF("E","Pierna","pesas",B.MX)
-B.pC=s([B.RP,B.RT,B.RS,B.RR,B.RQ],A.av("D<oF>"))
 B.n7=new A.IZ(0,"named")
 B.BU=new A.IZ(1,"anonymous")
-B.L9=s([B.n7,B.BU],A.av("D<IZ>"))
-B.pD=s(["January","February","March","April","May","June","July","August","September","October","November","December"],t.s)
-B.LV=s([0.41233895,0.35762064,0.18051042],t.n)
-B.Lw=s([0.2126,0.7152,0.0722],t.n)
-B.MV=s([0.01932141,0.11916382,0.95034478],t.n)
-B.dc=s([B.LV,B.Lw,B.MV],t.zg)
-B.pE=s([0,4,12,1,5,13,3,7,15],t.t)
-B.Ld=s([65533],t.t)
+B.L8=s([B.n7,B.BU],A.av("D<IZ>"))
+B.pC=s(["January","February","March","April","May","June","July","August","September","October","November","December"],t.s)
+B.LY=s([0.41233895,0.35762064,0.18051042],t.n)
+B.Lx=s([0.2126,0.7152,0.0722],t.n)
+B.MW=s([0.01932141,0.11916382,0.95034478],t.n)
+B.dc=s([B.LY,B.Lx,B.MW],t.zg)
+B.pD=s([0,4,12,1,5,13,3,7,15],t.t)
+B.Lc=s([65533],t.t)
 B.a0r=new A.hR(0,1)
 B.a0w=new A.hR(0.5,1)
 B.a0z=new A.hR(0.5375,0.75)
@@ -102891,33 +102847,73 @@ B.hb=new A.mG(3,"justify")
 B.ab=new A.mG(4,"start")
 B.ez=new A.mG(5,"end")
 B.Lm=s([B.cy,B.dx,B.dy,B.hb,B.ab,B.ez],A.av("D<mG>"))
-B.LF=s([2,1.13276676],t.n)
+B.LH=s([2,1.13276676],t.n)
 B.KD=s([2.18349805,1.20311921],t.n)
-B.MA=s([2.33888662,1.28698796],t.n)
-B.MC=s([2.48660575,1.36351941],t.n)
+B.ME=s([2.33888662,1.28698796],t.n)
+B.MG=s([2.48660575,1.36351941],t.n)
 B.Lr=s([2.62226596,1.44717976],t.n)
-B.Lz=s([2.7514899,1.53385819],t.n)
-B.M4=s([3.36298265,1.98288283],t.n)
-B.LJ=s([4.08649929,2.23811846],t.n)
-B.LX=s([4.85481134,2.47563463],t.n)
-B.Lv=s([5.62945551,2.72948597],t.n)
-B.LG=s([6.43023796,2.98020421],t.n)
-B.pF=s([B.LF,B.KD,B.MA,B.MC,B.Lr,B.Lz,B.M4,B.LJ,B.LX,B.Lv,B.LG],t.zg)
+B.LB=s([2.7514899,1.53385819],t.n)
+B.M7=s([3.36298265,1.98288283],t.n)
+B.LL=s([4.08649929,2.23811846],t.n)
+B.M_=s([4.85481134,2.47563463],t.n)
+B.Lw=s([5.62945551,2.72948597],t.n)
+B.LI=s([6.43023796,2.98020421],t.n)
+B.pE=s([B.LH,B.KD,B.ME,B.MG,B.Lr,B.LB,B.M7,B.LL,B.M_,B.Lw,B.LI],t.zg)
 B.Lo=s(["AM","PM"],t.s)
-B.pG=s(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],t.s)
+B.pF=s(["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],t.s)
 B.Lq=s([B.k3,B.k4],A.av("D<zB>"))
 B.Ls=s(["BC","AD"],t.s)
-B.Lu=s([18,15,10,12,15,18,15,12,12],t.n)
+B.Lv=s([18,15,10,12,15,18,15,12,12],t.n)
+B.Ii=new A.cs("Press banca plano (barra)","Compuesto",5,"5",null,"Compuesto 5\xd75. +2,5 kg cuando completes con RPE \u22647. \xb7 RPE 7-8 \xb7 desc 3 min")
+B.Ip=new A.cs("Press inclinado (mancuernas)","Accesorio",4,"6-10",null,"\xc9nfasis clavicular. Doble progresi\xf3n. \xb7 RPE 7-8 \xb7 desc 2 min")
+B.Ij=new A.cs("Aperturas pec-deck o cable","Accesorio",3,"10-15",null,"Tensi\xf3n continua, sin balanceo. \xb7 RPE 8 \xb7 desc 75-90 s")
+B.IB=new A.cs("Fondos asistidos o press cerrado","Accesorio",3,"8-10",null,"Codos pegados al cuerpo. \xb7 RPE 7-8 \xb7 desc 90-120 s")
+B.Iv=new A.cs("Tr\xedceps polea con cuerda","Accesorio",3,"10-15",null,"\xdaltima serie cerca del fallo. \xb7 RPE 8-9 \xb7 desc 60-75 s")
+B.IA=new A.cs("Face pull con cuerda","Recordatorio",3,"12-15",null,"Salud de hombro (recordatorio espalda). NO machacar. \xb7 RPE 8 \xb7 desc 60 s")
+B.IG=new A.cs("Plancha frontal","Core",2,"30-45","s","Anti-extensi\xf3n. Gl\xfateo activo. \xb7 RPE 7-8 \xb7 desc 45-60 s")
+B.LM=s([B.Ii,B.Ip,B.Ij,B.IB,B.Iv,B.IA,B.IG],t.Fe)
+B.RS=new A.oF("A","Pecho + Tr\xedceps","pesas",B.LM)
+B.Ix=new A.cs("Peso muerto rumano (mancuerna)","Compuesto",5,"5",null,"Compuesto 5\xd75. Bisagra de cadera, espalda neutra. +2,5 kg/mancuerna con RPE \u22647. \xb7 RPE 7-8 \xb7 desc 3 min")
+B.Iw=new A.cs("Jal\xf3n al pecho o dominada asistida","Accesorio",4,"6-10",null,"Tir\xf3n vertical. \xb7 RPE 7-8 \xb7 desc 2 min")
+B.Iq=new A.cs("Remo pecho apoyado","Accesorio",4,"6-10",null,"Codos atr\xe1s, esc\xe1pulas estables. \xb7 RPE 7-8 \xb7 desc 2 min")
+B.IF=new A.cs("Remo sentado en cable (agarre neutro)","Accesorio",3,"8-12",null,"Recorrido completo. No tirar con lumbar. \xb7 RPE 7-8 \xb7 desc 90-120 s")
+B.In=new A.cs("Curl mancuerna inclinado","Accesorio",3,"8-12",null,"Estiramiento largo del b\xedceps. \xb7 RPE 8 \xb7 desc 75-90 s")
+B.It=new A.cs("P\xe1jaros / deltoide posterior","Recordatorio",3,"12-20",null,"Sinergia con la espalda (recordatorio hombro). Carga baja. \xb7 RPE 8 \xb7 desc 60 s")
+B.If=new A.cs("Crunch en m\xe1quina","Core",2,"12-15",null,"Flexi\xf3n controlada. No tires del cuello. \xb7 RPE 8 \xb7 desc 60 s")
+B.Ly=s([B.Ix,B.Iw,B.Iq,B.IF,B.In,B.It,B.If],t.Fe)
+B.RR=new A.oF("B","Espalda + B\xedceps","pesas",B.Ly)
+B.Ir=new A.cs("Cinta inclinada al 15%","Cardio",1,"35-45","min","Ritmo de conversaci\xf3n. No HIIT. \xb7 RPE 5-6 \xb7 continuo")
+B.Mc=s([B.Ir],t.Fe)
+B.RP=new A.oF("C","Cardio","cardio",B.Mc)
+B.Iu=new A.cs("Press militar (barra) o sentado","Compuesto",5,"5",null,"Compuesto 5\xd75. Si lumbar protesta de pie, hazlo sentado. \xb7 RPE 7-8 \xb7 desc 3 min")
+B.IE=new A.cs("Press Arnold o inclinado (mancuernas)","Accesorio",3,"8-12",null,"Variaci\xf3n angular del press. \xb7 RPE 7-8 \xb7 desc 90-120 s")
+B.Is=new A.cs("Elevaciones laterales (mancuernas)","Accesorio",4,"12-20",null,"Estricto, sin trampear. \xb7 RPE 8-9 \xb7 desc 60-75 s")
+B.Ih=new A.cs("Elevaciones laterales polea (un brazo)","Accesorio",3,"12-15",null,"Tensi\xf3n continua. \xb7 RPE 8-9 \xb7 desc 60 s")
+B.IH=new A.cs("Face pull con cuerda","Accesorio",3,"12-15",null,"Deltoide posterior + manguito. \xb7 RPE 8 \xb7 desc 60 s")
+B.IC=new A.cs("Aperturas en pec-deck","Recordatorio",3,"10-15",null,"Mantiene frecuencia pecho 2x/sem (recordatorio pecho). \xb7 RPE 8 \xb7 desc 60-75 s")
+B.Iz=new A.cs("Pallof press en polea","Core",2,"12","/lado","Anti-rotaci\xf3n. No dejes que el tronco gire. \xb7 RPE 7-8 \xb7 desc 45-60 s")
+B.Lt=s([B.Iu,B.IE,B.Is,B.Ih,B.IH,B.IC,B.Iz],t.Fe)
+B.RQ=new A.oF("D","Hombro","pesas",B.Lt)
+B.Io=new A.cs("Peso muerto convencional (barra)","Compuesto",5,"5",null,"Compuesto 5\xd75. Si rodilla protesta, prueba sumo o trap-bar. \xb7 RPE 7-8 \xb7 desc 3 min")
+B.Il=new A.cs("Hip thrust","Accesorio",4,"6-10",null,"Gl\xfateo dominante, amable con la rodilla. \xb7 RPE 7-8 \xb7 desc 2 min")
+B.Ig=new A.cs("Prensa horizontal (rango ~90\xb0)","Accesorio",3,"10-12",null,"NO bajes hasta el pecho. Pies a anchura media o algo altos. \xb7 RPE 7-8 \xb7 desc 2 min")
+B.Ik=new A.cs("Curl femoral tumbado","Accesorio",4,"10-15",null,"Isquios fuertes estabilizan la r\xf3tula. 1 s de pausa. \xb7 RPE 8-9 \xb7 desc 75-90 s")
+B.Iy=new A.cs("Abductor en m\xe1quina sentado","Accesorio",3,"12-15",null,"Gl\xfateo medio: clave para el tracking rotuliano. \xb7 RPE 8 \xb7 desc 60 s")
+B.ID=new A.cs("Gemelo en prensa o de pie","Accesorio",4,"12-20",null,"Pausa al estiramiento y arriba. \xb7 RPE 8-9 \xb7 desc 60-75 s")
+B.Im=new A.cs("Remo con mancuerna unilateral","Recordatorio",3,"8-12",null,"Grosor de espalda con poco volumen lumbar (recordatorio espalda). \xb7 RPE 8 \xb7 desc 75 s")
+B.Lj=s([B.Io,B.Il,B.Ig,B.Ik,B.Iy,B.ID,B.Im],t.Fe)
+B.RT=new A.oF("E","Pierna","pesas",B.Lj)
+B.pG=s([B.RS,B.RR,B.RP,B.RQ,B.RT],A.av("D<oF>"))
 B.pH=s(["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],t.s)
 B.EO=new A.q(0.058823529411764705,0.1568627450980392,0.11764705882352941,0.0784313725490196,B.e)
 B.w5=new A.i(0,-1)
 B.CQ=new A.bA(0,B.L,B.EO,B.w5,6)
-B.Lx=s([B.CQ],t.E)
+B.Lz=s([B.CQ],t.E)
 B.bs=new A.ld(0,"label")
 B.b9=new A.ld(1,"avatar")
 B.cf=new A.ld(2,"deleteIcon")
-B.LA=s([B.bs,B.b9,B.cf],A.av("D<ld>"))
-B.LB=s([1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],t.t)
+B.LC=s([B.bs,B.b9,B.cf],A.av("D<ld>"))
+B.LD=s([1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298],t.t)
 B.aS=new A.fb(0,"icon")
 B.ba=new A.fb(1,"input")
 B.aq=new A.fb(2,"label")
@@ -102929,11 +102925,11 @@ B.aZ=new A.fb(7,"suffixIcon")
 B.bZ=new A.fb(8,"helperError")
 B.c_=new A.fb(9,"counter")
 B.cR=new A.fb(10,"container")
-B.LH=s([B.aS,B.ba,B.aq,B.bg,B.bh,B.bi,B.am,B.aZ,B.bZ,B.c_,B.cR],A.av("D<fb>"))
+B.LJ=s([B.aS,B.ba,B.aq,B.bg,B.bh,B.bi,B.am,B.aZ,B.bZ,B.c_,B.cR],A.av("D<fb>"))
 B.N3=new A.m5("en",null,"US")
 B.pI=s([B.N3],t.ss)
 B.pJ=s([0,41,61,101,131,181,251,301,360],t.n)
-B.LI=s(["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],t.s)
+B.LK=s(["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],t.s)
 B.a0g=new A.mY(0,0)
 B.a0l=new A.mY(1,0.05)
 B.a0j=new A.mY(3,0.08)
@@ -102952,18 +102948,18 @@ B.pL=s([0,21,51,121,151,191,271,321,360],t.n)
 B.iW=new A.oC(0,0,"partial")
 B.RL=new A.oC(1,1,"intermediate")
 B.iX=new A.oC(2,2,"finalResult")
-B.LQ=s([B.iW,B.RL,B.iX],A.av("D<oC>"))
-B.LR=s(["Q1","Q2","Q3","Q4"],t.s)
+B.LT=s([B.iW,B.RL,B.iX],A.av("D<oC>"))
+B.LU=s(["Q1","Q2","Q3","Q4"],t.s)
 B.Cf=new A.Mc(2,"outer")
 B.o2=new A.q(0.09803921568627451,0,0,0,B.e)
 B.f=new A.i(0,0)
 B.CO=new A.bA(0.2,B.Cf,B.o2,B.f,11)
-B.LU=s([B.CO],t.E)
+B.LX=s([B.CO],t.E)
 B.B5=new A.Fd(0,"left")
 B.B6=new A.Fd(1,"right")
-B.LW=s([B.B5,B.B6],A.av("D<Fd>"))
+B.LZ=s([B.B5,B.B6],A.av("D<Fd>"))
 B.ak=new A.Fr(0,"upstream")
-B.LY=s([B.ak,B.k],A.av("D<Fr>"))
+B.M0=s([B.ak,B.k],A.av("D<Fr>"))
 B.ao=new A.Fw(0,"rtl")
 B.U=new A.Fw(1,"ltr")
 B.lr=s([B.ao,B.U],A.av("D<Fw>"))
@@ -102971,17 +102967,17 @@ B.cS=new A.k9(0,"leading")
 B.bK=new A.k9(1,"title")
 B.cT=new A.k9(2,"subtitle")
 B.eK=new A.k9(3,"trailing")
-B.M3=s([B.cS,B.bK,B.cT,B.eK],A.av("D<k9>"))
+B.M6=s([B.cS,B.bK,B.cT,B.eK],A.av("D<k9>"))
 B.Eu=new A.q3(0,"auto")
 B.Ev=new A.q3(1,"full")
 B.Ew=new A.q3(2,"chromium")
-B.M5=s([B.Eu,B.Ev,B.Ew,B.cH],A.av("D<q3>"))
+B.M8=s([B.Eu,B.Ev,B.Ew,B.cH],A.av("D<q3>"))
 B.F9=new A.q(0.10196078431372549,0.1568627450980392,0.11764705882352941,0.0784313725490196,B.e)
 B.fO=new A.i(0,2)
 B.CX=new A.bA(0,B.L,B.F9,B.fO,8)
-B.M6=s([B.CX],t.E)
+B.M9=s([B.CX],t.E)
 B.be=new A.fM(1,"fuchsia")
-B.M7=s([B.aj,B.be,B.M,B.b6,B.aG,B.b7],A.av("D<fM>"))
+B.Ma=s([B.aj,B.be,B.M,B.b6,B.aG,B.b7],A.av("D<fM>"))
 B.BC=new A.xx(0,"topLeft")
 B.BF=new A.xx(3,"bottomRight")
 B.a0b=new A.mX(B.BC,B.BF)
@@ -102990,49 +102986,49 @@ B.BD=new A.xx(1,"topRight")
 B.BE=new A.xx(2,"bottomLeft")
 B.a0c=new A.mX(B.BD,B.BE)
 B.a0d=new A.mX(B.BE,B.BD)
-B.M8=s([B.a0b,B.a0e,B.a0c,B.a0d],A.av("D<mX>"))
-B.Ma=s([35,30,20,25,30,35,30,25,25],t.n)
-B.Md=s(["click","scroll"],t.s)
+B.Mb=s([B.a0b,B.a0e,B.a0c,B.a0d],A.av("D<mX>"))
+B.Me=s([35,30,20,25,30,35,30,25,25],t.n)
+B.Mh=s(["click","scroll"],t.s)
 B.Dj=new A.ni()
 B.j1=new A.S1(1,"page")
 B.j2=new A.f8(B.bk,B.j1)
-B.Me=s([B.Dj,B.j2],A.av("D<bg>"))
-B.Mm=s([],t.QP)
+B.Mi=s([B.Dj,B.j2],A.av("D<bg>"))
+B.Mq=s([],t.QP)
 B.a1Z=s([],A.av("D<jt>"))
 B.pM=s([],A.av("D<iL>"))
-B.Mk=s([],t.Ug)
+B.Mo=s([],t.Ug)
 B.pR=s([],A.av("D<b8d>"))
-B.Mx=s([],t.D)
+B.MB=s([],t.D)
 B.a2_=s([],t.ij)
-B.Mv=s([],t.fJ)
+B.Mz=s([],t.fJ)
 B.a20=s([],t.HS)
-B.Mu=s([],t.ER)
+B.My=s([],t.ER)
 B.a21=s([],t.ss)
 B.pP=s([],t.tc)
 B.iv=s([],t.jl)
 B.pO=s([],t.wi)
-B.Ml=s([],A.av("D<kP<@>>"))
+B.Mp=s([],A.av("D<kP<@>>"))
 B.lu=s([],t.AO)
-B.Mt=s([],t.D1)
+B.Mx=s([],t.D1)
 B.lt=s([],t.QF)
 B.pN=s([],t.Xv)
-B.Mp=s([],t.Lx)
-B.Mi=s([],t.AS)
-B.Mj=s([],t.p)
+B.Mt=s([],t.Lx)
+B.Mm=s([],t.AS)
+B.Mn=s([],t.p)
 B.ls=s([],t.t)
 B.pQ=s([],t.ee)
-B.Mw=s([],t.XS)
+B.MA=s([],t.XS)
 B.pS=s(["S","M","T","W","T","F","S"],t.s)
 B.pT=s(["J","F","M","A","M","J","J","A","S","O","N","D"],t.s)
 B.CM=new A.bA(0.75,B.L,B.o2,B.fO,1.5)
-B.MD=s([B.CM],t.E)
+B.MH=s([B.CM],t.E)
 B.fy=s([B.cW,B.cF,B.hn,B.ho,B.k2],t.QP)
-B.Lf=s([0.001200833568784504,0.002389694492170889,0.0002795742885861124],t.n)
-B.Mf=s([0.0005891086651375999,0.0029785502573438758,0.0003270666104008398],t.n)
-B.Lt=s([0.00010146692491640572,0.0005364214359186694,0.0032979401770712076],t.n)
-B.MN=s([B.Lf,B.Mf,B.Lt],t.zg)
-B.MO=s([45,95,45,20,45,90,45,45,45],t.n)
-B.MQ=s([120,120,20,45,20,15,20,120,120],t.n)
+B.Le=s([0.001200833568784504,0.002389694492170889,0.0002795742885861124],t.n)
+B.Mj=s([0.0005891086651375999,0.0029785502573438758,0.0003270666104008398],t.n)
+B.Lu=s([0.00010146692491640572,0.0005364214359186694,0.0032979401770712076],t.n)
+B.MQ=s([B.Le,B.Mj,B.Lu],t.zg)
+B.MR=s([45,95,45,20,45,90,45,45,45],t.n)
+B.MS=s([120,120,20,45,20,15,20,120,120],t.n)
 B.eb=new A.ie(0,"controlModifier")
 B.ec=new A.ie(1,"shiftModifier")
 B.ed=new A.ie(2,"altModifier")
@@ -103043,9 +103039,9 @@ B.lQ=new A.ie(6,"scrollLockModifier")
 B.lR=new A.ie(7,"functionModifier")
 B.w_=new A.ie(8,"symbolModifier")
 B.pU=s([B.eb,B.ec,B.ed,B.ee,B.lO,B.lP,B.lQ,B.lR,B.w_],A.av("D<ie>"))
-B.MS=s(["1st quarter","2nd quarter","3rd quarter","4th quarter"],t.s)
+B.MU=s(["1st quarter","2nd quarter","3rd quarter","4th quarter"],t.s)
 B.lv=s([!0,!1],t.HZ)
-B.MW=s(["pointerdown","pointermove","pointerleave","pointerup","pointercancel","touchstart","touchend","touchmove","touchcancel","mousedown","mousemove","mouseleave","mouseup","wheel"],t.s)
+B.MX=s(["pointerdown","pointermove","pointerleave","pointerup","pointercancel","touchstart","touchend","touchmove","touchcancel","mousedown","mousemove","mouseleave","mouseup","wheel"],t.s)
 B.MY=s(["Before Christ","Anno Domini"],t.s)
 B.Gc=new A.q(0.2196078431372549,0,0,0,B.e)
 B.iM=new A.i(0,8)
@@ -103101,13 +103097,13 @@ B.bn=new A.PH(0,"min")
 B.y=new A.PH(1,"max")
 B.Pn={in:0,iw:1,ji:2,jw:3,mo:4,aam:5,adp:6,aue:7,ayx:8,bgm:9,bjd:10,ccq:11,cjr:12,cka:13,cmk:14,coy:15,cqu:16,drh:17,drw:18,gav:19,gfx:20,ggn:21,gti:22,guv:23,hrr:24,ibi:25,ilw:26,jeg:27,kgc:28,kgh:29,koj:30,krm:31,ktr:32,kvs:33,kwq:34,kxe:35,kzj:36,kzt:37,lii:38,lmm:39,meg:40,mst:41,mwj:42,myt:43,nad:44,ncp:45,nnx:46,nts:47,oun:48,pcr:49,pmc:50,pmu:51,ppa:52,ppr:53,pry:54,puz:55,sca:56,skk:57,tdu:58,thc:59,thx:60,tie:61,tkk:62,tlw:63,tmp:64,tne:65,tnf:66,tsf:67,uok:68,xba:69,xia:70,xkh:71,xsj:72,ybd:73,yma:74,ymt:75,yos:76,yuu:77}
 B.bV=new A.c7(B.Pn,["id","he","yi","jv","ro","aas","dz","ktz","nun","bcg","drl","rki","mom","cmr","xch","pij","quh","khk","prs","dev","vaj","gvr","nyc","duz","jal","opa","gal","oyb","tdf","kml","kwv","bmf","dtp","gdj","yam","tvd","dtp","dtp","raq","rmx","cir","mry","vaj","mry","xny","kdz","ngv","pij","vaj","adx","huw","phr","bfy","lcq","prt","pub","hle","oyb","dtp","tpo","oyb","ras","twm","weo","tyj","kak","prs","taj","ema","cax","acn","waw","suj","rki","lrr","mtm","zom","yug"],t.li)
-B.Mq=s([],t.E)
+B.Mu=s([],t.E)
 B.c2=new A.q(0.2,0,0,0,B.e)
 B.CL=new A.bA(-1,B.L,B.c2,B.fO,1)
 B.c3=new A.q(0.1411764705882353,0,0,0,B.e)
 B.CC=new A.bA(0,B.L,B.c3,B.bE,1)
 B.CK=new A.bA(0,B.L,B.bR,B.bE,3)
-B.MJ=s([B.CL,B.CC,B.CK],t.E)
+B.MN=s([B.CL,B.CC,B.CK],t.E)
 B.eh=new A.i(0,3)
 B.CJ=new A.bA(-2,B.L,B.c2,B.eh,1)
 B.D_=new A.bA(0,B.L,B.c3,B.fO,2)
@@ -103116,7 +103112,7 @@ B.Ln=s([B.CJ,B.D_,B.CE],t.E)
 B.CD=new A.bA(-2,B.L,B.c2,B.eh,3)
 B.CG=new A.bA(0,B.L,B.c3,B.eh,4)
 B.D9=new A.bA(0,B.L,B.bR,B.bE,8)
-B.ME=s([B.CD,B.CG,B.D9],t.E)
+B.MI=s([B.CD,B.CG,B.D9],t.E)
 B.CI=new A.bA(-1,B.L,B.c2,B.fO,4)
 B.w3=new A.i(0,4)
 B.CT=new A.bA(0,B.L,B.c3,B.w3,5)
@@ -103125,7 +103121,7 @@ B.KC=s([B.CI,B.CT,B.CN],t.E)
 B.CA=new A.bA(-1,B.L,B.c2,B.eh,5)
 B.D0=new A.bA(0,B.L,B.c3,B.lU,10)
 B.D8=new A.bA(0,B.L,B.bR,B.bE,18)
-B.Ly=s([B.CA,B.D0,B.D8],t.E)
+B.LA=s([B.CA,B.D0,B.D8],t.E)
 B.lT=new A.i(0,5)
 B.CF=new A.bA(-3,B.L,B.c2,B.lT,5)
 B.CR=new A.bA(1,B.L,B.c3,B.iM,10)
@@ -103135,25 +103131,25 @@ B.CB=new A.bA(-3,B.L,B.c2,B.lT,6)
 B.w4=new A.i(0,9)
 B.D2=new A.bA(1,B.L,B.c3,B.w4,12)
 B.D1=new A.bA(2,B.L,B.bR,B.eh,16)
-B.Lc=s([B.CB,B.D2,B.D1],t.E)
+B.Lb=s([B.CB,B.D2,B.D1],t.E)
 B.PC=new A.i(0,7)
 B.CU=new A.bA(-4,B.L,B.c2,B.PC,8)
 B.Px=new A.i(0,12)
 B.CP=new A.bA(2,B.L,B.c3,B.Px,17)
 B.D6=new A.bA(4,B.L,B.bR,B.lT,22)
-B.LE=s([B.CU,B.CP,B.D6],t.E)
+B.LG=s([B.CU,B.CP,B.D6],t.E)
 B.D4=new A.bA(-5,B.L,B.c2,B.iM,10)
 B.Py=new A.i(0,16)
 B.CY=new A.bA(2,B.L,B.c3,B.Py,24)
 B.Db=new A.bA(5,B.L,B.bR,B.lU,30)
-B.LD=s([B.D4,B.CY,B.Db],t.E)
+B.LF=s([B.D4,B.CY,B.Db],t.E)
 B.Pw=new A.i(0,11)
 B.CH=new A.bA(-7,B.L,B.c2,B.Pw,15)
 B.PA=new A.i(0,24)
 B.D3=new A.bA(3,B.L,B.c3,B.PA,38)
 B.CW=new A.bA(8,B.L,B.bR,B.w4,46)
-B.LT=s([B.CH,B.D3,B.CW],t.E)
-B.Ow=new A.d8([0,B.Mq,1,B.MJ,2,B.Ln,3,B.ME,4,B.KC,6,B.Ly,8,B.KY,9,B.Lc,12,B.LE,16,B.LD,24,B.LT],A.av("d8<n,E<bA>>"))
+B.LW=s([B.CH,B.D3,B.CW],t.E)
+B.Ow=new A.d8([0,B.Mu,1,B.MN,2,B.Ln,3,B.MI,4,B.KC,6,B.LA,8,B.KY,9,B.Lb,12,B.LG,16,B.LF,24,B.LW],A.av("d8<n,E<bA>>"))
 B.ca=new A.j(4294968065)
 B.mj=new A.am(B.ca,!1,!1,!0,!1,B.o)
 B.bT=new A.j(4294968066)
@@ -103664,65 +103660,65 @@ B.KU=s([46,null,null,8589935150],t.Z)
 B.KV=s([47,null,null,8589935151],t.Z)
 B.KW=s([48,null,null,8589935152],t.Z)
 B.KX=s([49,null,null,8589935153],t.Z)
-B.L0=s([50,null,null,8589935154],t.Z)
-B.L1=s([51,null,null,8589935155],t.Z)
-B.L2=s([52,null,null,8589935156],t.Z)
-B.L3=s([53,null,null,8589935157],t.Z)
-B.L4=s([54,null,null,8589935158],t.Z)
-B.L5=s([55,null,null,8589935159],t.Z)
-B.L6=s([56,null,null,8589935160],t.Z)
-B.L8=s([57,null,null,8589935161],t.Z)
-B.LZ=s([8589934852,8589934852,8589934853,null],t.Z)
+B.L_=s([50,null,null,8589935154],t.Z)
+B.L0=s([51,null,null,8589935155],t.Z)
+B.L1=s([52,null,null,8589935156],t.Z)
+B.L2=s([53,null,null,8589935157],t.Z)
+B.L3=s([54,null,null,8589935158],t.Z)
+B.L4=s([55,null,null,8589935159],t.Z)
+B.L5=s([56,null,null,8589935160],t.Z)
+B.L7=s([57,null,null,8589935161],t.Z)
+B.M1=s([8589934852,8589934852,8589934853,null],t.Z)
 B.KG=s([4294967555,null,4294967555,null],t.Z)
 B.KH=s([4294968065,null,null,8589935154],t.Z)
 B.KI=s([4294968066,null,null,8589935156],t.Z)
 B.KJ=s([4294968067,null,null,8589935158],t.Z)
 B.KK=s([4294968068,null,null,8589935160],t.Z)
 B.KP=s([4294968321,null,null,8589935157],t.Z)
-B.M_=s([8589934848,8589934848,8589934849,null],t.Z)
+B.M2=s([8589934848,8589934848,8589934849,null],t.Z)
 B.KF=s([4294967423,null,null,8589935150],t.Z)
 B.KL=s([4294968069,null,null,8589935153],t.Z)
 B.KE=s([4294967309,null,null,8589935117],t.Z)
 B.KM=s([4294968070,null,null,8589935159],t.Z)
 B.KQ=s([4294968327,null,null,8589935152],t.Z)
-B.M0=s([8589934854,8589934854,8589934855,null],t.Z)
+B.M3=s([8589934854,8589934854,8589934855,null],t.Z)
 B.KN=s([4294968071,null,null,8589935155],t.Z)
 B.KO=s([4294968072,null,null,8589935161],t.Z)
-B.M1=s([8589934850,8589934850,8589934851,null],t.Z)
-B.vV=new A.d8(["*",B.KR,"+",B.KS,"-",B.KT,".",B.KU,"/",B.KV,"0",B.KW,"1",B.KX,"2",B.L0,"3",B.L1,"4",B.L2,"5",B.L3,"6",B.L4,"7",B.L5,"8",B.L6,"9",B.L8,"Alt",B.LZ,"AltGraph",B.KG,"ArrowDown",B.KH,"ArrowLeft",B.KI,"ArrowRight",B.KJ,"ArrowUp",B.KK,"Clear",B.KP,"Control",B.M_,"Delete",B.KF,"End",B.KL,"Enter",B.KE,"Home",B.KM,"Insert",B.KQ,"Meta",B.M0,"PageDown",B.KN,"PageUp",B.KO,"Shift",B.M1],A.av("d8<l,E<n?>>"))
-B.L7=s([B.q1,null,null,B.vI],t.L)
-B.My=s([B.vu,null,null,B.vJ],t.L)
-B.LC=s([B.vv,null,null,B.vK],t.L)
-B.M2=s([B.vw,null,null,B.dh],t.L)
+B.M4=s([8589934850,8589934850,8589934851,null],t.Z)
+B.vV=new A.d8(["*",B.KR,"+",B.KS,"-",B.KT,".",B.KU,"/",B.KV,"0",B.KW,"1",B.KX,"2",B.L_,"3",B.L0,"4",B.L1,"5",B.L2,"6",B.L3,"7",B.L4,"8",B.L5,"9",B.L7,"Alt",B.M1,"AltGraph",B.KG,"ArrowDown",B.KH,"ArrowLeft",B.KI,"ArrowRight",B.KJ,"ArrowUp",B.KK,"Clear",B.KP,"Control",B.M2,"Delete",B.KF,"End",B.KL,"Enter",B.KE,"Home",B.KM,"Insert",B.KQ,"Meta",B.M3,"PageDown",B.KN,"PageUp",B.KO,"Shift",B.M4],A.av("d8<l,E<n?>>"))
+B.L6=s([B.q1,null,null,B.vI],t.L)
+B.MC=s([B.vu,null,null,B.vJ],t.L)
+B.LE=s([B.vv,null,null,B.vK],t.L)
+B.M5=s([B.vw,null,null,B.dh],t.L)
 B.Kw=s([B.vx,null,null,B.vL],t.L)
-B.ML=s([B.vy,null,null,B.lF],t.L)
-B.MI=s([B.vz,null,null,B.fI],t.L)
-B.Le=s([B.vA,null,null,B.di],t.L)
-B.MT=s([B.vB,null,null,B.fJ],t.L)
-B.MH=s([B.vC,null,null,B.dj],t.L)
-B.Lb=s([B.vD,null,null,B.lG],t.L)
+B.MO=s([B.vy,null,null,B.lF],t.L)
+B.MM=s([B.vz,null,null,B.fI],t.L)
+B.Ld=s([B.vA,null,null,B.di],t.L)
+B.MV=s([B.vB,null,null,B.fJ],t.L)
+B.ML=s([B.vC,null,null,B.dj],t.L)
+B.La=s([B.vD,null,null,B.lG],t.L)
 B.KB=s([B.vE,null,null,B.dk],t.L)
 B.Lp=s([B.vF,null,null,B.fK],t.L)
-B.Mz=s([B.vG,null,null,B.dl],t.L)
-B.MB=s([B.vH,null,null,B.fL],t.L)
-B.Lg=s([B.fG,B.fG,B.iC,null],t.L)
-B.MM=s([B.iy,null,B.iy,null],t.L)
-B.LK=s([B.ca,null,null,B.di],t.L)
-B.LL=s([B.bT,null,null,B.dj],t.L)
-B.LM=s([B.bU,null,null,B.dk],t.L)
-B.MR=s([B.cb,null,null,B.dl],t.L)
-B.MF=s([B.lz,null,null,B.lG],t.L)
-B.Lh=s([B.fF,B.fF,B.iB,null],t.L)
-B.Mb=s([B.b3,null,null,B.dh],t.L)
-B.LN=s([B.de,null,null,B.fI],t.L)
-B.La=s([B.ix,null,null,B.lE],t.L)
-B.LO=s([B.df,null,null,B.fK],t.L)
-B.MG=s([B.fE,null,null,B.lF],t.L)
-B.Li=s([B.fH,B.fH,B.iD,null],t.L)
-B.LP=s([B.fC,null,null,B.fJ],t.L)
-B.Mg=s([B.fD,null,null,B.fL],t.L)
-B.Lj=s([B.cJ,B.cJ,B.dg,null],t.L)
-B.OL=new A.d8(["*",B.L7,"+",B.My,"-",B.LC,".",B.M2,"/",B.Kw,"0",B.ML,"1",B.MI,"2",B.Le,"3",B.MT,"4",B.MH,"5",B.Lb,"6",B.KB,"7",B.Lp,"8",B.Mz,"9",B.MB,"Alt",B.Lg,"AltGraph",B.MM,"ArrowDown",B.LK,"ArrowLeft",B.LL,"ArrowRight",B.LM,"ArrowUp",B.MR,"Clear",B.MF,"Control",B.Lh,"Delete",B.Mb,"End",B.LN,"Enter",B.La,"Home",B.LO,"Insert",B.MG,"Meta",B.Li,"PageDown",B.LP,"PageUp",B.Mg,"Shift",B.Lj],A.av("d8<l,E<j?>>"))
+B.MD=s([B.vG,null,null,B.dl],t.L)
+B.MF=s([B.vH,null,null,B.fL],t.L)
+B.Lf=s([B.fG,B.fG,B.iC,null],t.L)
+B.MP=s([B.iy,null,B.iy,null],t.L)
+B.LN=s([B.ca,null,null,B.di],t.L)
+B.LO=s([B.bT,null,null,B.dj],t.L)
+B.LP=s([B.bU,null,null,B.dk],t.L)
+B.MT=s([B.cb,null,null,B.dl],t.L)
+B.MJ=s([B.lz,null,null,B.lG],t.L)
+B.Lg=s([B.fF,B.fF,B.iB,null],t.L)
+B.Mf=s([B.b3,null,null,B.dh],t.L)
+B.LQ=s([B.de,null,null,B.fI],t.L)
+B.L9=s([B.ix,null,null,B.lE],t.L)
+B.LR=s([B.df,null,null,B.fK],t.L)
+B.MK=s([B.fE,null,null,B.lF],t.L)
+B.Lh=s([B.fH,B.fH,B.iD,null],t.L)
+B.LS=s([B.fC,null,null,B.fJ],t.L)
+B.Mk=s([B.fD,null,null,B.fL],t.L)
+B.Li=s([B.cJ,B.cJ,B.dg,null],t.L)
+B.OL=new A.d8(["*",B.L6,"+",B.MC,"-",B.LE,".",B.M5,"/",B.Kw,"0",B.MO,"1",B.MM,"2",B.Ld,"3",B.MV,"4",B.ML,"5",B.La,"6",B.KB,"7",B.Lp,"8",B.MD,"9",B.MF,"Alt",B.Lf,"AltGraph",B.MP,"ArrowDown",B.LN,"ArrowLeft",B.LO,"ArrowRight",B.LP,"ArrowUp",B.MT,"Clear",B.MJ,"Control",B.Lg,"Delete",B.Mf,"End",B.LQ,"Enter",B.L9,"Home",B.LR,"Insert",B.MK,"Meta",B.Lh,"PageDown",B.LS,"PageUp",B.Mk,"Shift",B.Li],A.av("d8<l,E<j?>>"))
 B.OM=new A.d8([0,"Mantener",-300,"D\xe9ficit suave (\u2212300)",-500,"D\xe9ficit moderado (\u2212500)",-750,"D\xe9ficit agresivo (\u2212750)",300,"Volumen (+300)"],t.TM)
 B.Po={KeyA:0,KeyB:1,KeyC:2,KeyD:3,KeyE:4,KeyF:5,KeyG:6,KeyH:7,KeyI:8,KeyJ:9,KeyK:10,KeyL:11,KeyM:12,KeyN:13,KeyO:14,KeyP:15,KeyQ:16,KeyR:17,KeyS:18,KeyT:19,KeyU:20,KeyV:21,KeyW:22,KeyX:23,KeyY:24,KeyZ:25,Digit1:26,Digit2:27,Digit3:28,Digit4:29,Digit5:30,Digit6:31,Digit7:32,Digit8:33,Digit9:34,Digit0:35,Minus:36,Equal:37,BracketLeft:38,BracketRight:39,Backslash:40,Semicolon:41,Quote:42,Backquote:43,Comma:44,Period:45,Slash:46}
 B.lL=new A.c7(B.Po,["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0","-","=","[","]","\\",";","'","`",",",".","/"],t.li)
@@ -104185,9 +104181,9 @@ B.zQ=new A.aY(1,1)
 B.Rb=new A.aY(-1/0,-1/0)
 B.Rc=new A.aY(1.5,1.5)
 B.Rd=new A.aY(1/0,1/0)
-B.Mr=s([],A.av("D<iR>"))
-B.Ms=s([],A.av("D<jg>"))
-B.zR=new A.DC(B.Mr,B.Ms)
+B.Mv=s([],A.av("D<iR>"))
+B.Mw=s([],A.av("D<jg>"))
+B.zR=new A.DC(B.Mv,B.Mw)
 B.Re=new A.al(0,0)
 B.Rf=new A.al(0,!0)
 B.cA=new A.FD(2,"collapsed")
@@ -104366,9 +104362,9 @@ B.Ao=new A.f6([B.as,B.b5,B.cd,B.bd,B.by],t.Lu)
 B.Ap=new A.jV(B.v,B.f,0)
 B.FU=new A.q(0.23529411764705882,0,0,0,B.e)
 B.Da=new A.bA(0.5,B.L,B.FU,B.w3,10)
-B.Mc=s([B.Da],t.E)
+B.Mg=s([B.Da],t.E)
 B.RO=new A.kX(B.k6,B.r)
-B.SP=new A.ip(null,null,null,B.Mc,B.RO)
+B.SP=new A.ip(null,null,null,B.Mg,B.RO)
 B.SQ=new A.EP(1,"border")
 B.SR=new A.EP(2,"inside")
 B.SU=new A.am(B.fE,!1,!0,!1,!1,B.o)
@@ -105770,7 +105766,7 @@ s($,"bcC","aUD",()=>A.aq('"(?:[^"\\x00-\\x1F\\x7F\\\\]|\\\\.)*"',!1))
 s($,"bcB","aUC",()=>A.aq("\\\\(.)",!1))
 s($,"bdy","aV5",()=>A.aq('[()<>@,;:"\\\\/\\[\\]?={} \\t\\x00-\\x1F\\x7F]',!1))
 s($,"bdL","aV9",()=>A.aq("(?:"+$.aUA().a+")*",!1))
-s($,"bdl","aV3",()=>new A.N8("en_US",B.Ls,B.MY,B.pT,B.pT,B.pD,B.pD,B.pB,B.pB,B.pG,B.pG,B.pH,B.pH,B.pS,B.pS,B.LR,B.MS,B.Lo))
+s($,"bdl","aV3",()=>new A.N8("en_US",B.Ls,B.MY,B.pT,B.pT,B.pC,B.pC,B.pB,B.pB,B.pF,B.pF,B.pH,B.pH,B.pS,B.pS,B.LU,B.MU,B.Lo))
 r($,"bbU","aFM",()=>A.aOF("initializeDateFormatting(<locale>)",$.aV3(),A.av("N8")))
 r($,"bdh","aK7",()=>A.aOF("initializeDateFormatting(<locale>)",B.OF,t.GU))
 s($,"bd6","aV_",()=>48)
