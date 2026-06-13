@@ -96600,7 +96600,10 @@ B.b.N(m,J.ed(n.e,new A.are(n,q),o))
 m.push(B.aR)
 o=q.y
 m.push(A.aI_(A.ez(B.Jf,o,r,r),A.ac("Crear alimento personalizado",r,r,r,A.bu(q,o,14,B.n),r,r),new A.arf(n,q)))
-B.b.N(p,m)}p.push(B.AX)
+B.b.N(p,m)}else{var xe=n.ajH(A.eY(a,!0,t.W))
+if(xe.length!==0){p.push(B.aR)
+p.push(A.ac("RECIENTES",r,r,r,A.bu(q,r,12,B.A),r,r))
+B.b.N(p,A.V(new A.Y(xe,new A.ard(n,q),A.W(xe).h("Y<1,f>")),t.l7))}}p.push(B.AX)
 q=A.kH(p,b,B.fp,r,!1)}l.push(A.co(q,1))
 return A.d2(l,B.z,B.r,B.y)},
 $S:134}
